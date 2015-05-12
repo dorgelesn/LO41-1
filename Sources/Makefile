@@ -8,7 +8,7 @@
 
 
 #definition des cibles particuliére
-.PHONY: clean,mrproper
+.PHONY: clean,mrpropre
 
 #desactivation ds regles implicite
 .suffix:
@@ -24,9 +24,10 @@ main=$(nomMain:=.o)
 
 #nom de la bibliotheque (le .h et  .c doivent avoir le meme nom :) ) 
 # et toujouts ps d'extenssion (pour le script mais le fichier en possede une en realiter)
-#nomBibliotheque=fonction
-#BibliothequeH=$(nomBibliotheque:=.h)
-#BibliothequeO=$(nomBibliotheque:=.o)
+
+nomBibliotheque=menu
+BibliothequeH=$(nomBibliotheque:=.h)
+BibliothequeO=$(nomBibliotheque:=.o)
 
 
 
@@ -46,7 +47,7 @@ main=$(nomMain:=.o)
 
 $EXEC):$(main) $(BibliothequeO)
 
-$(cc) $^ -o $(EXEC) $(FlagVoulu)
+	$(cc) $^ -o $(EXEC) $(FlagVoulu)
 
 #le main necessite le .h donc:
 $(main): $(BibliothequeH)
