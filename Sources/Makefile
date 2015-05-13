@@ -22,13 +22,20 @@ FlagVoulu= -W  -lm -g
 nomMain=main
 main=$(nomMain:=.o)
 
-#nom de la bibliotheque (le .h et  .c doivent avoir le meme nom :) ) 
+#nom de la bibliotheque (le .h et  .c doivent avoir le meme nom :) )
 # et toujouts ps d'extenssion (pour le script mais le fichier en possede une en realiter)
 
 nomBibliotheque=menu
 BibliothequeH=$(nomBibliotheque:=.h)
 BibliothequeO=$(nomBibliotheque:=.o)
 
+nomBibliotheque2=serveur_controleur
+Bibliotheque2H=$(nomBibliotheque2:=.h)
+Bibliotheque2O=$(nomBibliotheque2:=.o)
+
+nomBibliotheque3=echangeur
+Bibliotheque3H=$(nomBibliotheque3:=.h)
+Bibliotheque3O=$(nomBibliotheque3:=.o)
 
 
 
@@ -63,9 +70,9 @@ $(main): $(BibliothequeH)
 #supression des fichier temporaire
 clean:
 	@echo "destruction de tout le fichier temporaire ( il restera l'executable)"
-	rm -rf *.o 
+	rm -rf *.o
 #supression de tout les fichier sauf les source
-mrproper : clean
+mrpropre : clean
 	@echo "destruction de tous sauf les source"
 	rm -rf $(EXEC)
 run: $(EXEC)

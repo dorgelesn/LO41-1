@@ -41,6 +41,20 @@ Florian Lacour \& Michaël Ayeng
 
 Fonction de base du programme. 
 
+Fonction de base du serveur\-\_\-controleur.
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & Valeur représentant le nombre d'argument passés lors de l'appel du binaire exécutable \\
+\hline
+{\em argv} & Tableau de caractère contenant les arguments de la ligne de commande \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Renvoi 0 si le programme s'est déroulé normalement
+\end{DoxyReturn}
+Le serveur controleur est le processus père de la simulation. Il fork les processus fils représentant les échangeurs.
+
 
 \begin{DoxyParams}{Parameters}
 {\em argc} & Valeur représentant le nombre d'argument passés lors de l'appel du binaire exécutable \\

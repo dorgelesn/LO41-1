@@ -14,10 +14,10 @@
 /**
  * \fn int main(int argc, char *argv[])
  * \brief Fonction de base du programme
- * 
+ *
  * \param argc Valeur représentant le nombre d'argument passés lors de l'appel du binaire exécutable
  * \param argv Tableau de caractère contenant les arguments de la ligne de commande
- * \return Renvoi 0 si le programme s'est déroulé normalement 
+ * \return Renvoi 0 si le programme s'est déroulé normalement
  */
 int main(int argc, char *argv[])
 {

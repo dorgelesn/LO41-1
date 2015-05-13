@@ -8,13 +8,27 @@ Affichage des menus.
 
 {\ttfamily \#include $<$stdio.\-h$>$}\\*
 {\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$unistd.\-h$>$}\\*
 {\ttfamily \#include \char`\"{}menu.\-h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{menu_8c_a5327de69667137ef4da1ed78e2bf722b}{\#define {\bfseries N\-B\-\_\-\-E\-C\-H\-A\-N\-G\-E\-U\-R\-\_\-\-D\-E\-F\-A\-U\-T}~4}\label{menu_8c_a5327de69667137ef4da1ed78e2bf722b}
+
+\item 
+\hypertarget{menu_8c_a23b2897a0029be2746ab41bb6ffb2458}{\#define {\bfseries N\-B\-\_\-\-V\-E\-H\-I\-C\-U\-L\-E\-S\-\_\-\-D\-E\-F\-A\-U\-T}~5}\label{menu_8c_a23b2897a0029be2746ab41bb6ffb2458}
+
+\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{menu_8c_ab2d459e5dcbb100d4984998ccf87e073}{void \hyperlink{menu_8c_ab2d459e5dcbb100d4984998ccf87e073}{menu\-Principal} (void)}\label{menu_8c_ab2d459e5dcbb100d4984998ccf87e073}
 
 \begin{DoxyCompactList}\small\item\em Fonction d'affichage du menu principal. \end{DoxyCompactList}\item 
+void \hyperlink{menu_8c_a497b87a36022c8b6bb0c4f66e0b5308c}{execution\-Standard} (void)
+\begin{DoxyCompactList}\small\item\em Fonction d'execution de la simulation en mode standard. \end{DoxyCompactList}\item 
+void \hyperlink{menu_8c_ad9678bbc38155d1986667f96c3072697}{execution\-Parametree} (void)
+\begin{DoxyCompactList}\small\item\em Fonction d'execution de la simulation en mode parametrée. \end{DoxyCompactList}\item 
 \hypertarget{menu_8c_a2aee638331a3b7157a0aa75be75810b0}{void \hyperlink{menu_8c_a2aee638331a3b7157a0aa75be75810b0}{a\-Propos} (void)}\label{menu_8c_a2aee638331a3b7157a0aa75be75810b0}
 
 \begin{DoxyCompactList}\small\item\em Fonction d'affichage des informations relatives au programme. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -30,3 +44,29 @@ Florian Lacour \& Michaël Ayeng
 \begin{DoxyDate}{Date}
 12 Mai 2015 
 \end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{menu_8c_ad9678bbc38155d1986667f96c3072697}{\index{menu.\-c@{menu.\-c}!execution\-Parametree@{execution\-Parametree}}
+\index{execution\-Parametree@{execution\-Parametree}!menu.c@{menu.\-c}}
+\subsubsection[{execution\-Parametree}]{\setlength{\rightskip}{0pt plus 5cm}void execution\-Parametree (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{menu_8c_ad9678bbc38155d1986667f96c3072697}
+
+
+Fonction d'execution de la simulation en mode parametrée. 
+
+Cette fonction permet d'afficher un menu où l'utilisateur peut spécifier le nombre d'échangeur présent dans la simulation ainsi que le nombre de véhicule que chaque échangeur possèdera au début de la simulation. La fonction execute ensuite la simulation \hypertarget{menu_8c_a497b87a36022c8b6bb0c4f66e0b5308c}{\index{menu.\-c@{menu.\-c}!execution\-Standard@{execution\-Standard}}
+\index{execution\-Standard@{execution\-Standard}!menu.c@{menu.\-c}}
+\subsubsection[{execution\-Standard}]{\setlength{\rightskip}{0pt plus 5cm}void execution\-Standard (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{menu_8c_a497b87a36022c8b6bb0c4f66e0b5308c}
+
+
+Fonction d'execution de la simulation en mode standard. 
+
+Cette fonction permet d'executer la simulation en mode standard, avec les paramètres par défaut 
