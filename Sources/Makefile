@@ -25,7 +25,7 @@ main=$(nomMain:=.o)
 #nom de la bibliotheque (le .h et  .c doivent avoir le meme nom :) )
 # et toujouts ps d'extenssion (pour le script mais le fichier en possede une en realiter)
 
-nomBibliotheque=menu
+nomBibliotheque=
 BibliothequeH=$(nomBibliotheque:=.h)
 BibliothequeO=$(nomBibliotheque:=.o)
 
@@ -52,7 +52,7 @@ Bibliotheque3O=$(nomBibliotheque3:=.o)
 
 
 
-$EXEC):$(main) $(BibliothequeO)
+$(EXEC):$(main) $(BibliothequeO)
 
 	$(cc) $^ -o $(EXEC) $(FlagVoulu)
 
