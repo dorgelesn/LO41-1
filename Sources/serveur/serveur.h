@@ -1,0 +1,6 @@
+#ifndef SERVEUR_CONTROLEUR_H_INCLUDED
+#define SERVEUR_CONTROLEUR_H_INCLUDED
+
+int main(int argc, char argv[]);
+
+#endif //SERVEUR_CONTROLEUR_H_INCLUDED
