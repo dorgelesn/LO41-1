@@ -8,20 +8,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 #include "menu.h"
 
-#define NB_ECHANGEUR_DEFAUT 4
+#define NB_ECHANGEURS_DEFAUT 4
 #define NB_VEHICULES_DEFAUT 5
 
 
 /**
- * \fn void menuPrincipal(void)
+ * \fn void menuPrincipal(int* nbEchangeurs, int* nbVehicules)
  * \brief Fonction d'affichage du menu principal
  *
+ * \param nbEchangeurs Un pointeur sur le nombre d'échangeur de la simulation
+ * \param nbVehicules Un pointeur sur le nombre de véhicules de la simulation
+ *
  */
-void menuPrincipal(void) {
+void menuPrincipal(int* nbEchangeurs, int* nbVehicules) {
 
 	int choix;
 
@@ -41,11 +43,11 @@ void menuPrincipal(void) {
 		switch (choix) {
 
 			case 1:
-      executionStandard();
+      executionStandard(nbEchangeurs,nbVehicules);
 			break;
 
 			case 2:
-      executionParametree();
+      executionParametree(nbEchangeurs,nbVehicules);
 			break;
 
 			case 3:
@@ -55,54 +57,57 @@ void menuPrincipal(void) {
 			default:
 			printf("\n\nChoix incorrect");
 		}
-	} while (1);
+	} while (choix != 1 && choix != 2);
 }
 
 
 /**
- * \fn void executionStandard(void)
+ * \fn void executionStandard(int* nbEchangeurs, int* nbVehicules)
  * \brief Fonction d'execution de la simulation en mode standard
  *
  * \details Cette fonction permet d'executer la simulation en mode standard,
  * avec les paramètres par défaut
+ *
+ * \param nbEchangeurs Un pointeur sur le nombre d'échangeur de la simulation
+ * \param nbVehicules Un pointeur sur le nombre de véhicules de la simulation
  */
-void executionStandard(void) {
+void executionStandard(int* nbEchangeurs, int* nbVehicules) {
 
   printf("\n\n\n\n******************************\n");
 	printf("\tVersion standard");
 	printf("\n******************************\n");
 
-  printf("\nExecution de la simulation");
-  execlp("./serveur_controleur","serveur_controleur",NB_ECHANGEUR_DEFAUT,NB_VEHICULES_DEFAUT,NULL);
+	*nbEchangeurs = NB_ECHANGEURS_DEFAUT;
+	*nbVehicules = NB_VEHICULES_DEFAUT;
+
 }
 
 
 /**
- * \fn void executionParametree(void)
+ * \fn void executionParametree(intù nbEchangeurs, int* nbVehicules)
  * \brief Fonction d'execution de la simulation en mode parametrée
  *
  * \details Cette fonction permet d'afficher un menu où l'utilisateur peut
  * spécifier le nombre d'échangeur présent dans la simulation
  * ainsi que le nombre de véhicule que chaque échangeur possèdera
  * au début de la simulation.
- * La fonction execute ensuite la simulation
+ *
+ * \param nbEchangeurs Un pointeur sur le nombre d'échangeur de la simulation
+ * \param nbVehicules Un pointeur sur le nombre de véhicules de la simulation
  *
  */
-void executionParametree(void) {
-  int nbEchangeurs, nbVehicules;
+void executionParametree(int* nbEchangeurs, int* nbVehicules) {
 
   printf("\n\n\n\n******************************\n");
 	printf("\tVersion parametrée");
 	printf("\n******************************\n");
 
   printf("\nVeuillez entrer le nombre d'échangeurs: ");
-  scanf("%d",&nbEchangeurs);
+  scanf("%d",nbEchangeurs);
 
   printf("\nVeuillez entrer le nombre de véhicules par échangeur: ");
-  scanf("%d",&nbVehicules);
+  scanf("%d",nbVehicules);
 
-  printf("\nExecution de la simulation");
-  execlp("./serveur_controleur","serveur_controleur",nbEchangeurs,nbVehicules,NULL);
 }
 
 /**

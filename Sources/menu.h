@@ -2,9 +2,9 @@
 #define MENU_H_INCLUDED
 
 
-void menuPrincipal(void);
-void executionStandard(void);
-void executionParametree(void);
+void menuPrincipal(int*, int*);
+void executionStandard(int*, int*);
+void executionParametree(int*, int*);
 void aPropos(void);
 
 #endif // MENU_H_INCLUDED

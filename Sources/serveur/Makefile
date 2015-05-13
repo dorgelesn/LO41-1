@@ -55,7 +55,7 @@ $(main): $(BibliothequeH)
 #supression des fichier temporaire
 clean:
 	@echo "destruction de tout le fichier temporaire ( il restera l'executable)"
-	rm -rf *.o
+	rm -rf *.o *.c~
 #supression de tout les fichier sauf les source
 mrpropre : clean
 	@echo "destruction de tous sauf les source"

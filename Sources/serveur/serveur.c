@@ -1,5 +1,5 @@
 /**
- * \file serveur_controleur.c
+ * \file serveur.c
  * \brief Programme de calcul des flux de trafic
  * \author Florian Lacour & Michaël Ayeng
  * \version 0.1
@@ -9,16 +9,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//#include "serveur_controleur.h"
-//#include "echangeur.h"
+#include "serveur.h"
 
 
 /**
  * \fn int main(int argc, char *argv[])
- * \brief Fonction de base du serveur_controleur
+ * \brief Fonction de base du serveur
  *
- * \details Le serveur controleur est le processus père de la simulation.
- * Il fork les processus fils représentant les échangeurs.
+ * \details Le serveur effectue les calculs et gère le trafic
  *
  * \param argc Valeur représentant le nombre d'argument passés lors de l'appel du binaire exécutable
  * \param argv Tableau de caractère contenant les arguments de la ligne de commande
@@ -26,18 +24,10 @@
  */
 int main(int argc, char argv[]) {
 
-  int nbEchangeurs, nbVehicules, i;
+  int nbEchangeurs;
 
-//  nbEchangeurs = argv[1];
-  //nbVehicules = argv[2];
+  nbEchangeurs = argv[1];
 
-  printf("\nServeur-controleur crée");
-/*
-  for (i = 1; i <= nbEchangeurs; i++) {
-    // Chaque processus fils lance sa fonction echangeur
-    if (fork() == 0){
-      echangeur(i, nbVehicules);
-    }
-  }
-*/
+  printf("\nServeur crée");
+  printf("\nNombre d'échangeurs gérés par le serveur: %d",nbEchangeurs);
 }
