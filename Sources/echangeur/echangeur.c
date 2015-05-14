@@ -11,6 +11,22 @@
 
  #include "echangeur.h"
 
- void main(int argc, int argv[]) {
-   printf("Echangeur n°%d crée",argv[1]);
+ /**
+  * \fn int main(int argc, char *argv[])
+  * \brief Programme simulant un échangeur
+  *
+  *
+  * \param argc Valeur représentant le nombre d'argument passés lors de l'appel du binaire exécutable
+  * \param argv Tableau de char* contenant le numéro de l'échangeur, ainsi que le nombre de véhicules à gérer
+  * \return Renvoi 0 si le programme s'est déroulé normalement
+  */
+ void main(int argc, char *argv[]) {
+
+   int idEchangeur,nbVehicules;
+
+   idEchangeur = atoi(argv[1]);
+   nbVehicules = atoi(argv[2]);
+
+   printf("\nEchangeur n°%d crée",idEchangeur);
+   printf("\nNombre de véhicule à gérer: %d",nbVehicules);
  }

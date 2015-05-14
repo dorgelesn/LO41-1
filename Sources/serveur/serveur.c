@@ -14,19 +14,19 @@
 
 /**
  * \fn int main(int argc, char *argv[])
- * \brief Fonction de base du serveur
+ * \brief Programme simulant le serveur
  *
  * \details Le serveur effectue les calculs et gère le trafic
  *
  * \param argc Valeur représentant le nombre d'argument passés lors de l'appel du binaire exécutable
- * \param argv Tableau de caractère contenant les arguments de la ligne de commande
+ * \param argv Tableau de char* contenant les arguments de la ligne de commande
  * \return Renvoi 0 si le programme s'est déroulé normalement
  */
-int main(int argc, char argv[]) {
+int main(int argc, char *argv[]) {
 
   int nbEchangeurs;
 
-  nbEchangeurs = argv[1];
+  nbEchangeurs = atoi(argv[1]);
 
   printf("\nServeur crée");
   printf("\nNombre d'échangeurs gérés par le serveur: %d",nbEchangeurs);
