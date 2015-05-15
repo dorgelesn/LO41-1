@@ -32,9 +32,6 @@ BibliothequeO=$(nomBibliotheque:=.o)
 
 
 
-
-
-
 # ecplication pour la suite
 # $^ => toute les depenance
 #$> premiére dependance de la liste de dependance

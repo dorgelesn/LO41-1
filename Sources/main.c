@@ -22,11 +22,12 @@
  * \param argv Tableau de char* contenant le nombre d'échangeur gérer
  * \return Renvoi 0 si le programme s'est déroulé normalement
  */
-int main(int argc, char *argv[]) {
-
+int main(int argc,char *argv[]) {
+  int msgid;
   int nbEchangeurs, nbVehicules, i;
-  char arguments[3][2];
-
+  char arguments[3][3];
+    msgid=creationFile(argv[0]);
+    printf("creation de la file de message %d",msgid);
   menuPrincipal(&nbEchangeurs,&nbVehicules);
 
   // Pour une execution, passage d'argument via char* uniquement
@@ -37,11 +38,15 @@ int main(int argc, char *argv[]) {
   for (i = 1; i <= nbEchangeurs; i++) {
     if (fork() == 0){
       sprintf(arguments[0],"%d",i);   // Converti le numéro d'échangeur en char*
+      sprintf(arguments[3],"%d",msgid);
       printf("\nExecution de l'échangeur n°%d",i);
-      execl("./echangeur/echangeur","echangeur",arguments[0],arguments[1],NULL);
+      //premier paramétre est toujours egal a la file de message
+
+      execlp("./echangeur/echangeur","echangeur",arguments[3],arguments[0],arguments[1],NULL);
       perror("execl()");  // Affiche une eventuelle erreur
-    }
     sleep(1); // Temps de repos pour fluidifier l'affichage
+    }
+    printf("\n\n");
   }
 
   // Execution du serveur
@@ -52,6 +57,18 @@ int main(int argc, char *argv[]) {
   }
 
   sleep(1); // Temps de repos pour fluidifier l'affichage
+  /*
+  Juste pour teste
+  */
+  voiture voit;
+  voit.depart=1;
+  voit.arriver=0;
+  printf("\n envoit du message \n");
+  envoitMessage(msgid,1,voit);
+  sleep(10);
 
-  
+
+  printf("\nsuppresion de la file de message\n ");
+  msgctl(msgid,IPC_RMID,NULL);
+
 }

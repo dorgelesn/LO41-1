@@ -14,7 +14,52 @@
 #define NB_ECHANGEURS_DEFAUT 4
 #define NB_VEHICULES_DEFAUT 5
 
+void erreur(const char *msg)
+{
+    perror(msg);
+    exit(1);
+}
 
+void envoitMessage(int msgid,int numeroEchangeur,voiture V){
+	message a;
+	a.type=numeroEchangeur;
+	a.V=V;
+	a.numPid=getpid();
+	if(msgsnd(msgid,&a,sizeof(message) - sizeof(long),0)){
+		perror("Erreur d'envoit requete");
+		exit(1);
+	}
+
+
+}
+
+
+
+
+
+
+
+int creationFile(void*a){
+	int msgid;			/* valeur de retour de la creation de la file */
+	    key_t key;			/* valeur de retour de la creation de la clé */
+			/****************************************************************/
+			/*  Creation de la clé IPC 					*/
+			/****************************************************************/
+    if ((key = ftok((char*)a, 'A')) == -1) {
+	perror("Erreur de creation de la clé \n");
+	exit(1);
+		}
+		/****************************************************************/
+/* Creation de la file de message 				*/
+/* int msgget(key_t key, int msgflg);				*/
+/****************************************************************/
+
+    if ((msgid = msgget(key, 0750 | IPC_CREAT | IPC_EXCL)) == -1) {
+	perror("Erreur de creation de la file\n");
+	exit(1);
+    }
+		return msgid;
+}
 /**
  * \fn void menuPrincipal(int* nbEchangeurs, int* nbVehicules)
  * \brief Fonction d'affichage du menu principal
