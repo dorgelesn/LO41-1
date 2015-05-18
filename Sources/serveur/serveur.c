@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
 
   int nbEchangeurs;
 
+  // Réception du paramètre de l'échangeur
   nbEchangeurs = atoi(argv[1]);
 
   printf("\nServeur crée");
