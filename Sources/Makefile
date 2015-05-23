@@ -29,6 +29,9 @@ nomBibliotheque=menu
 BibliothequeH=$(nomBibliotheque:=.h)
 BibliothequeO=$(nomBibliotheque:=.o)
 
+nomBibliotheque2=messagerie
+Bibliotheque2H=$(nomBibliotheque:=.h)
+Bibliotheque2O=$(nomBibliotheque:=.o)
 
 
 
@@ -42,12 +45,12 @@ BibliothequeO=$(nomBibliotheque:=.o)
 
 
 
-$(EXEC):$(main) $(BibliothequeO)
+$(EXEC):$(main) menu.o messagerie.o
 
 	$(cc) $^ -o $(EXEC) $(FlagVoulu)
 
 #le main necessite le .h donc:
-$(main): $(BibliothequeH)
+$(main): messagerie.h menu.h
 
 %.o: %.c
 	@echo "generation de la bibliotheque," $@ "\n grace a la source"  $<

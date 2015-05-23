@@ -12,7 +12,12 @@
 #include "messagerie.h"
 #include "menu.h"
 
-
+int msgid;
+void traitantInt(int num){
+  printf("\n intteruptions avec suppression de la file de message ");
+  msgctl(msgid,IPC_RMID,NULL);
+  exit(1);
+}
 /**
 * \fn int main(int argc, char *argv[])
 * \brief Programme principal de la simulation
@@ -24,10 +29,11 @@
 */
 int main(int argc,char *argv[]) {
 
-  int nbEchangeurs, nbVehicules, msgid, i;
+  int nbEchangeurs, nbVehicules,  i;
   char arguments[3][3];
 
   msgid = creationFile(argv[0]);
+  signal(SIGINT,traitantInt);
   printf("\nCreation de la file de message %d",msgid);
   menuPrincipal(&nbEchangeurs,&nbVehicules);
 
@@ -64,8 +70,8 @@ int main(int argc,char *argv[]) {
   */
   vehicule voit;
 
-  voit.départ = 1;
-  voit.arrivée = 0;
+  voit.depart = 1;
+  voit.arrivee = 0;
 
   printf("\nEnvoie du message\n");
   envoieMessage(msgid,1,voit);

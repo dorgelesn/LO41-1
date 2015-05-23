@@ -1,12 +1,22 @@
 #ifndef MESSAGERIE_H_INCLUDED
 #define MESSAGERIE_H_INCLUDED
-
+#include <stdlib.h>
+#include <stdio.h>
 // Librairies nécessaires aux files de message
 #include <unistd.h>
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
+// lib pour les signaux
+#include <signal.h>
+
+// Structure des véhicules
+typedef struct vehicule {
+  int depart;
+  int arrivee;
+} vehicule;
+
 
 // Structure des messages
 typedef struct message {
@@ -15,11 +25,6 @@ typedef struct message {
   pid_t numPid;
 } message;
 
-// Structure des véhicules
-typedef struct vehicule {
-  int départ;
-  int arrivée;
-} vehicule;
 
 int creationFile(void*);
 void envoieMessage(int msgid,int numeroEchangeur,vehicule vehicule);
