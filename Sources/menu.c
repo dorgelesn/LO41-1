@@ -37,6 +37,7 @@ void menuPrincipal(int* nbEchangeurs, int* nbVehicules) {
     printf("3) A propos\n");
 
     printf("\nVotre choix: ");
+    fflush(stdin);
     scanf("%d",&choix);
 
     switch (choix) {

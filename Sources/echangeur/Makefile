@@ -16,7 +16,7 @@
 #definition des variables
 cc=gcc
 EXEC= echangeur
-FlagVoulu= -W  -lm -g
+FlagVoulu= -W  -lm -g -pthread
 #nom des fonciton des fonction sans leurs extenssion
 #(pour le script mais le fichier en possede une en realiter) nom du main
 nomMain=echangeur

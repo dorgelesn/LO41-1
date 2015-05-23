@@ -5,6 +5,18 @@
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
-void main(int argc, char *argv[]);
+#include <pthread.h>
+typedef struct vehicule {
+  int depart;
+  int arrivee;
+} vehicule;
 
+typedef struct message {
+  long type;
+  vehicule vehicule;
+  pid_t numPid;
+} message;
+
+void main(int argc, char *argv[]);
+void* traitantThread(void* param);
 #endif //ECHANGEUR_H_INCLUDED

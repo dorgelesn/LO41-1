@@ -10,7 +10,15 @@
 #include <stdlib.h>
 
 #include "echangeur.h"
-#include "messagerie.h"
+
+
+void* traitantThread(void* param){
+    int i= (int) param;
+    printf("creation du thread %d, de TID %ld",i,(long)pthread_self());
+    fflush(stdout);
+    pthread_exit(NULL);
+}
+
 
 /**
 * \fn int main(int argc, char *argv[])
@@ -23,22 +31,28 @@
 */
 void main(int argc, char *argv[]) {
 
-  int msgid, idEchangeur, nbVehicules;
+  int msgid, nbVehicules,nbEchangeur,i,rc;
   int tailleMessage = sizeof(message)-sizeof(long);
   message M;
 
   // Réception des paramètres de l'échangeur
   msgid = atoi(argv[1]);
-  idEchangeur = atoi(argv[2]);
-  nbVehicules = atoi(argv[3]);
 
-  printf("\nEchangeur n°%d crée",idEchangeur);
+  nbVehicules = atoi(argv[3]);
+  nbEchangeur =atoi(argv[4]);
+  pthread_t threads[nbEchangeur];
+  printf("\n Nb ecgangeur a creer %d ",nbEchangeur);
   printf("\nReception de la file de message %d",msgid);
-  printf("\nNombre de véhicule à gérer: %d",nbVehicules);
+for(i=0;i<nbEchangeur;i++){
+printf("\ncreation du %d thread",i);
+rc=  pthread_create(&threads[i],NULL,traitantThread,(void*) i);
+if(rc){
+  printf("erreur creation thread");
+}
+}
 
   sleep(1); // Temps de repos pour fluidifier l'affichage
 
-  printf("\nEchangeur n°%d en attente de véhicule\n",idEchangeur);
-  msgrcv(msgid,&M,tailleMessage,idEchangeur,0);
-  printf("Requête reçu, de %d a %d a",M.vehicule.départ, M.vehicule.arrivée);
+  msgrcv(msgid,&M,tailleMessage,10,0);
+  printf("Requête reçu, de %d a %d a",M.vehicule.depart, M.vehicule.arrivee);
 }

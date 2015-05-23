@@ -42,19 +42,19 @@ int main(int argc,char *argv[]) {
   sprintf(arguments[3],"%d",nbEchangeurs);  // Converti le nombre d'échangeur en char*
 
   // Execution des échangeurs
-  for (i = 1; i <= nbEchangeurs; i++) {
+
     if (fork() == 0){
       sprintf(arguments[0],"%d",msgid); // Converti la file de message en char*
-      sprintf(arguments[1],"%d",i);   // Converti le numéro d'échangeur en char*
-
-      printf("\nExecution de l'échangeur n°%d",i);
+         // Converti le numéro d'échangeur en char*
+      sprintf(arguments[2],"%d",nbVehicules);   // Converti le nombre de vehicules en char*
+      sprintf(arguments[3],"%d",nbEchangeurs);  // Converti le nombre d'échangeur en char
       // Execute un échangeur en lui passant la file de message, le numéro d'échangeur et le nombre de véhicules
-      execlp("./echangeur/echangeur","echangeur",arguments[0],arguments[1],arguments[2],NULL);
+      execlp("./echangeur/echangeur","echangeur",arguments[0],arguments[1],arguments[2],arguments[3],NULL);
       perror("execl()");  // Affiche une eventuelle erreur
       sleep(1); // Temps de repos pour fluidifier l'affichage
     }
     printf("\n\n");
-  }
+
 
   // Execution du serveur
   if (fork() == 0) {
@@ -74,7 +74,7 @@ int main(int argc,char *argv[]) {
   voit.arrivee = 0;
 
   printf("\nEnvoie du message\n");
-  envoieMessage(msgid,1,voit);
+  envoieMessage(msgid,10,voit);
   sleep(10);
 
 
