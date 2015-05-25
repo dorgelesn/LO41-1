@@ -1,0 +1,88 @@
+\hypertarget{menu_8c}{\section{menu.\-c File Reference}
+\label{menu_8c}\index{menu.\-c@{menu.\-c}}
+}
+
+
+Affichage des menus.  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}menu.\-h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{menu_8c_a8635db4edd4a3c488784c33429db5d0a}{\#define {\bfseries N\-B\-\_\-\-E\-C\-H\-A\-N\-G\-E\-U\-R\-S\-\_\-\-D\-E\-F\-A\-U\-T}~4}\label{menu_8c_a8635db4edd4a3c488784c33429db5d0a}
+
+\item 
+\hypertarget{menu_8c_a23b2897a0029be2746ab41bb6ffb2458}{\#define {\bfseries N\-B\-\_\-\-V\-E\-H\-I\-C\-U\-L\-E\-S\-\_\-\-D\-E\-F\-A\-U\-T}~5}\label{menu_8c_a23b2897a0029be2746ab41bb6ffb2458}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{menu_8c_a0fa173ad1e0bf9fc0d7ee7649ddfb91e}{menu\-Principal} (int $\ast$nb\-Echangeurs, int $\ast$nb\-Vehicules)
+\begin{DoxyCompactList}\small\item\em Fonction d'affichage du menu principal. \end{DoxyCompactList}\item 
+void \hyperlink{menu_8c_a6b13e5e8cdd419da43cbcfafe382e371}{execution\-Standard} (int $\ast$nb\-Echangeurs, int $\ast$nb\-Vehicules)
+\begin{DoxyCompactList}\small\item\em Fonction d'execution de la simulation en mode standard. \end{DoxyCompactList}\item 
+\hypertarget{menu_8c_a428a540023dce42b82a4f0961779aef4}{void {\bfseries execution\-Parametree} (int $\ast$nb\-Echangeurs, int $\ast$nb\-Vehicules)}\label{menu_8c_a428a540023dce42b82a4f0961779aef4}
+
+\item 
+\hypertarget{menu_8c_a2aee638331a3b7157a0aa75be75810b0}{void \hyperlink{menu_8c_a2aee638331a3b7157a0aa75be75810b0}{a\-Propos} (void)}\label{menu_8c_a2aee638331a3b7157a0aa75be75810b0}
+
+\begin{DoxyCompactList}\small\item\em Fonction d'affichage des informations relatives au programme. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Affichage des menus. \begin{DoxyAuthor}{Author}
+Florian Lacour \& Michaël Ayeng 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\-1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+12 Mai 2015 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{menu_8c_a6b13e5e8cdd419da43cbcfafe382e371}{\index{menu.\-c@{menu.\-c}!execution\-Standard@{execution\-Standard}}
+\index{execution\-Standard@{execution\-Standard}!menu.c@{menu.\-c}}
+\subsubsection[{execution\-Standard}]{\setlength{\rightskip}{0pt plus 5cm}void execution\-Standard (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{nb\-Echangeurs, }
+\item[{int $\ast$}]{nb\-Vehicules}
+\end{DoxyParamCaption}
+)}}\label{menu_8c_a6b13e5e8cdd419da43cbcfafe382e371}
+
+
+Fonction d'execution de la simulation en mode standard. 
+
+Cette fonction permet d'executer la simulation en mode standard, avec les paramètres par défaut
+
+
+\begin{DoxyParams}{Parameters}
+{\em nb\-Echangeurs} & Un pointeur sur le nombre d'échangeur de la simulation \\
+\hline
+{\em nb\-Vehicules} & Un pointeur sur le nombre de véhicules de la simulation \\
+\hline
+\end{DoxyParams}
+\hypertarget{menu_8c_a0fa173ad1e0bf9fc0d7ee7649ddfb91e}{\index{menu.\-c@{menu.\-c}!menu\-Principal@{menu\-Principal}}
+\index{menu\-Principal@{menu\-Principal}!menu.c@{menu.\-c}}
+\subsubsection[{menu\-Principal}]{\setlength{\rightskip}{0pt plus 5cm}void menu\-Principal (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{nb\-Echangeurs, }
+\item[{int $\ast$}]{nb\-Vehicules}
+\end{DoxyParamCaption}
+)}}\label{menu_8c_a0fa173ad1e0bf9fc0d7ee7649ddfb91e}
+
+
+Fonction d'affichage du menu principal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nb\-Echangeurs} & Un pointeur sur le nombre d'échangeur de la simulation \\
+\hline
+{\em nb\-Vehicules} & Un pointeur sur le nombre de véhicules de la simulation \\
+\hline
+\end{DoxyParams}
