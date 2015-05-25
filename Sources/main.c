@@ -35,19 +35,26 @@ int main(int argc,char *argv[]) {
   msgid = creationFile(argv[0]);
   signal(SIGINT,traitantInt);
   printf("\nCreation de la file de message %d",msgid);
-  menuPrincipal(&nbEchangeurs,&nbVehicules);
+//  menuPrincipal(&nbEchangeurs,&nbVehicules);
 
   // Pour une execution, passage d'argument via char* uniquement
-  sprintf(arguments[2],"%d",nbVehicules);   // Converti le nombre de vehicules en char*
-  sprintf(arguments[3],"%d",nbEchangeurs);  // Converti le nombre d'échangeur en char*
+//  sprintf(arguments[2],"%d",nbVehicules);   // Converti le nombre de vehicules en char*
+  //sprintf(arguments[3],"%d",nbEchangeurs);  // Converti le nombre d'échangeur en char*
+
+
+
 
   // Execution des échangeurs
 
     if (fork() == 0){
       sprintf(arguments[0],"%d",msgid); // Converti la file de message en char*
          // Converti le numéro d'échangeur en char*
-      sprintf(arguments[2],"%d",nbVehicules);   // Converti le nombre de vehicules en char*
-      sprintf(arguments[3],"%d",nbEchangeurs);  // Converti le nombre d'échangeur en char
+      //sprintf(arguments[2],"%d",nbVehicules);   // Converti le nombre de vehicules en char*
+      //sprintf(arguments[3],"%d",nbEchangeurs);  // Converti le nombre d'échangeur en char
+      sprintf(arguments[2],"%d",0);   // Converti le nombre de vehicules en char*
+      sprintf(arguments[3],"%d",4);  //
+
+
       // Execute un échangeur en lui passant la file de message, le numéro d'échangeur et le nombre de véhicules
       execlp("./echangeur/echangeur","echangeur",arguments[0],arguments[1],arguments[2],arguments[3],NULL);
       perror("execl()");  // Affiche une eventuelle erreur
@@ -72,13 +79,23 @@ int main(int argc,char *argv[]) {
 
   voit.depart = 1;
   voit.arrivee = 0;
+  message a;
 
-  printf("\nEnvoie du message\n");
-  envoieMessage(msgid,10,voit);
-  sleep(10);
+
+    a.type =3;
+    a.vehicule = voit;
+    a.numPid = getpid();
+    printf("\n Envoie du message pour %d de %d a %d \n",(int)a.type,a.vehicule.arrivee,a.vehicule.depart);
+    if(msgsnd(msgid,&a,sizeof(message) - sizeof(long),0)){
+      perror("Erreur d'envoit requete");
+      exit(1);
+    }
+
+  sleep(1);
 
 
   printf("\nSuppresion de la file de message\n ");
+  sleep(10);
   msgctl(msgid,IPC_RMID,NULL);
 
 }

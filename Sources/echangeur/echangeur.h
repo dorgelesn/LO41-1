@@ -17,6 +17,18 @@ typedef struct message {
   pid_t numPid;
 } message;
 
-void main(int argc, char *argv[]);
-void* traitantThread(void* param);
+
+typedef struct echangeur {
+  int numId;
+  int haut;
+  int bas;
+  int droite;
+  int gauche;
+} echangeur;
+
+
+
+
+void creationEchangeur(echangeur *c,int Id,int D,int G,int H,int B);
+void afficherEchangeur(echangeur* c);
 #endif //ECHANGEUR_H_INCLUDED

@@ -8,13 +8,13 @@
 
 #include "messagerie.h"
 
-void envoieMessage(int msgid,int numeroEchangeur,vehicule vehicule){
-  message a;
+void envoieMessage(int msgid,int numeroEchangeur,vehicule vehicule,message* a){
 
-  a.type = numeroEchangeur;
-  a.vehicule = vehicule;
-  a.numPid = getpid();
 
+  a->type = numeroEchangeur;
+  a->vehicule = vehicule;
+  a->numPid = getpid();
+  printf("\n Envoie du message pour %d de %d a %d \n",a->type,a->vehicule.arrivee,a->vehicule.depart);
   if(msgsnd(msgid,&a,sizeof(message) - sizeof(long),0)){
     perror("Erreur d'envoit requete");
     exit(1);

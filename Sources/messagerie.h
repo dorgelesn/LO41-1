@@ -27,7 +27,7 @@ typedef struct message {
 
 
 int creationFile(void*);
-void envoieMessage(int msgid,int numeroEchangeur,vehicule vehicule);
+void envoieMessage(int msgid,int numeroEchangeur,vehicule vehicule, message* a;);
 void erreur(const char *msg);
 
 #endif // MESSAGERIE_H_INCLUDED
