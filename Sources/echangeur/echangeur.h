@@ -6,11 +6,26 @@
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <pthread.h>
+
+/**
+*\struct vehicule
+*\brief Objet represenatant une voiture
+*
+* depart represente l'Id de l'echangeur de depart de la voiture
+* arrivee represente l'Id de l'echangeur d'arrivée de la voiture
+**/
 typedef struct vehicule {
   int depart;
   int arrivee;
 } vehicule;
 
+/**
+*\struct vehicule
+*\brief Objet represenatant une voiture
+*
+* depart represente l'Id de l'echangeur de depart de la voiture
+* arrivee represente l'Id de l'echangeur d'arrivée de la voiture
+**/
 typedef struct message {
   long type;
   vehicule vehicule;
@@ -18,6 +33,28 @@ typedef struct message {
 } message;
 
 
+/**
+*\struct echangeur
+*\brief Objet represenatant un echangeur
+*
+* numId represente l'identifiant de l'echangeur
+* haut est l'ID de l'echangeur au dessus du notre
+* bas est l'ID de l'echangeur en bas du notre
+* droite est l'ID de l'echangeur a droite du notre
+* gauche est l'ID de l'echangeur a droite du notre
+*         Schema des conexion :
+*          Schema des connection
+            0        0
+           ||       ||
+    0== |  1  |== | 4 | == 0
+          ||       ||
+  0 == | 2  | == | 3 | == 0
+        ||        ||
+        0         0
+*
+*
+*
+**/
 typedef struct echangeur {
   int numId;
   int haut;

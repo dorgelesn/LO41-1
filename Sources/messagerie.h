@@ -11,14 +11,28 @@
 // lib pour les signaux
 #include <signal.h>
 
-// Structure des véhicules
+/**
+*\struct vehicule
+*\brief Objet represenatant une voiture
+*
+* depart represente l'Id de l'echangeur de depart de la voiture
+* arrivee represente l'Id de l'echangeur d'arrivée de la voiture
+**/
 typedef struct vehicule {
   int depart;
   int arrivee;
 } vehicule;
 
 
-// Structure des messages
+/**
+*\struct message
+*\brief Objet permettant d'envoyer l'information de depart d'une voiture a un echangeur
+*
+* type : utiliser pour la file de msg
+*  vehicule utiliser pour envoyer les information sur le vehicule
+* numPid utiliser pour informer le main
+**/
+
 typedef struct message {
   long type;
   vehicule vehicule;
