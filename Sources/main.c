@@ -14,7 +14,7 @@
 
 int msgid;
 void traitantInt(int num){
-  printf("\n intteruptions avec suppression de la file de message ");
+  printf("\nInterruption avec suppression de la file de messages");
   msgctl(msgid,IPC_RMID,NULL);
   exit(1);
 }
@@ -29,11 +29,11 @@ void traitantInt(int num){
 */
 int main(int argc,char *argv[]) {
 
-  int nbEchangeurs, nbVehicules,  i;
+  int nbEchangeurs, nbVehicules, i;
   char arguments[3][3];
 
-  msgid = creationFile(argv[0]);
-  signal(SIGINT,traitantInt);
+  msgid = creationFile(argv[0]);  // Creation de la file de message
+  signal(SIGINT,traitantInt);     // Nettoyage de la file de message nouvellement crééé
   printf("\nCreation de la file de message %d",msgid);
 //  menuPrincipal(&nbEchangeurs,&nbVehicules);
 
@@ -51,8 +51,8 @@ int main(int argc,char *argv[]) {
          // Converti le numéro d'échangeur en char*
       //sprintf(arguments[2],"%d",nbVehicules);   // Converti le nombre de vehicules en char*
       //sprintf(arguments[3],"%d",nbEchangeurs);  // Converti le nombre d'échangeur en char
-      sprintf(arguments[2],"%d",0);   // Converti le nombre de vehicules en char*
-      sprintf(arguments[3],"%d",4);  //
+      sprintf(arguments[2],"%d",0);   // TEMP: Nb vehicule
+      sprintf(arguments[3],"%d",4);  //  TEMP: Nb echangeurs
 
 
       // Execute un échangeur en lui passant la file de message, le numéro d'échangeur et le nombre de véhicules
@@ -72,6 +72,8 @@ int main(int argc,char *argv[]) {
   }
 
   sleep(1); // Temps de repos pour fluidifier l'affichage
+
+  
   /*
   Juste pour teste
   */

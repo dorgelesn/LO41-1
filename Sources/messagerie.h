@@ -13,7 +13,7 @@
 
 /**
 *\struct vehicule
-*\brief Objet represenatant une voiture
+*\brief Objet representant une voiture
 *
 * depart represente l'Id de l'echangeur de depart de la voiture
 * arrivee represente l'Id de l'echangeur d'arrivée de la voiture
@@ -25,11 +25,12 @@ typedef struct vehicule {
 
 
 /**
-*\struct vehicule
-*\brief Objet represenatant une voiture
+*\struct message
+*\brief Objet representant un message
 *
-* depart represente l'Id de l'echangeur de depart de la voiture
-* arrivee represente l'Id de l'echangeur d'arrivée de la voiture
+* type represente le type du message
+* vehicule represente le vehicule emetteur du message
+* numPid represente le PID du processus dont fait partie le vehicule
 **/
 typedef struct message {
   long type;

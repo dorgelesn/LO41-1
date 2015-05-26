@@ -1,9 +1,9 @@
 /**
-* \file echangeur.c
-* \brief Programme de simulation des échangeurs
+* \file MainEchangeur.c
+* \brief ?
 * \author Florian Lacour & Michaël Ayeng
 * \version 0.1
-* \date 13 Mai 2015
+* \date ?? Mai 2015
 */
 
 #include <stdio.h>
@@ -28,15 +28,15 @@ void* traitantThread(void* param){
 }
 /**
 * \fn traitantFile(void*param)
-* \brief Fonction gerant un thread qui verifie la présence de msh dans la file
+* \brief Fonction gerant un thread qui verifie la présence de msg dans la file
 *
 * \param void* seras convertie en message
 *
 */
 void* traitantFile(void*param){
-  message* M=(message*)param;
+  message* M = (message*)param;
   msgrcv(msgid,&(*M),sizeof(message) - sizeof(long),3,0);
-  printf("\n Requête reçu, de %d a %d ",M->vehicule.depart, M->vehicule.arrivee);
+  printf("\nRequête reçu, de %d a %d",M->vehicule.depart, M->vehicule.arrivee);
 
 }
 /**
@@ -60,7 +60,7 @@ void main(int argc, char *argv[]) {
   nbVehicules = atoi(argv[3]);
   nbEchangeur =atoi(argv[4]);
   pthread_t threads[nbEchangeur];
-  printf("\n l'echangeur a recus la file de message : %d",msgid);
+  printf("\nL'echangeur a recu la file de message : %d",msgid);
   /*
           Schema des connection
             0        0
@@ -81,14 +81,15 @@ for(i=0;i<nbEchangeur;i++){
   rc=  pthread_create(&threads[i],NULL,traitantThread,(void*) &ech[i]);
   if(rc){
   printf("erreur creation thread");
+  }
 }
-}
+
 sleep(5);
+
 rc=  pthread_create(&threads[++i],NULL,traitantFile,(void*) &ech[i]);
 if(rc){
 printf("erreur creation thread");
 }
-
 
   sleep(1); // Temps de repos pour fluidifier l'affichage
 
