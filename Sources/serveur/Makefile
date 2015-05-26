@@ -19,7 +19,7 @@ EXEC= serveur
 FlagVoulu= -W  -lm -g
 #nom des fonciton des fonction sans leurs extenssion
 #(pour le script mais le fichier en possede une en realiter) nom du main
-nomMain=serveur
+nomMain= mainServeur
 main=$(nomMain:=.o)
 
 #nom de la bibliotheque (le .h et  .c doivent avoir le meme nom :) )
@@ -37,12 +37,12 @@ main=$(nomMain:=.o)
 
 
 
-$(EXEC):$(main) $(BibliothequeO)
+$(EXEC):$(main) serveur.o
 
 	$(cc) $^ -o $(EXEC) $(FlagVoulu)
 
 #le main necessite le .h donc:
-$(main): $(BibliothequeH)
+$(main): serveur.h
 
 %.o: %.c
 	@echo "generation de la bibliotheque," $@ "\n grace a la source"  $<

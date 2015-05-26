@@ -25,14 +25,12 @@ typedef struct vehicule {
 
 
 /**
-*\struct message
-*\brief Objet permettant d'envoyer l'information de depart d'une voiture a un echangeur
+*\struct vehicule
+*\brief Objet represenatant une voiture
 *
-* type : utiliser pour la file de msg
-*  vehicule utiliser pour envoyer les information sur le vehicule
-* numPid utiliser pour informer le main
+* depart represente l'Id de l'echangeur de depart de la voiture
+* arrivee represente l'Id de l'echangeur d'arrivée de la voiture
 **/
-
 typedef struct message {
   long type;
   vehicule vehicule;
