@@ -6,7 +6,7 @@
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <pthread.h>
-
+#include <stdio.h>
 /**
 *\struct vehicule
 *\brief Objet represenatant une voiture
