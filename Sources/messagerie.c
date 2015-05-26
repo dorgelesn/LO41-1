@@ -14,8 +14,16 @@ void envoieMessage(int msgid,int numeroEchangeur,vehicule vehicule,message* a){
   a->type = numeroEchangeur;
   a->vehicule = vehicule;
   a->numPid = getpid();
-  printf("\n Envoie du message pour %d de %d a %d \n",a->type,a->vehicule.arrivee,a->vehicule.depart);
+  printf("\n Envoie du message pour %d de %d a %d \n",(int)a->type,a->vehicule.arrivee,a->vehicule.depart);
   if(msgsnd(msgid,&a,sizeof(message) - sizeof(long),0)){
+    perror("Erreur d'envoit requete");
+    exit(1);
+  }
+  message b;
+  b.type=1;
+  b.vehicule=a->vehicule;
+  b.numPid=getpid();
+  if(msgsnd(msgid,&b,sizeof(message) - sizeof(long),0)){
     perror("Erreur d'envoit requete");
     exit(1);
   }

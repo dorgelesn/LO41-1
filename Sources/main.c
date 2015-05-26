@@ -67,13 +67,13 @@ int main(int argc,char *argv[]) {
   if (fork() == 0) {
     printf("\nExecution du serveur");
     // Execute le serveur en lui passant le nombre d'échangeurs
-    execl("./serveur/serveur","serveur",arguments[3],NULL);
+    execl("./serveur/serveur","serveur",arguments[3],arguments[0],NULL);
     perror("execl()");
   }
 
   sleep(1); // Temps de repos pour fluidifier l'affichage
 
-  
+
   /*
   Juste pour teste
   */
@@ -84,14 +84,8 @@ int main(int argc,char *argv[]) {
   message a;
 
 
-    a.type =3;
-    a.vehicule = voit;
-    a.numPid = getpid();
-    printf("\n Envoie du message pour %d de %d a %d \n",(int)a.type,a.vehicule.arrivee,a.vehicule.depart);
-    if(msgsnd(msgid,&a,sizeof(message) - sizeof(long),0)){
-      perror("Erreur d'envoit requete");
-      exit(1);
-    }
+ envoieMessage(msgid,3,voit,&a);
+
 
   sleep(1);
 

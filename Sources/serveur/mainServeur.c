@@ -11,7 +11,7 @@
 
 #include "serveur.h"
 
-
+int msgid;
 /**
  * \fn int main(int argc, char *argv[])
  * \brief Programme simulant le serveur
@@ -28,8 +28,12 @@ int main(int argc, char *argv[]) {
 
   // Réception du paramètre de l'échangeur
   nbEchangeurs = atoi(argv[1]);
-
+  msgid=atoi(argv[2]);
+  printf("le serveur a recus le msgid : %d",msgid);
   printf("\nServeur crée");
   printf("\nNombre d'échangeurs gérés par le serveur: %d",nbEchangeurs);
-  
+  message M;
+  msgrcv(msgid,M,sizeof(message) - sizeof(long),1,0);
+  printf("\nServeur: Requête reçu, de %d a %d",M.vehicule.depart, M.vehicule.arrivee);
+
 }

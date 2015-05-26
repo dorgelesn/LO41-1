@@ -8,6 +8,12 @@ typedef struct vehicule {
   int arrivee;
 } vehicule;
 
+typedef struct message {
+  long type;
+  vehicule vehicule;
+  pid_t numPid;
+} message;
+
 
 typedef struct element element;
 struct element
