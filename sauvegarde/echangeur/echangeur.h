@@ -19,20 +19,6 @@ typedef struct vehicule {
   int arrivee;
 } vehicule;
 
-/**
-*\struct message
-*\brief Objet representant un message
-*
-* type represente le type du message
-* vehicule represente le vehicule emetteur du message
-* numPid represente le PID du processus dont fait partie le vehicule
-**/
-typedef struct message {
-  long type;
-  vehicule vehicule;
-  pid_t numPid;
-} message;
-
 
 /**
 *\struct echangeur
@@ -49,8 +35,8 @@ typedef struct message {
 *    0== |  1  |== | 4 | == 0
 *           ||       ||
 *    0 == | 2  | == | 3 | == 0
-*           ||        ||
-*            0         0
+*          ||        ||
+*          0         0
 *
 **/
 typedef struct echangeur {

@@ -36,7 +36,7 @@ void* traitantThread(void* param){
 void* traitantFile(void*param){
   message* M = (message*)param;
   msgrcv(msgid,&(*M),sizeof(message) - sizeof(long),3,0);
-  printf("\nRequête reçu, de %d a %d",M->vehicule.depart, M->vehicule.arrivee);
+  printf("\nRequête reçu, de %d a %d\n",M->vehicule.depart, M->vehicule.arrivee);
 
 }
 /**

@@ -16,7 +16,7 @@
 #definition des variables
 cc=gcc
 EXEC= main
-FlagVoulu= -W  -lm -g
+FlagVoulu= -W  -lm -g -pthread
 #nom des fonciton des fonction sans leurs extenssion
 #(pour le script mais le fichier en possede une en realiter) nom du main
 nomMain=main
@@ -29,7 +29,7 @@ nomBibliotheque=menu
 BibliothequeH=$(nomBibliotheque:=.h)
 BibliothequeO=$(nomBibliotheque:=.o)
 
-nomBibliotheque2=messagerie
+nomBibliotheque2=echangeur
 Bibliotheque2H=$(nomBibliotheque:=.h)
 Bibliotheque2O=$(nomBibliotheque:=.o)
 
@@ -45,12 +45,12 @@ Bibliotheque2O=$(nomBibliotheque:=.o)
 
 
 
-$(EXEC):$(main) menu.o messagerie.o
+$(EXEC):$(main) menu.o echangeur.o
 
 	$(cc) $^ -o $(EXEC) $(FlagVoulu)
 
 #le main necessite le .h donc:
-$(main): messagerie.h menu.h
+$(main): echangeur.h menu.h
 
 %.o: %.c
 	@echo "generation de la bibliotheque," $@ "\n grace a la source"  $<

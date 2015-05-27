@@ -31,9 +31,9 @@ int main(int argc, char *argv[]) {
   msgid=atoi(argv[2]);
   printf("le serveur a recus le msgid : %d",msgid);
   printf("\nServeur crée");
-  printf("\nNombre d'échangeurs gérés par le serveur: %d",nbEchangeurs);
   message M;
-  msgrcv(msgid,M,sizeof(message) - sizeof(long),1,0);
+  printf("\nattente de message");
+  msgrcv(msgid,&M,sizeof(message) - sizeof(long),1,0);
   printf("\nServeur: Requête reçu, de %d a %d",M.vehicule.depart, M.vehicule.arrivee);
 
 }
