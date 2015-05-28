@@ -13,10 +13,9 @@
 #include "menu.h"
 #include "linkedList.h"
 #include "structures.h"
+#include "serveur.h"
 
-
-
-
+void* traitantThreadServeur(void* param);
 /**
 * \fn int main(int argc, char *argv[])
 * \brief Programme principal de la simulation
@@ -41,33 +40,37 @@ int main(int argc,char *argv[]) {
         ||        ||
         0         0
   */
+
   creationEchangeur(&ech[0],1,4,0,0,2);
   creationEchangeur(&ech[1],2,3,0,1,0);
   creationEchangeur(&ech[2],3,0,2,4,0);
   creationEchangeur(&ech[3],4,0,1,0,3);
+  serveur a;
+  a.NbVoiture=0;
+  a.NbEchangeur=nbEchangeurs;
+  a.liste=initialisation();
+  rc=  pthread_create(&threads[0],NULL,traitantThreadServeur,(void*) &a);
+  if(rc){
+  printf("erreur creation thread serveur ");
+  }
+for(i=1;i<nbEchangeurs+1;i++){
 
-for(i=0;i<nbEchangeurs;i++){
-
-  rc=  pthread_create(&threads[i],NULL,traitantThreadEchangeur,(void*) &ech[i]);
+  rc=  pthread_create(&threads[i],NULL,traitantThreadEchangeur,(void*) &ech[i-1]);
   if(rc){
   printf("erreur creation thread");
   }
   sleep(1);
 }
 
+
 // Attente de fin des thread
-for(i=0;i<nbEchangeurs;i++){
+
+pthread_join(threads[0],NULL);
+for(i=1;i<nbEchangeurs+1;i++){
     pthread_join(threads[i],NULL);
 }
-llist Liste=initialisation();
-llist element;
-vehicule v;
-creationVehicule(&v,1,0,24);
-//afficherVehicule(&v);
-Liste=ajouterEnTete(Liste,&v);
-element=element_i(Liste,0);
-afficherVehicule(element->val
-);
+
+
 
 
 

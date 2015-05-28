@@ -1,23 +1,25 @@
 #include "linkedList.h"
-
+#include "structures.h"
 
 
 
 llist initialisation()
 {
-  llist liste = malloc(sizeof(*liste));
+  llist liste = malloc(sizeof(element));
+  liste->val=NULL;
+  liste->nxt==NULL;
       return liste;
 }
 
 
 
-llist ajouterEnTete(llist liste, vehicule* valeur)
+llist ajouterEnTeteListe(llist liste, vehicule valeur)
 {
     /* On crée un nouvel élément */
-    element* nouvelElement = malloc(sizeof(element));
+    llist nouvelElement = malloc(sizeof(element));
 
     /* On assigne la valeur au nouvel élément */
-    nouvelElement->val = valeur;
+    nouvelElement->val = &valeur;
 
     /* On assigne l'adresse de l'élément suivant au nouvel élément */
     nouvelElement->nxt = liste;

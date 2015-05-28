@@ -1,20 +1,13 @@
-#ifndef SERVEUR_H_INCLUDED
-#define SERVEUR_H_INCLUDED
+#ifndef LINKED_H_INCLUDED
+#define LINKED_H_INCLUDED
 #include <stdlib.h>
 
 #include "structures.h"
 
-typedef struct element element;
-struct element
-{
-  vehicule* val;
-    struct element *nxt;
-};
 
-typedef element* llist;
 llist initialisation();
 
-llist ajouterEnTete(llist liste, vehicule* valeur);
+llist ajouterEnTeteListe(llist liste, vehicule valeur);
 
 llist ajouterEnFin(llist liste, vehicule* valeur);
 

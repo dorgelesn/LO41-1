@@ -14,9 +14,10 @@ void creationEchangeur(echangeur* c,int Id,int D,int G,int H,int B){
     c->bas=B;
     c->droite=D;
     c->gauche=G;
+    c->occuper=false;
 }
 void afficherEchangeur(echangeur* c){
-  printf("\nNumero Echangeur: %d\n\tConnexion haute: %d\n\tConnexion basse: %d\n\tConnexion gauche: %d\n\tConnexion droite: %d",c->numId,c->haut,c->bas,c->gauche,c->droite);
+  printf("\nNumero Echangeur: %d\n\tConnexion haute: %d\n\tConnexion basse: %d\n\tConnexion gauche: %d\n\tConnexion droite: %d\n\t il est dans l'états :%d",c->numId,c->haut,c->bas,c->gauche,c->droite,c->occuper);
 }
 
 

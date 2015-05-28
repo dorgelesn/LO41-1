@@ -1,6 +1,7 @@
 #ifndef STRUCTURE_H_INCLUDED
 #define STRUCTURE_H_INCLUDED
 
+
 typedef int bool;
 #define true 1
 #define false 0
@@ -18,6 +19,15 @@ typedef struct vehicule {
 } vehicule;
 
 
+// Pour les listes chainé
+typedef struct element element;
+struct element
+{
+    vehicule* val;
+    struct element *nxt;
+};
+
+typedef element* llist;
 /**
 *\struct echangeur
 *\brief Objet represenatant un echangeur
@@ -36,6 +46,7 @@ typedef struct vehicule {
 *           ||        ||
 *            0         0
 *
+* occuper sert a savoir si un vehicule utilise le carrefour
 **/
 typedef struct echangeur {
   int numId;
@@ -43,7 +54,15 @@ typedef struct echangeur {
   int bas;
   int droite;
   int gauche;
+  bool occuper;
 } echangeur;
+
+typedef struct serveur{
+  int NbVoiture;
+  int NbEchangeur;
+  llist liste;
+} serveur;
+
 
 
 #endif

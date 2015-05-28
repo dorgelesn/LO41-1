@@ -45,12 +45,12 @@ Bibliotheque2O=$(nomBibliotheque:=.o)
 
 
 
-$(EXEC):$(main) menu.o echangeur.o linkedList.o
+$(EXEC):$(main) menu.o echangeur.o linkedList.o serveur.o
 	@echo "\n"
 	$(cc) $^ -o $(EXEC) $(FlagVoulu)
 	@echo "\n \n \n"
 #le main necessite le .h donc:
-$(main): echangeur.h menu.h linkedList.h structures.h
+$(main): echangeur.h menu.h linkedList.h structures.h serveur.h
 
 %.o: %.c
 	@echo "\n"
