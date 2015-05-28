@@ -2,6 +2,9 @@
 #define STRUCTURE_H_INCLUDED
 
 
+pthread_mutex_t mutex;
+pthread_cond_t attendre;
+
 typedef int bool;
 #define true 1
 #define false 0
@@ -17,6 +20,8 @@ typedef struct vehicule {
   int depart;
   int arrivee;
 } vehicule;
+
+
 
 
 // Pour les listes chainé

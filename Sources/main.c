@@ -8,13 +8,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <signal.h>
 #include "echangeur.h"
 #include "menu.h"
 #include "linkedList.h"
 #include "structures.h"
 #include "serveur.h"
-
+void traitantSignt(){
+  printf("\n interruption avec suppresion des mutex")
+  pthread_mutex_destroy(&mutex);
+  pthread_cond_destroy(&attendre);
+  exit(1);
+}
 void* traitantThreadServeur(void* param);
 /**
 * \fn int main(int argc, char *argv[])
@@ -30,6 +35,10 @@ int main(int argc,char *argv[]) {
   int nbEchangeurs=4, nbVehicules=0, i,rc;
   echangeur ech[nbEchangeurs];
   pthread_t threads[nbEchangeurs];
+
+pthread_mutex_init(&mutex, NULL);
+pthread_cond_init(&attendre,NULL);
+signal(SIGINT,traitantSignt);
   /*
           Schema des connection
             0        0
@@ -75,4 +84,6 @@ for(i=1;i<nbEchangeurs+1;i++){
 
 
 printf("\n \n");
+pthread_mutex_destroy(&mutex);
+pthread_cond_destroy(&attendre);
 }

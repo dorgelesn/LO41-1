@@ -5,4 +5,5 @@
 #include <stdio.h>
 void* traitantThreadServeur(void* param);
 void afficherServeur(serveur* s);
+void ajouterVoiture(serveur* serv,int ech,int dep,int arr);
 #endif
