@@ -7,49 +7,15 @@
 #include <sys/msg.h>
 #include <pthread.h>
 #include <stdio.h>
-/**
-*\struct vehicule
-*\brief Objet represenatant une voiture
-*
-* depart represente l'Id de l'echangeur de depart de la voiture
-* arrivee represente l'Id de l'echangeur d'arrivée de la voiture
-**/
-typedef struct vehicule {
-  int depart;
-  int arrivee;
-} vehicule;
 
+#include "structures.h"
 
-/**
-*\struct echangeur
-*\brief Objet represenatant un echangeur
-*
-* numId represente l'identifiant de l'echangeur
-* haut est l'ID de l'echangeur au dessus du notre
-* bas est l'ID de l'echangeur en bas du notre
-* droite est l'ID de l'echangeur a droite du notre
-* gauche est l'ID de l'echangeur a gauche du notre
-*         Schema des connexions :
-*            0        0
-*           ||       ||
-*    0== |  1  |== | 4 | == 0
-*           ||       ||
-*    0 == | 2  | == | 3 | == 0
-*           ||        ||
-*            0         0
-*
-**/
-typedef struct echangeur {
-  int numId;
-  int haut;
-  int bas;
-  int droite;
-  int gauche;
-} echangeur;
-
-
-
+void* traitantThreadEchangeur(void* param);
 
 void creationEchangeur(echangeur *c,int Id,int D,int G,int H,int B);
 void afficherEchangeur(echangeur* c);
+
+
+void creationVehicule(vehicule* v,int IdEchangeur,int depart,int arrivee);
+void afficherVehicule(vehicule* v);
 #endif //ECHANGEUR_H_INCLUDED

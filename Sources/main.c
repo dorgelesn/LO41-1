@@ -11,22 +11,10 @@
 
 #include "echangeur.h"
 #include "menu.h"
+#include "linkedList.h"
+#include "structures.h"
 
 
-/**
-* \fn traitantThread(void* param)
-* \brief Fonction gerant un thread "Echangeur"
-*
-* \param void* seras convertie en echangeur
-*
-*/
-void* traitantThread(void* param){
-    echangeur* ech= (echangeur*) param;
-    // Utilisation Mutex ????
-    afficherEchangeur(ech);
-    fflush(stdout);
-    pthread_exit(NULL);
-}
 
 
 /**
@@ -60,11 +48,28 @@ int main(int argc,char *argv[]) {
 
 for(i=0;i<nbEchangeurs;i++){
 
-  rc=  pthread_create(&threads[i],NULL,traitantThread,(void*) &ech[i]);
+  rc=  pthread_create(&threads[i],NULL,traitantThreadEchangeur,(void*) &ech[i]);
   if(rc){
   printf("erreur creation thread");
   }
   sleep(1);
 }
+
+// Attente de fin des thread
+for(i=0;i<nbEchangeurs;i++){
+    pthread_join(threads[i],NULL);
+}
+llist Liste=initialisation();
+llist element;
+vehicule v;
+creationVehicule(&v,1,0,24);
+//afficherVehicule(&v);
+Liste=ajouterEnTete(Liste,&v);
+element=element_i(Liste,0);
+afficherVehicule(element->val
+);
+
+
+
 printf("\n \n");
 }
