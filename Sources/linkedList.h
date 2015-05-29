@@ -7,11 +7,11 @@
 
 llist initialisation();
 
-llist ajouterEnTeteListe(llist liste, vehicule valeur);
+llist ajouterEnTeteListe(llist liste, vehicule* valeur);
 
 llist ajouterEnFin(llist liste, vehicule* valeur);
 
-int estVide(llist liste);
+bool estVide(llist liste);
 
 llist supprimerElementEnTete(llist liste);
 

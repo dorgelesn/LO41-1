@@ -1,25 +1,44 @@
+/**
+* \file linkedList.c
+* \brief Fonctions de gestion de listes chainées
+* \author Florian Lacour & Michaël Ayeng
+* \version 0.1
+* \date 28 Mai 2015
+*/
+
 #include "linkedList.h"
 #include "structures.h"
 
-
-
+/**
+* \fn lliste initalisation()
+* \brief Fonction permettant l'initialisation de la liste chainée
+*
+* \return Renvoi un premier élément servant de base pour la liste chainée
+*/
 llist initialisation()
 {
   llist liste = malloc(sizeof(element));
   liste->val=NULL;
   liste->nxt==NULL;
-      return liste;
+  return liste;
 }
 
-
-
-llist ajouterEnTeteListe(llist liste, vehicule valeur)
+/**
+* \fn llist ajouterEnTeteListe(llist liste, vehicule* valeur)
+* \brief Fonction permettant l'ajout d'un vehicule en début de la liste chainée
+*
+* \param liste La liste chainée que l'on manipule
+* \param valeur Le véhicule que l'on souhaite placé en tête de la liste
+*
+* \return Renvoi un pointeur sur le premier élément de la liste
+*/
+llist ajouterEnTeteListe(llist liste, vehicule* valeur)
 {
     /* On crée un nouvel élément */
     llist nouvelElement = malloc(sizeof(element));
 
     /* On assigne la valeur au nouvel élément */
-    nouvelElement->val = &valeur;
+    nouvelElement->val = valeur;
 
     /* On assigne l'adresse de l'élément suivant au nouvel élément */
     nouvelElement->nxt = liste;
@@ -28,7 +47,15 @@ llist ajouterEnTeteListe(llist liste, vehicule valeur)
     return nouvelElement;
 }
 
-
+/**
+* \fn llist ajouterEnFin(llist liste, vehicule* valeur)
+* \brief Fonction permettant l'ajout d'un vehicule en fin de la liste chainée
+*
+* \param liste La liste chainée que l'on manipule
+* \param valeur Le véhicule que l'on souhaite placé en fin de la liste
+*
+* \return Renvoi un pointeur sur le premier élément de la liste
+*/
 llist ajouterEnFin(llist liste, vehicule* valeur)
 {
     /* On crée un nouvel élément */
@@ -59,18 +86,32 @@ llist ajouterEnFin(llist liste, vehicule* valeur)
     }
 }
 
-int estVide(llist liste)
+/**
+* \fn int estVide(llist liste)
+* \brief Fonction permettant de savoir si la liste chainée est vide
+*
+* \param liste La liste chainée que l'on manipule
+* \return Renvoi true ou false
+*/
+bool estVide(llist liste)
 {
     if(liste == NULL)
     {
-        return 1;
+        return true;
     }
     else
     {
-        return 0;
+        return false;
     }
 }
 
+/**
+* \fn llist supprimerElementEnTete(llist liste)
+* \brief Fonction permettant de supprimant l'élément en tête de la liste chainée
+*
+* \param liste La liste chainée que l'on manipule
+* \return Renvoi le nouveau premier élément de la liste chainée
+*/
 llist supprimerElementEnTete(llist liste)
 {
     if(liste != NULL)
@@ -89,6 +130,13 @@ llist supprimerElementEnTete(llist liste)
     }
 }
 
+/**
+* \fn llist supprimerElementEnFin(llist liste)
+* \brief Fonction permettant de supprimant l'élément à la fin de la liste chainée
+*
+* \param liste La liste chainée que l'on manipule
+* \return Renvoi le premier élément de la liste chainée
+*/
 llist supprimerElementEnFin(llist liste)
 {
     /* Si la liste est vide, on retourne NULL */
@@ -122,6 +170,15 @@ llist supprimerElementEnFin(llist liste)
     return liste;
 }
 
+/**
+* \fn llist rechercherElement(llist liste, vehicule valeur)
+* \brief Fonction permettant de trouvant l'élément de la liste possédant un véhicule particulière
+*
+* \param liste La liste chainée que l'on manipule
+* \param valeur Le véhicule à trouver dans la liste
+*
+* \return Renvoi l'élément contenant la valeur cherchée
+*/
 llist rechercherElement(llist liste, vehicule valeur)
 {
     element *tmp=liste;
@@ -138,6 +195,15 @@ llist rechercherElement(llist liste, vehicule valeur)
     return NULL;
 }
 
+/**
+* \fn llist element_i(llist liste, int indice)
+* \brief Fonction permettant d'accéder au n-ième élément de la liste
+*
+* \param liste La liste chainée que l'on manipule
+* \param indice Numéro de l'élément que l'on souhaite obtenir
+*
+* \return Renvoi l'élément à l'indice demandé
+*/
 llist element_i(llist liste, int indice)
 {
     int i;
@@ -159,6 +225,14 @@ llist element_i(llist liste, int indice)
     }
 }
 
+/**
+* \fn int nombreElements(llist liste)
+* \brief Fonction permettant d'obtenir le nombre d'élément de la liste chainée
+*
+* \param liste La liste chainée que l'on manipule
+*
+* \return Renvoi le nombre d'élément que contient la liste
+*/
 int nombreElements(llist liste)
 {
     /* Si la liste est vide, il y a 0 élément */
@@ -170,6 +244,14 @@ int nombreElements(llist liste)
     return nombreElements(liste->nxt)+1;
 }
 
+/**
+* \fn llist effacerListe(llist liste)
+* \brief Fonction permettant d'effacer le contenu d'une liste chainée
+*
+* \param liste La liste chainée que l'on manipule
+*
+* \return Renvoi un pointeur NULL
+*/
 llist effacerListe(llist liste)
 {
     if(liste == NULL)

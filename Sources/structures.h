@@ -1,19 +1,17 @@
 #ifndef STRUCTURE_H_INCLUDED
 #define STRUCTURE_H_INCLUDED
 
+#include <stdbool.h>
 
 pthread_mutex_t mutex;
 pthread_cond_t attendre;
 
-typedef int bool;
-#define true 1
-#define false 0
 /**
 *\struct vehicule
-*\brief Objet represenatant une voiture
+*\brief Objet representant un vehicule
 *
-* depart represente l'Id de l'echangeur de depart de la voiture
-* arrivee represente l'Id de l'echangeur d'arrivée de la voiture
+* depart Represente l'Id de l'echangeur de depart de la voiture
+* arrivee Represente l'Id de l'echangeur d'arrivée de la voiture
 **/
 typedef struct vehicule {
   int IdEchangeur;
@@ -21,18 +19,21 @@ typedef struct vehicule {
   int arrivee;
 } vehicule;
 
-
-
-
-// Pour les listes chainé
-typedef struct element element;
-struct element
+/**
+*\struct element
+*\brief Objet representant un élément de liste chainée
+*
+* val Pointeur sur un vehicule
+* nxt Pointeur sur l'élément suivant
+**/
+typedef struct element
 {
     vehicule* val;
-    struct element *nxt;
-};
+    struct element* nxt;
+} element;
 
 typedef element* llist;
+
 /**
 *\struct echangeur
 *\brief Objet represenatant un echangeur
@@ -42,6 +43,7 @@ typedef element* llist;
 * bas est l'ID de l'echangeur en bas du notre
 * droite est l'ID de l'echangeur a droite du notre
 * gauche est l'ID de l'echangeur a gauche du notre
+* occuper sert a savoir si un vehicule utilise le carrefour
 *         Schema des connexions :
 *            0        0
 *           ||       ||
@@ -51,7 +53,7 @@ typedef element* llist;
 *           ||        ||
 *            0         0
 *
-* occuper sert a savoir si un vehicule utilise le carrefour
+*
 **/
 typedef struct echangeur {
   int numId;
@@ -62,12 +64,18 @@ typedef struct echangeur {
   bool occuper;
 } echangeur;
 
+/**
+*\struct serveur
+*\brief Objet representant le serveur
+*
+* NbVoiture Représente le nombre de véhicules gérés par le serveur
+* NbEchangeur Représente le nombre d'échangeurs gérés par le serveur
+* liste Contient la liste chainée
+**/
 typedef struct serveur{
   int NbVoiture;
   int NbEchangeur;
   llist liste;
 } serveur;
-
-
 
 #endif
