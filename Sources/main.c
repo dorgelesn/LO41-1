@@ -96,10 +96,11 @@ int main(int argc,char *argv[]) {
 
   // Attente de fin des threads
   printf("\n\n");
-  for(i = 0; i <= nbEchangeurs+1; i++){
+  for(i = 0; i < nbEchangeurs+1; i++){
     pthread_join(threads[i],NULL);
     printf("\n*Fin du thread %d",i);
   }
+  printf("\n\n");
 
   // Destruction des mutex
   pthread_mutex_destroy(&mutex);
