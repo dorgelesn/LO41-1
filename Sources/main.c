@@ -15,15 +15,17 @@
 #include "structures.h"
 #include "serveur.h"
 
+serveur a;
 /**
 * \fn void traitantSignt()
 * \brief Fonction de traitement des interruptions
 * Permet la suppresion des mutex
 */
 void traitantSignt(){
-  printf("\n interruption avec suppresion des mutex");
+//  printf("\n interruption avec suppresion des mutex");
   pthread_mutex_destroy(&mutex);
   pthread_cond_destroy(&attendre);
+  a.liste=effacerListe(a.liste);
   exit(1);
 }
 
@@ -44,7 +46,7 @@ int main(int argc,char *argv[]) {
   echangeur ech[nbEchangeurs];
   pthread_t threads[nbEchangeurs];
   // Initialisation du serveur
-  serveur a;
+
   a.NbVoiture = 0;
   a.NbEchangeur = nbEchangeurs;
   a.liste = initialisation();
@@ -78,7 +80,7 @@ int main(int argc,char *argv[]) {
     if(rc){
       printf("\n(!)erreur creation thread serveur ");
     } else {
-      printf("\nCreation du thread du serveur");
+  //    printf("\nCreation du thread du serveur");
     }
 
     // Creation des threads des echangeurs
@@ -87,8 +89,8 @@ int main(int argc,char *argv[]) {
       if(rc){
         printf("\n(!)erreur creation thread echangeur");
       } else {
-        printf("\n-----------------------");
-        printf("\nCreation du thread de l'echangeur %d",i);
+      //  printf("\n-----------------------");
+    //    printf("\nCreation du thread de l'echangeur %d",i);
       }
       sleep(1);
   }
@@ -98,11 +100,12 @@ int main(int argc,char *argv[]) {
   printf("\n\n");
   for(i = 0; i < nbEchangeurs+1; i++){
     pthread_join(threads[i],NULL);
-    printf("\n*Fin du thread %d",i);
+  //  printf("\n*Fin du thread %d",i);
   }
   printf("\n\n");
 
   // Destruction des mutex
   pthread_mutex_destroy(&mutex);
   pthread_cond_destroy(&attendre);
+  a.liste=effacerListe(a.liste);
 }
