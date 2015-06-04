@@ -9,12 +9,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <pthread.h>
 #include "echangeur.h"
 #include "menu.h"
 #include "linkedList.h"
 #include "structures.h"
 #include "serveur.h"
-
+#include "voiture.h"
 serveur a;
 /**
 * \fn void traitantSignt()
@@ -41,13 +42,13 @@ void traitantSignt(){
 int main(int argc,char *argv[]) {
 
   // Initialisation des variables
-  int nbEchangeurs = 4, nbVehicules = 0, i,rc;
+  int nbEchangeurs = 4, nbVehicules = 10, i,rc;
   // Initialisation des echangeurs
   echangeur ech[nbEchangeurs];
   pthread_t threads[nbEchangeurs];
   // Initialisation du serveur
 
-  a.NbVoiture = 0;
+  a.NbVoiture = nbVehicules;
   a.NbEchangeur = nbEchangeurs;
   a.liste = initialisation();
   // Initialisation des mutex
@@ -74,6 +75,13 @@ int main(int argc,char *argv[]) {
     creationEchangeur(&ech[2],3,0,2,4,0);
     creationEchangeur(&ech[3],4,0,1,0,3);
 
+
+
+
+
+
+
+
     // Creation du thread du serveur
     printf("\n-----------------------");
     rc = pthread_create(&threads[0],NULL,traitantThreadServeur,(void*) &a);
@@ -81,8 +89,8 @@ int main(int argc,char *argv[]) {
       printf("\n(!)erreur creation thread serveur ");
     } else {
   //    printf("\nCreation du thread du serveur");
-    }
-
+}
+/*
     // Creation des threads des echangeurs
     for(i = 1; i < nbEchangeurs+1; i++){
       rc = pthread_create(&threads[i],NULL,traitantThreadEchangeur,(void*) &ech[i-1]);
@@ -94,17 +102,26 @@ int main(int argc,char *argv[]) {
       }
       sleep(1);
   }
+*/
+vehicule* vehic;
+vehic= ajouterVehicule(&a,1,0,24);
+rc = pthread_create(&threads[1],NULL,traitantThreadVoiture,(void*)vehic );
+if(rc)
+  printf("\n(!)erreur creation thread echangeur");
 
-
+  sleep(1);
   // Attente de fin des threads
+  /*
   printf("\n\n");
-  for(i = 0; i < nbEchangeurs+1; i++){
+  for(i = 0; i <+1; i++){
     pthread_join(threads[i],NULL);
   //  printf("\n*Fin du thread %d",i);
   }
   printf("\n\n");
-
-  // Destruction des mutex
+*/
+  // Destruction des mutexs
+  sleep(5);
+  printf("\n\n");
   pthread_mutex_destroy(&mutex);
   pthread_cond_destroy(&attendre);
   a.liste=effacerListe(a.liste);

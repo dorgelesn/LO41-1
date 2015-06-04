@@ -17,11 +17,15 @@
 * \param param Paramètre du thread contenant la structure du serveur
 */
 void* traitantThreadServeur(void* param){
+ pthread_mutex_lock(&mutex);
+ printf("\n le serveur est en attente");
+ pthread_cond_wait (&attendre,&mutex);
   serveur* serv = (serveur*) param;
   afficherServeur(serv);
-  ajouterVehicule(serv,1,0,24);
-  printf("\n\n%d",serv->liste->val->arrivee);
-  sleep(3);
+
+printf("\n\nserveur : %d",serv->liste->val->arrivee);
+pthread_mutex_unlock(&mutex);
+printf("\nfin du thread serveur");
 }
 
 /**
@@ -33,13 +37,15 @@ void* traitantThreadServeur(void* param){
 * \param dep Départ du véhicule
 * \param arr Arrivée du véhicule
 */
-void ajouterVehicule(serveur* serv,int ech,int dep,int arr){
+vehicule* ajouterVehicule(serveur* serv,int ech,int dep,int arr){
   // Initialisation du véhicule
-  vehicule v;
+  vehicule* v=malloc(sizeof(vehicule));
   // Configuration du véhicule
-  creationVehicule(&v,ech,dep,arr);
+  // le resultat est stocker dans V
+  creationVehicule(v,ech,dep,arr);
   // Ajout du véhicule en tête de la liste de traitement du serveur
-  (*serv).liste = ajouterEnTeteListe((*serv).liste,&v);
+  (*serv).liste = ajouterEnTeteListe((*serv).liste,v);
+  return v;
 }
 
 /**

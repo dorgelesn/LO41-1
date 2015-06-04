@@ -2,7 +2,7 @@
 #define STRUCTURE_H_INCLUDED
 
 #include <stdbool.h>
-
+#include <pthread.h>
 pthread_mutex_t mutex;
 pthread_cond_t attendre;
 

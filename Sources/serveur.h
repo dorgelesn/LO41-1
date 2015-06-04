@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include "structures.h"
 #include "linkedList.h"
-
+#include <pthread.h>
 void* traitantThreadServeur(void* param);
 void afficherServeur(serveur* s);
-void ajouterVehicule(serveur* serv,int ech,int dep,int arr);
+vehicule* ajouterVehicule(serveur* serv,int ech,int dep,int arr);
 
 #endif
