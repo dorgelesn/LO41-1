@@ -17,14 +17,20 @@
 * \param param Paramètre du thread contenant la structure du serveur
 */
 void* traitantThreadServeur(void* param){
- pthread_mutex_lock(&mutex);
- printf("\n le serveur est en attente");
- pthread_cond_wait (&attendre,&mutex);
-  serveur* serv = (serveur*) param;
-  afficherServeur(serv);
 
-printf("\n\nserveur : %d",serv->liste->val->arrivee);
+ serveur* serv = (serveur*) param;
+ //afficherServeur(serv);
+ int i=0;
+ while(i!=10){
+ printf("\n le serveur est en attente");
+ pthread_mutex_lock(&mutex);
+ pthread_cond_wait (&attendre,&mutex);
+
+printf("\n\nserveur recut le vehicule qui part de %d et arrive a %d",serv->liste->val->depart,serv->liste->val->arrivee);
 pthread_mutex_unlock(&mutex);
+i++;
+}
+
 printf("\nfin du thread serveur");
 }
 
@@ -37,7 +43,7 @@ printf("\nfin du thread serveur");
 * \param dep Départ du véhicule
 * \param arr Arrivée du véhicule
 */
-vehicule* ajouterVehicule(serveur* serv,int ech,int dep,int arr){
+vehicule *ajouterVehicule(serveur* serv,int ech,int dep,int arr){
   // Initialisation du véhicule
   vehicule* v=malloc(sizeof(vehicule));
   // Configuration du véhicule
@@ -48,6 +54,21 @@ vehicule* ajouterVehicule(serveur* serv,int ech,int dep,int arr){
   return v;
 }
 
+/**
+* \fn void creationVehicule(vehicule* v,int IdEchangeur,int depart,int arrivee)
+* \brief Fonction permettant le paramètrage d'un véhicule
+*
+* \param v Structure du véhicule
+* \param IdEchangeur Numéro d'identification de l'échangeur
+* \param depart Point de départ du véhicule
+* \param arrivee Point d'arrivée du véhicule
+*
+*/
+void creationVehicule(vehicule* v,int IdEchangeur,int depart,int arrivee){
+  v->IdEchangeur = IdEchangeur;
+  v->depart = depart;
+  v->arrivee = arrivee;
+}
 /**
 * \fn void afficherServeur(serveur* s)
 * \brief Fonction permettant l'affichage d'informations concernant le serveur

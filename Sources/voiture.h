@@ -4,8 +4,9 @@
 
 #include <stdio.h>
 #include <pthread.h>
+#include <time.h>
 #include "structures.h"
-
-void* traitantThreadVoiture(void* param);
+#include "serveur.h"
+void* traitantThreadGenerationVoiture(void* param);
 
 #endif

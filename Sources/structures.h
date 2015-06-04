@@ -1,6 +1,6 @@
 #ifndef STRUCTURE_H_INCLUDED
 #define STRUCTURE_H_INCLUDED
-
+#define maxiVoiture 100
 #include <stdbool.h>
 #include <pthread.h>
 pthread_mutex_t mutex;
@@ -77,5 +77,5 @@ typedef struct serveur{
   int NbEchangeur;
   llist liste;
 } serveur;
-
+serveur serv;
 #endif

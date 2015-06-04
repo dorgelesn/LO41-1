@@ -43,21 +43,7 @@ void afficherEchangeur(echangeur* c){
   printf("\n\tConnexion haute: %d\n\tConnexion basse: %d\n\tConnexion gauche: %d\n\tConnexion droite: %d\n\tBlocage: %d",c->haut,c->bas,c->gauche,c->droite,c->occuper);
 }
 
-/**
-* \fn void creationVehicule(vehicule* v,int IdEchangeur,int depart,int arrivee)
-* \brief Fonction permettant le paramètrage d'un véhicule
-*
-* \param v Structure du véhicule
-* \param IdEchangeur Numéro d'identification de l'échangeur
-* \param depart Point de départ du véhicule
-* \param arrivee Point d'arrivée du véhicule
-*
-*/
-void creationVehicule(vehicule* v,int IdEchangeur,int depart,int arrivee){
-  v->IdEchangeur = IdEchangeur;
-  v->depart = depart;
-  v->arrivee = arrivee;
-}
+
 
 /**
 * \fn void afficherVehicule(vehicule* v)

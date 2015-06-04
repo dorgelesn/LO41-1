@@ -9,14 +9,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
-#include <pthread.h>
 #include "echangeur.h"
 #include "menu.h"
 #include "linkedList.h"
 #include "structures.h"
 #include "serveur.h"
 #include "voiture.h"
-serveur a;
+
 /**
 * \fn void traitantSignt()
 * \brief Fonction de traitement des interruptions
@@ -26,7 +25,7 @@ void traitantSignt(){
 //  printf("\n interruption avec suppresion des mutex");
   pthread_mutex_destroy(&mutex);
   pthread_cond_destroy(&attendre);
-  a.liste=effacerListe(a.liste);
+  serv.liste=effacerListe(serv.liste);
   exit(1);
 }
 
@@ -45,12 +44,12 @@ int main(int argc,char *argv[]) {
   int nbEchangeurs = 4, nbVehicules = 10, i,rc;
   // Initialisation des echangeurs
   echangeur ech[nbEchangeurs];
-  pthread_t threads[nbEchangeurs];
+  pthread_t threads[maxiVoiture];
   // Initialisation du serveur
 
-  a.NbVoiture = nbVehicules;
-  a.NbEchangeur = nbEchangeurs;
-  a.liste = initialisation();
+  serv.NbVoiture = nbVehicules;
+  serv.NbEchangeur = nbEchangeurs;
+  serv.liste = initialisation();
   // Initialisation des mutex
   pthread_mutex_init(&mutex, NULL);
   pthread_cond_init(&attendre,NULL);
@@ -68,6 +67,7 @@ int main(int argc,char *argv[]) {
            0         0
   */
     // Creation des echangeurs
+/*
     printf("\n-----------------------");
     printf("\nCreation des echangeurs");
     creationEchangeur(&ech[0],1,4,0,0,2);
@@ -75,7 +75,7 @@ int main(int argc,char *argv[]) {
     creationEchangeur(&ech[2],3,0,2,4,0);
     creationEchangeur(&ech[3],4,0,1,0,3);
 
-
+*/
 
 
 
@@ -84,7 +84,7 @@ int main(int argc,char *argv[]) {
 
     // Creation du thread du serveur
     printf("\n-----------------------");
-    rc = pthread_create(&threads[0],NULL,traitantThreadServeur,(void*) &a);
+    rc = pthread_create(&threads[0],NULL,traitantThreadServeur,(void*) &serv);
     if(rc){
       printf("\n(!)erreur creation thread serveur ");
     } else {
@@ -103,26 +103,25 @@ int main(int argc,char *argv[]) {
       sleep(1);
   }
 */
-vehicule* vehic;
-vehic= ajouterVehicule(&a,1,0,24);
-rc = pthread_create(&threads[1],NULL,traitantThreadVoiture,(void*)vehic );
+
+rc = pthread_create(&threads[1],NULL,traitantThreadGenerationVoiture,NULL );
 if(rc)
   printf("\n(!)erreur creation thread echangeur");
 
-  sleep(1);
+
   // Attente de fin des threads
-  /*
-  printf("\n\n");
-  for(i = 0; i <+1; i++){
+
+  printf("\n\n attente fin de thread");
+  for(i = 0; i <2; i++){
     pthread_join(threads[i],NULL);
-  //  printf("\n*Fin du thread %d",i);
+   printf("\n*Fin du thread %d",i);
   }
   printf("\n\n");
-*/
-  // Destruction des mutexs
-  sleep(5);
+
+  // Destruction des mutex
+  
   printf("\n\n");
   pthread_mutex_destroy(&mutex);
   pthread_cond_destroy(&attendre);
-  a.liste=effacerListe(a.liste);
+  serv.liste=effacerListe(serv.liste);
 }
