@@ -112,14 +112,14 @@ if(rc)
   // Attente de fin des threads
 
   printf("\n\n attente fin de thread");
-  for(i = 0; i <2; i++){
+  for(i = 1; i <2; i++){
     pthread_join(threads[i],NULL);
    printf("\n*Fin du thread %d",i);
   }
   printf("\n\n");
 
   // Destruction des mutex
-  
+
   printf("\n\n");
   pthread_mutex_destroy(&mutex);
   pthread_cond_destroy(&attendre);

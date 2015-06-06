@@ -5,7 +5,15 @@
 #include <pthread.h>
 pthread_mutex_t mutex;
 pthread_cond_t attendre;
+/*
+pour la syncro des voiture avec le serveur :
+thread_cond_t attendre[maxiVoiture]=> initialisation !! ctrl+c
+quand l'echangeur est cispo (bool) alors l'echangeur envoit un signal au thread qui est en attente et se mais lui méme
 
+
+
+
+*/
 /**
 *\struct vehicule
 *\brief Objet representant un vehicule
@@ -14,6 +22,7 @@ pthread_cond_t attendre;
 * arrivee Represente l'Id de l'echangeur d'arrivée de la voiture
 **/
 typedef struct vehicule {
+  //int precedent; ????
   int IdEchangeur;
   int depart;
   int arrivee;
