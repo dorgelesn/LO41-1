@@ -18,23 +18,23 @@
 */
 void* traitantThreadServeurAjout(void* param){
 
- serveur* serv = (serveur*) param;
- //afficherServeur(serv);
- int i=0;
- while(i!=10){
- //printf("\n le serveur est en attente");
- pthread_mutex_lock(&mutex);
- pthread_cond_wait (&attendre,&mutex);
+  serveur* serv = (serveur*) param;
+  int i = 0;
 
-printf("\n\nserveur recut le vehicule qui part de %d et arrive a %d",serv->liste->val->depart,serv->liste->val->arrivee);
-if(ech[serv->liste->val->depart].dispo==false){
-pthread_cond_signal (&dispoEchangeur[serv->liste->val->depart]);
-}
-pthread_mutex_unlock(&mutex);
-i++;
-}
+  for (i = 0; i < 10; i++){
+    // Section critique
+    pthread_mutex_lock(&mutex);
+    pthread_cond_wait (&attendre,&mutex);  // Attente du signal du thread generateur de voiture
+    printf("\n\n~Serveur : Reception d'un nouveau vehicule à gerer");
+    afficherVehicule(serv->liste->val); // Affiche les informations relatives au véhicule
+    if(ech[serv->liste->val->depart].dispo==false){
+      pthread_cond_signal (&dispoEchangeur[serv->liste->val->depart]);
+    }
+    pthread_mutex_unlock(&mutex);
+    // Fin de section critique
+  }
 
-printf("\nfin du thread serveur");
+  printf("\nfin du thread serveur");
 }
 
 /**
