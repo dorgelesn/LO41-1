@@ -67,9 +67,9 @@ void afficherVehicule(vehicule* v){
 *
 */
 void* traitantThreadEchangeur(void* param){
-    echangeur* ech= (echangeur*) param;
+  int ech= (int) param;
     // Utilisation Mutex ????
-    afficherEchangeur(ech);
+    printf("\n Numero d'echangeur %d",ech);
     fflush(stdout);
     pthread_exit(NULL);
 }

@@ -53,6 +53,9 @@ int main(int argc,char *argv[]) {
   // Initialisation des mutex
   pthread_mutex_init(&mutex, NULL);
   pthread_cond_init(&attendre,NULL);
+  for(i=0;i<maxiEchangeur;i++){
+    pthread_cond_init(&dispoEchangeur[i],NULL);
+  }
   // Linkage des signals
   signal(SIGINT,traitantSignt);
 
@@ -67,7 +70,7 @@ int main(int argc,char *argv[]) {
            0         0
   */
     // Creation des echangeurs
-/*
+
     printf("\n-----------------------");
     printf("\nCreation des echangeurs");
     creationEchangeur(&ech[0],1,4,0,0,2);
@@ -75,7 +78,7 @@ int main(int argc,char *argv[]) {
     creationEchangeur(&ech[2],3,0,2,4,0);
     creationEchangeur(&ech[3],4,0,1,0,3);
 
-*/
+
 
 
 
@@ -84,29 +87,24 @@ int main(int argc,char *argv[]) {
 
     // Creation du thread du serveur
     printf("\n-----------------------");
-    rc = pthread_create(&threads[0],NULL,traitantThreadServeur,(void*) &serv);
+    rc = pthread_create(&threads[0],NULL,traitantThreadServeurAjout,(void*) &serv);
     if(rc){
       printf("\n(!)erreur creation thread serveur ");
-    } else {
-  //    printf("\nCreation du thread du serveur");
-}
-/*
-    // Creation des threads des echangeurs
-    for(i = 1; i < nbEchangeurs+1; i++){
-      rc = pthread_create(&threads[i],NULL,traitantThreadEchangeur,(void*) &ech[i-1]);
-      if(rc){
-        printf("\n(!)erreur creation thread echangeur");
-      } else {
-      //  printf("\n-----------------------");
-    //    printf("\nCreation du thread de l'echangeur %d",i);
-      }
-      sleep(1);
-  }
-*/
-
+    }
 rc = pthread_create(&threads[1],NULL,traitantThreadGenerationVoiture,NULL );
 if(rc)
   printf("\n(!)erreur creation thread echangeur");
+
+    // Creation des threads des echangeurs
+    for(i = 0; i < nbEchangeurs; i++){
+      rc = pthread_create(&threads[i+2],NULL,traitantThreadEchangeur,(void*) i);
+      if(rc){
+        printf("\n(!)erreur creation thread echangeur");
+      }
+      sleep(1);
+  }
+
+
 
 
   // Attente de fin des threads

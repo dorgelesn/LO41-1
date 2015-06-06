@@ -13,9 +13,9 @@ void* traitantThreadGenerationVoiture(void* param){
       a=rand()%4;
     }while(a==d);
     pthread_mutex_lock(&mutex);
-    printf("\ncreation d'une voiture qui part de l'echangeur : %d et arrive a %d",d,a);
+  //  printf("\ncreation d'une voiture qui part de l'echangeur : %d et arrive a %d",d,a);
     vehic = ajouterVehicule(&serv,id,d,a);
-    printf("\n la voiture envoit le signal");
+    //printf("\n la voiture envoit le signal");
     pthread_cond_signal (&attendre);
     pthread_mutex_unlock(&mutex);
     sleep(1);

@@ -16,13 +16,13 @@
 *
 * \param param Paramètre du thread contenant la structure du serveur
 */
-void* traitantThreadServeur(void* param){
+void* traitantThreadServeurAjout(void* param){
 
  serveur* serv = (serveur*) param;
  //afficherServeur(serv);
  int i=0;
  while(i!=10){
- printf("\n le serveur est en attente");
+ //printf("\n le serveur est en attente");
  pthread_mutex_lock(&mutex);
  pthread_cond_wait (&attendre,&mutex);
 

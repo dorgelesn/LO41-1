@@ -1,10 +1,12 @@
 #ifndef STRUCTURE_H_INCLUDED
 #define STRUCTURE_H_INCLUDED
 #define maxiVoiture 100
+#define maxiEchangeur 4
 #include <stdbool.h>
 #include <pthread.h>
 pthread_mutex_t mutex;
 pthread_cond_t attendre;
+pthread_cond_t dispoEchangeur[maxiEchangeur];
 /*
 pour la syncro des voiture avec le serveur :
 thread_cond_t attendre[maxiVoiture]=> initialisation !! ctrl+c

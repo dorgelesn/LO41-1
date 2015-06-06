@@ -5,7 +5,7 @@
 #include "structures.h"
 #include "linkedList.h"
 #include <pthread.h>
-void* traitantThreadServeur(void* param);
+void* traitantThreadServeurAjout(void* param);
 void afficherServeur(serveur* s);
 vehicule* ajouterVehicule(serveur* serv,int ech,int dep,int arr);
 void creationVehicule(vehicule* v,int IdEchangeur,int depart,int arrivee);
