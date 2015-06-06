@@ -43,7 +43,7 @@ int main(int argc,char *argv[]) {
   // Initialisation des variables
   int nbEchangeurs = 4, nbVehicules = 10, i,rc;
   // Initialisation des echangeurs
-  echangeur ech[nbEchangeurs];
+
   pthread_t threads[maxiVoiture];
   // Initialisation du serveur
 

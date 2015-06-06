@@ -7,6 +7,8 @@
 pthread_mutex_t mutex;
 pthread_cond_t attendre;
 pthread_cond_t dispoEchangeur[maxiEchangeur];
+
+
 /*
 pour la syncro des voiture avec le serveur :
 thread_cond_t attendre[maxiVoiture]=> initialisation !! ctrl+c
@@ -66,14 +68,17 @@ typedef element* llist;
 *
 *
 **/
+// 0 false
 typedef struct echangeur {
   int numId;
   int haut;
   int bas;
   int droite;
   int gauche;
-  bool occuper;
+  bool dispo;
 } echangeur;
+
+echangeur ech[maxiEchangeur];
 
 /**
 *\struct serveur

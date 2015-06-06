@@ -26,7 +26,7 @@ void creationEchangeur(echangeur* c,int Id,int D,int G,int H,int B){
     c->bas = B;
     c->droite = D;
     c->gauche = G;
-    c->occuper = false;
+    c->dispo = false;
 }
 
 /**
@@ -40,7 +40,7 @@ void afficherEchangeur(echangeur* c){
   printf("\n-----------------------");
   printf("\nInformations echangeur n°%d",c->numId);
   printf("\n-----------------------");
-  printf("\n\tConnexion haute: %d\n\tConnexion basse: %d\n\tConnexion gauche: %d\n\tConnexion droite: %d\n\tBlocage: %d",c->haut,c->bas,c->gauche,c->droite,c->occuper);
+  printf("\n\tConnexion haute: %d\n\tConnexion basse: %d\n\tConnexion gauche: %d\n\tConnexion droite: %d\n\tBlocage: %d",c->haut,c->bas,c->gauche,c->droite,c->dispo);
 }
 
 
@@ -69,7 +69,13 @@ void afficherVehicule(vehicule* v){
 void* traitantThreadEchangeur(void* param){
   int ech= (int) param;
     // Utilisation Mutex ????
-    printf("\n Numero d'echangeur %d",ech);
+    while(true){
+    pthread_mutex_lock(&mutex);
+    printf("\n Numero d'echangeur %d en attente",ech);
+    pthread_cond_wait (&dispoEchangeur[ech],&mutex);
+    printf("\n \t l'changeur %d ouvre la barriére",ech);
+    pthread_mutex_unlock(&mutex);
+    }
     fflush(stdout);
     pthread_exit(NULL);
 }

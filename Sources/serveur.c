@@ -27,6 +27,9 @@ void* traitantThreadServeurAjout(void* param){
  pthread_cond_wait (&attendre,&mutex);
 
 printf("\n\nserveur recut le vehicule qui part de %d et arrive a %d",serv->liste->val->depart,serv->liste->val->arrivee);
+if(ech[serv->liste->val->depart].dispo==false){
+pthread_cond_signal (&dispoEchangeur[serv->liste->val->depart]);
+}
 pthread_mutex_unlock(&mutex);
 i++;
 }
