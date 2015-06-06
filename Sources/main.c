@@ -101,11 +101,7 @@ if(rc)
           }
 
 // Lancement de Thread
-/*
-  for(i=0;i<nbEchangeurs-1;i++){
-    pthread_cond_signal (&lancerEchangeur);
-  }
-  pthread_cond_signal (&lancerServeur);*/
+sleep(1);
   pthread_cond_signal (&partir);
 
   // Attente de fin des threads
@@ -116,7 +112,7 @@ if(rc)
 
   }
   printf("\n\n");
-sleep(1);
+usleep(1000);
   // Destruction des mutex
 
   printf("\n\n");
