@@ -26,10 +26,10 @@ void* traitantThreadServeurAjout(void* param){
     pthread_mutex_lock(&mutex);
     pthread_cond_wait (&attendre,&mutex);  // Attente du signal du thread generateur de voiture
     printf("\n\n~Serveur : Reception d'un nouveau vehicule à gerer");
-    afficherVehicule(serv->liste->val) // Affiche les informations relatives au véhicule
-	if(ech[serv->liste->val->depart].dispo==false){
-		pthread_cond_signal (&dispoEchangeur[serv->liste->val->depart]);
-	}
+    afficherVehicule(serv->liste->val); // Affiche les informations relatives au véhicule
+    if(ech[serv->liste->val->depart].dispo==false){
+      pthread_cond_signal (&dispoEchangeur[serv->liste->val->depart]);
+    }
     pthread_mutex_unlock(&mutex);
     // Fin de section critique
   }

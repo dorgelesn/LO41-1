@@ -8,18 +8,18 @@ void* traitantThreadGenerationVoiture(void* param){
   srand(time(NULL));
 
   sleep (3);
-  
+
   for (i = 0; i < 2; i++){
     // Détermination des propriétés du véhicule
-    idEchangeur = rand()%5; // Assigne la voiture à un échangeur de manière aléatoire
+    idEchangeur = rand()%5 + 1; // Assigne la voiture à un échangeur de manière aléatoire
     depart = idEchangeur;   // Assigne l'échangeur de départ du véhicule
     do{
-      arrivee = rand()%5;   // Tente d'assigner un échangeur d'arrivée
+      arrivee = rand()%5 + 1;   // Tente d'assigner un échangeur d'arrivée
     } while(arrivee == depart);
 
     // Section critique
     pthread_mutex_lock(&mutex);
-    voiture = ajouterVehicule(&serv,id,d,a); // Ajoute le véhicule dans la liste du serveur
+    voiture = ajouterVehicule(&serv,idEchangeur,depart,arrivee); // Ajoute le véhicule dans la liste du serveur
     pthread_cond_signal (&attendre); // Envoi un signal de réveil au serveur
     pthread_mutex_unlock(&mutex);
     // Fin de section critique
