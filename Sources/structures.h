@@ -4,10 +4,12 @@
 #define maxiEchangeur 4
 #include <stdbool.h>
 #include <pthread.h>
+pthread_t threads[maxiVoiture+maxiEchangeur+1];
 pthread_mutex_t mutex;
 pthread_cond_t attendre;
-pthread_cond_t dispoEchangeur[maxiEchangeur];
+pthread_cond_t BarierreEchangeur[maxiEchangeur];
 
+pthread_cond_t partir;
 
 /*
 pour la syncro des voiture avec le serveur :

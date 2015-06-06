@@ -52,12 +52,15 @@ void afficherEchangeur(echangeur* c){
 *
 */
 void* traitantThreadEchangeur(void* param){
-  int ech= (int) param;
+
+  int i;
+
+    int ech= (int) param;
     // Utilisation Mutex ????
     while(true){
     pthread_mutex_lock(&mutex);
     printf("\n Numero d'echangeur %d en attente",ech);
-    pthread_cond_wait (&dispoEchangeur[ech],&mutex);
+    pthread_cond_wait (&BarierreEchangeur[ech],&mutex);
     printf("\n \t l'changeur %d ouvre la barriére",ech);
     pthread_mutex_unlock(&mutex);
     }

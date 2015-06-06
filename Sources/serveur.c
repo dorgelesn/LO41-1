@@ -17,18 +17,22 @@
 * \param param Paramètre du thread contenant la structure du serveur
 */
 void* traitantThreadServeurAjout(void* param){
-
+  /*
+  pthread_mutex_lock(&mutex);
+  pthread_cond_wait (&partir,&mutex);
+  pthread_mutex_unlock(&mutex);*/
   serveur* serv = (serveur*) param;
-  int i = 0;
+  int i ;
 
   for (i = 0; i < 10; i++){
     // Section critique
     pthread_mutex_lock(&mutex);
     pthread_cond_wait (&attendre,&mutex);  // Attente du signal du thread generateur de voiture
-    printf("\n\n~Serveur : Reception d'un nouveau vehicule à gerer");
-    afficherVehicule(serv->liste->val); // Affiche les informations relatives au véhicule
+    printf("\n\n~Serveur : Reception d'un nouveau vehicule à gerer : depart %d",serv->liste->val->depart);
+
+  //  afficherVehicule(serv->liste->val); // Affiche les informations relatives au véhicule
     if(ech[serv->liste->val->depart].dispo==false){
-      pthread_cond_signal (&dispoEchangeur[serv->liste->val->depart]);
+      pthread_cond_signal (&BarierreEchangeur[serv->liste->val->depart-1]);
     }
     pthread_mutex_unlock(&mutex);
     // Fin de section critique

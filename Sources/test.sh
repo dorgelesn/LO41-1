@@ -1,6 +1,6 @@
 #!/bin/bash
 truncate -s 0 test.txt
-for i in `seq 1 10`;
+for i in `seq 1 5`;
 do
 	echo $i
 	echo ------------------>>test.txt	

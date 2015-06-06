@@ -25,6 +25,12 @@ void traitantSignt(){
 //  printf("\n interruption avec suppresion des mutex");
   pthread_mutex_destroy(&mutex);
   pthread_cond_destroy(&attendre);
+  int i;
+  for(i=0;i<maxiEchangeur;i++){
+    pthread_cond_destroy(&BarierreEchangeur[i]);
+  }
+
+  pthread_cond_destroy(&partir);
   serv.liste=effacerListe(serv.liste);
   exit(1);
 }
@@ -44,7 +50,7 @@ int main(int argc,char *argv[]) {
   int nbEchangeurs = 4, nbVehicules = 10, i,rc;
   // Initialisation des echangeurs
 
-  pthread_t threads[maxiVoiture];
+
   // Initialisation du serveur
 
   serv.NbVoiture = nbVehicules;
@@ -54,8 +60,12 @@ int main(int argc,char *argv[]) {
   pthread_mutex_init(&mutex, NULL);
   pthread_cond_init(&attendre,NULL);
   for(i=0;i<maxiEchangeur;i++){
-    pthread_cond_init(&dispoEchangeur[i],NULL);
+    pthread_cond_init(&BarierreEchangeur[i],NULL);
   }
+
+  pthread_cond_init(&partir, NULL);
+
+
   // Linkage des signals
   signal(SIGINT,traitantSignt);
 
@@ -69,57 +79,54 @@ int main(int argc,char *argv[]) {
            ||        ||
            0         0
   */
-    // Creation des echangeurs
-
-    printf("\n-----------------------");
-    printf("\nCreation des echangeurs");
     creationEchangeur(&ech[0],1,4,0,0,2);
     creationEchangeur(&ech[1],2,3,0,1,0);
     creationEchangeur(&ech[2],3,0,2,4,0);
     creationEchangeur(&ech[3],4,0,1,0,3);
-
-
-
-
-
-
-
-
     // Creation du thread du serveur
-    printf("\n-----------------------");
     rc = pthread_create(&threads[0],NULL,traitantThreadServeurAjout,(void*) &serv);
     if(rc){
       printf("\n(!)erreur creation thread serveur ");
     }
 rc = pthread_create(&threads[1],NULL,traitantThreadGenerationVoiture,NULL );
 if(rc)
-  printf("\n(!)erreur creation thread echangeur");
+  printf("\n(!)erreur creation threadt Generation echangeur");
 
     // Creation des threads des echangeurs
     for(i = 0; i < nbEchangeurs; i++){
       rc = pthread_create(&threads[i+2],NULL,traitantThreadEchangeur,(void*) i);
-      if(rc){
-        printf("\n(!)erreur creation thread echangeur");
-      }
-      sleep(1);
+            if(rc){
+                printf("\n(!)erreur creation thread echangeur");
+                  }
+          }
+
+// Lancement de Thread
+/*
+  for(i=0;i<nbEchangeurs-1;i++){
+    pthread_cond_signal (&lancerEchangeur);
   }
-
-
-
+  pthread_cond_signal (&lancerServeur);*/
+  pthread_cond_signal (&partir);
 
   // Attente de fin des threads
-
-  printf("\n\n attente fin de thread");
+  //printf("\n\n attente fin de thread");
   for(i = 1; i <2; i++){
     pthread_join(threads[i],NULL);
    printf("\n*Fin du thread %d",i);
+
   }
   printf("\n\n");
-
+sleep(1);
   // Destruction des mutex
 
   printf("\n\n");
   pthread_mutex_destroy(&mutex);
   pthread_cond_destroy(&attendre);
+  for(i=0;i<maxiEchangeur;i++){
+    pthread_cond_destroy(&BarierreEchangeur[i]);
+  }
+  pthread_cond_destroy(&partir);
+
+
   serv.liste=effacerListe(serv.liste);
 }

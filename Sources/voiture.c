@@ -3,20 +3,23 @@
 void* traitantThreadGenerationVoiture(void* param){
 
 
+    pthread_mutex_lock(&mutex);
+    pthread_cond_wait (&partir,&mutex);
+    pthread_mutex_unlock(&mutex);
   vehicule* voiture;
-  int depart, arrivee, idEchangeur, i = 0;
+  int depart, arrivee, idEchangeur, i;
   srand(time(NULL));
 
-  sleep (3);
 
   for (i = 0; i < 2; i++){
+
     // Détermination des propriétés du véhicule
-    idEchangeur = rand()%5 + 1; // Assigne la voiture à un échangeur de manière aléatoire
+    idEchangeur = rand()%4 + 1; // Assigne la voiture à un échangeur de manière aléatoire
     depart = idEchangeur;   // Assigne l'échangeur de départ du véhicule
     do{
-      arrivee = rand()%5 + 1;   // Tente d'assigner un échangeur d'arrivée
+      arrivee = rand()%4 + 1;   // Tente d'assigner un échangeur d'arrivée
     } while(arrivee == depart);
-
+    printf("\n~ voiture depart a %d ",depart);
     // Section critique
     pthread_mutex_lock(&mutex);
     voiture = ajouterVehicule(&serv,idEchangeur,depart,arrivee); // Ajoute le véhicule dans la liste du serveur
@@ -27,7 +30,7 @@ void* traitantThreadGenerationVoiture(void* param){
     sleep(1);
     }
 
-    printf("\nfin du thread voiture");
+    printf("\nfin du thread generation de voiture");
 
 }
 
