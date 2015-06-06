@@ -44,21 +44,6 @@ void afficherEchangeur(echangeur* c){
 }
 
 
-
-/**
-* \fn void afficherVehicule(vehicule* v)
-* \brief Fonction permettant l'affichage d'informations concernant un véhicule
-*
-* \param c Structure du véhicule
-*
-*/
-void afficherVehicule(vehicule* v){
-  printf("\n-----------------------");
-  printf("\nInformations véhicule");
-  printf("\n-----------------------");
-  printf("\n\tEchangeur propriétaire: %d\n\tPoint de départ: %d\n\tPoint d'arrivée: %d",v->IdEchangeur,v->depart,v->arrivee);
-}
-
 /**
 * \fn void* traitantThread(void* param)
 * \brief Fonction gerant un thread "Echangeur"

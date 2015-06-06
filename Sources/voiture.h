@@ -7,6 +7,7 @@
 #include <time.h>
 #include "structures.h"
 #include "serveur.h"
+
 void* traitantThreadGenerationVoiture(void* param);
 
 #endif
