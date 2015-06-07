@@ -346,3 +346,18 @@ llist effacerListe(llist liste)
         return effacerListe(tmp);
     }
 }
+
+bool resteVoiture(llist liste,int numroEchan){
+  element *tmp=liste;
+  /* Tant que l'on n'est pas au bout de la liste */
+  while(tmp != NULL)
+  {
+      if(tmp->val->idEchangeur == numroEchan )
+      {
+          /* Si l'élément a la valeur recherchée, on renvoie son adresse */
+          return true;
+      }
+      tmp = tmp->nxt;
+  }
+  return false;
+}

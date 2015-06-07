@@ -30,4 +30,6 @@ llist element_i(llist liste, int indice);
 int nombreElements(llist liste);
 
 llist effacerListe(llist liste);
+
+bool resteVoiture(llist liste,int numroEchan);
 #endif //SERVEUR_H_INCLUDED

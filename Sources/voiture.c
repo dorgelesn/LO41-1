@@ -49,12 +49,17 @@ void* traitantThreadVehicule(void* param){
   //affichageVehicule();
   printf("\n [Voiture n°%d] : Depart depuis l'echangeur n°%d passe la barriére",voiture->idVehicule,voiture->idEchangeur);
 
+  pthread_mutex_unlock(&mutex);
   usleep(50);
 
 
   // Quand la voiture a fini
+  pthread_mutex_lock(&mutex);
   printf("\n  [Voiture n°%d] supression de la liste",voiture->idVehicule);
-  afficherListe(serv.liste);
+  //afficherListe(serv.liste);
+  if(resteVoiture(serv.liste,voiture->idEchangeur)){
+    pthread_cond_signal(&departVehicule[serv.liste->val->idVehicule]);
+  }
   serv.liste=supprimerElementById(serv.liste,voiture->idVehicule);
   pthread_mutex_unlock(&mutex);
   // Fin de section critique

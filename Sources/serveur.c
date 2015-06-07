@@ -32,9 +32,10 @@ void* traitantThreadServeur(void* param){
    // Ordonne au nouveau véhicule de démarrer
    //simulation temps de lever
    usleep(500);
+   /*
    pthread_mutex_lock(&mutex);
    pthread_cond_signal(&departVehicule[serv->liste->val->idVehicule]);
-   pthread_mutex_unlock(&mutex);
+   pthread_mutex_unlock(&mutex);*/
     // Fin de section critique
   }
 
