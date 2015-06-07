@@ -11,12 +11,11 @@ pthread_t threadsEchangeur[maxiEchangeur];
 pthread_t threadsVehicule[maxiVoiture];
 
 pthread_mutex_t mutex;
-
 pthread_cond_t BarriereEchangeur[maxiEchangeur];
 pthread_cond_t attendre;
 pthread_cond_t partir;
-pthread_cond_t departVehicule;
-
+pthread_cond_t departVehicule[maxiVoiture];
+pthread_cond_t voitureReady;
 /*
 pour la syncro des voiture avec le serveur :
 thread_cond_t attendre[maxiVoiture]=> initialisation !! ctrl+c

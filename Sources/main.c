@@ -29,6 +29,9 @@ void traitantSignt(){
   for(i = 0;i < maxiEchangeur; i++){
     pthread_cond_destroy(&BarriereEchangeur[i]);
   }
+  for(i = 0; i < maxiVoiture; i++){
+    pthread_cond_destroy(&departVehicule[i]);
+  }
   pthread_cond_destroy(&partir);
   serv.liste = effacerListe(serv.liste);
   exit(1);
@@ -46,19 +49,25 @@ void traitantSignt(){
 int main(int argc,char *argv[]) {
 
   // Initialisation des variables
-  int nbEchangeurs = 4, nbVehicules = 10, i,rc;
+  int nbEchangeurs = 4, nbVehicules = 5, i,rc;
   // Initialisation du serveur
   serv.NbVoiture = nbVehicules;
   serv.NbEchangeur = nbEchangeurs;
   serv.liste = initialisation();
   // Initialisation des mutex
   pthread_mutex_init(&mutex, NULL);
+
   pthread_cond_init(&attendre,NULL);
   for(i = 0; i < maxiEchangeur; i++){
     pthread_cond_init(&BarriereEchangeur[i],NULL);
   }
+  for(i = 0; i < maxiVoiture; i++){
+    pthread_cond_init(&departVehicule[i],NULL);
+  }
+
   pthread_cond_init(&partir, NULL);
-  pthread_cond_init(&departVehicule, NULL);
+  pthread_cond_init(&voitureReady, NULL);
+
 
   // Linkage des signaux
   signal(SIGINT,traitantSignt);
@@ -104,17 +113,17 @@ int main(int argc,char *argv[]) {
 
   // Attente de fin du thread générateur de véhicule
   pthread_join(threadGenerateur,NULL);
-  printf("\n*Fin du thread generateur de vehicule");
+//  printf("\n*Fin du thread generateur de vehicule");
 
   // Attente de fin des threads véhicule
+  /*
   for (i = 0; i < nbVehicules; i++){
     pthread_join(threadsVehicule[i],NULL);
     printf("\n*Fin du thread du vehicule n°%d",i);
-  }
+  }*/
 
   printf("\n\n");
-  usleep(1000);
-
+sleep(5);
   /* Nettoyage mémoire */
 
   // Destruction des mutex
@@ -122,6 +131,9 @@ int main(int argc,char *argv[]) {
   pthread_cond_destroy(&attendre);
   for(i = 0; i < maxiEchangeur; i++){
     pthread_cond_destroy(&BarriereEchangeur[i]);
+  }
+  for(i = 0; i < maxiVoiture; i++){
+    pthread_cond_destroy(&departVehicule[i]);
   }
   pthread_cond_destroy(&partir);
   // Vidage de la liste chainée

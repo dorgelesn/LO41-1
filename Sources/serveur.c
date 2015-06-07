@@ -21,19 +21,22 @@ void* traitantThreadServeur(void* param){
   serveur* serv = (serveur*) param;
   int i ;
 
-  for (i = 0; i < serv->NbVoiture; i++){
+  while(true){
     // Section critique
     pthread_mutex_lock(&mutex);
     pthread_cond_wait (&attendre,&mutex);  // Attente de la generation d'un nouveau vehicule
-    printf("\n\n[Serveur] : Nouveau vehicule (n°%d)",serv->liste->val->idVehicule);
-    pthread_cond_signal(&departVehicule); // Ordonne au nouveau véhicule de démarrer
-    pthread_mutex_unlock(&mutex);
+    pthread_cond_wait (&voitureReady,&mutex);
+    printf("\n\n[Serveur] :vehicule (n°%d), depart %d ",serv->liste->val->idVehicule,serv->liste->val->depart);
+    pthread_cond_signal(&BarriereEchangeur[serv->liste->val->depart-1]);
+   // Ordonne au nouveau véhicule de démarrer
+   pthread_cond_signal(&departVehicule[serv->liste->val->idVehicule]);
+   pthread_mutex_unlock(&mutex);
     // Fin de section critique
   }
 
   sleep(2);
 
-
+/*
   // SECTION A PROBLEME
   while(true){
     // Section critique
@@ -41,17 +44,16 @@ void* traitantThreadServeur(void* param){
     element* debutListe = serv->liste;  // Sauvegarde du début de la liste
     // Parcours de la liste
     while (!estVide(serv->liste)){
-      afficherVehicule(serv->liste->val);
+  //    afficherVehicule(serv->liste->val);
       // Si l'echangeur où se trouve le véhicule est disponible, ordonne d'ouvrir la barrière
       /*if(ech[serv->liste->val->idEchangeur].dispo == true){
         pthread_cond_signal(&BarriereEchangeur[serv->liste->val->idEchangeur-1]);
-      }*/
+      }
       serv->liste = serv->liste->nxt; // On passe à l'élément suivant
     }
     pthread_mutex_unlock(&mutex);
     // Fin de section critique
-  }
-
+  }*/
 }
 
 /**

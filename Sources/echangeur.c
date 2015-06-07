@@ -22,13 +22,14 @@ void* traitantThreadEchangeur(void* param){
   while(true){
     // Section critique
     pthread_mutex_lock(&mutex);
-    affichageEchangeur();
-    printf("[Echangeur n°%d] : En attente",numEchangeur+1);
-    ech[numEchangeur].dispo = true;
+  //  affichageEchangeur();
+  ech[numEchangeur].dispo = false;
+    printf("\n [Echangeur n°%d] :fermeture de la barriere",numEchangeur+1);
     pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal d'ouverture du serveur
-    ech[numEchangeur].dispo = false;
-    affichageEchangeur();
+    ech[numEchangeur].dispo = true;
+    //affichageEchangeur();
     printf("[Echangeur n°%d] : Ouverture de la barriere",numEchangeur+1);
+    pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal d'ouverture du serveur
     pthread_mutex_unlock(&mutex);
     // Fin de section critique
   }
