@@ -48,6 +48,14 @@ void* traitantThreadVehicule(void* param){
   pthread_cond_wait(&departVehicule[voiture->idVehicule],&mutex);
   //affichageVehicule();
   printf("\n [Voiture n°%d] : Depart depuis l'echangeur n°%d passe la barriére",voiture->idVehicule,voiture->idEchangeur);
+
+  usleep(50);
+
+
+  // Quand la voiture a fini
+  printf("\n  [Voiture n°%d] supression de la liste",voiture->idVehicule);
+  afficherListe(serv.liste);
+  serv.liste=supprimerElementById(serv.liste,voiture->idVehicule);
   pthread_mutex_unlock(&mutex);
   // Fin de section critique
 }

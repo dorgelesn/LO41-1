@@ -28,7 +28,11 @@ void* traitantThreadServeur(void* param){
     pthread_cond_wait (&voitureReady,&mutex);
     printf("\n\n[Serveur] :vehicule (n°%d), depart %d ",serv->liste->val->idVehicule,serv->liste->val->depart);
     pthread_cond_signal(&BarriereEchangeur[serv->liste->val->depart-1]);
+    pthread_mutex_unlock(&mutex);
    // Ordonne au nouveau véhicule de démarrer
+   //simulation temps de lever
+   usleep(500);
+   pthread_mutex_lock(&mutex);
    pthread_cond_signal(&departVehicule[serv->liste->val->idVehicule]);
    pthread_mutex_unlock(&mutex);
     // Fin de section critique
@@ -55,6 +59,8 @@ void* traitantThreadServeur(void* param){
     // Fin de section critique
   }*/
 }
+
+
 
 /**
 * \fn void ajouterVehicule(serveur* serv,int ech,int dep,int arr)

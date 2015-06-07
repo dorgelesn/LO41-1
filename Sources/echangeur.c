@@ -23,7 +23,7 @@ void* traitantThreadEchangeur(void* param){
     // Section critique
     pthread_mutex_lock(&mutex);
   //  affichageEchangeur();
-  ech[numEchangeur].dispo = false;
+    ech[numEchangeur].dispo = false;
     printf("\n [Echangeur n°%d] :fermeture de la barriere",numEchangeur+1);
     pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal d'ouverture du serveur
     ech[numEchangeur].dispo = true;

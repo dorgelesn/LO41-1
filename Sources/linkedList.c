@@ -130,6 +130,65 @@ llist supprimerElementEnTete(llist liste)
     }
 }
 
+void afficherListe(llist liste){
+  printf("\n [Liste] actuellemnt present : ");
+  if(liste == NULL)
+  {
+
+  }
+  else
+  {
+
+      element* temp=liste;
+
+      while(temp->nxt != NULL)
+      {
+        printf("%d ",temp->val->idEchangeur);
+          temp = temp->nxt;
+      }
+
+  }
+
+}
+
+llist supprimerElementById(llist liste, int id){
+
+  if(liste != NULL)
+  { int place;
+
+    place=rechercherPlaceById(liste,id);
+    if(place==-1){
+      return NULL;
+    }
+    if(place==0){
+      return supprimerElementEnTete(liste);
+    }
+    if(place==nombreElements(liste)){
+      supprimerElementEnFin(liste);
+    }
+    int i;
+    element* tmp = liste;
+    element* ptmp = liste;
+    for(i=0;i<place;i++){
+      /* ptmp stock l'adresse de tmp */
+      ptmp = tmp;
+      /* On déplace tmp (mais ptmp garde l'ancienne valeur de tmp */
+      tmp = tmp->nxt;
+    }
+    element* ntmp = tmp->nxt;
+    free(tmp);
+    ptmp->nxt=ntmp;
+    return liste;
+  }
+  else
+  {
+      return NULL;
+  }
+}
+
+
+
+
 /**
 * \fn llist supprimerElementEnFin(llist liste)
 * \brief Fonction permettant de supprimant l'élément à la fin de la liste chainée
@@ -168,6 +227,23 @@ llist supprimerElementEnFin(llist liste)
     ptmp->nxt = NULL;
     free(tmp);
     return liste;
+}
+
+int rechercherPlaceById(llist liste, int valeur){
+  element *tmp=liste;
+  int i=0;
+  /* Tant que l'on n'est pas au bout de la liste */
+  while(tmp != NULL)
+  {
+      if(tmp->val->idVehicule == valeur)
+      {
+          /* Si l'élément a la valeur recherchée, on renvoie son adresse */
+          return i;
+      }
+      tmp = tmp->nxt;
+      i++;
+  }
+  return -1;
 }
 
 /**

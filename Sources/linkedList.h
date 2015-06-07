@@ -1,7 +1,7 @@
 #ifndef LINKED_H_INCLUDED
 #define LINKED_H_INCLUDED
 #include <stdlib.h>
-
+#include <stdio.h>
 #include "structures.h"
 
 
@@ -17,7 +17,13 @@ llist supprimerElementEnTete(llist liste);
 
 llist supprimerElementEnFin(llist liste);
 
+llist supprimerElementById(llist liste, int id);
+
 llist rechercherElement(llist liste, vehicule valeur);
+
+int rechercherPlaceById(llist liste, int valeur);
+
+void afficherListe(llist liste);
 
 llist element_i(llist liste, int indice);
 
