@@ -4,17 +4,23 @@
 #define maxiEchangeur 4
 #include <stdbool.h>
 #include <pthread.h>
-pthread_t threads[maxiVoiture+maxiEchangeur+1];
-pthread_mutex_t mutex;
-pthread_cond_t attendre;
-pthread_cond_t BarierreEchangeur[maxiEchangeur];
 
+pthread_t threadServeur;
+pthread_t threadGenerateur;
+pthread_t threadsEchangeur[maxiEchangeur];
+pthread_t threadsVehicule[maxiVoiture];
+
+pthread_mutex_t mutex;
+
+pthread_cond_t BarriereEchangeur[maxiEchangeur];
+pthread_cond_t attendre;
 pthread_cond_t partir;
+pthread_cond_t departVehicule;
 
 /*
 pour la syncro des voiture avec le serveur :
 thread_cond_t attendre[maxiVoiture]=> initialisation !! ctrl+c
-quand l'echangeur est cispo (bool) alors l'echangeur envoit un signal au thread qui est en attente et se mais lui méme
+quand l'echangeur est dispo (bool) alors l'echangeur envoit un signal au thread qui est en attente et se mais lui méme
 
 
 
@@ -29,7 +35,8 @@ quand l'echangeur est cispo (bool) alors l'echangeur envoit un signal au thread 
 **/
 typedef struct vehicule {
   //int precedent; ????
-  int IdEchangeur;
+  int idEchangeur;
+  int idVehicule;
   int depart;
   int arrivee;
 } vehicule;
@@ -96,4 +103,5 @@ typedef struct serveur{
   llist liste;
 } serveur;
 serveur serv;
+
 #endif

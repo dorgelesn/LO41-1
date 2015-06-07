@@ -9,6 +9,35 @@
 #include "echangeur.h"
 
 /**
+* \fn void* traitantThread(void* param)
+* \brief Fonction gerant un thread "Echangeur"
+*
+* \param param Pointeur contenant un echangeur
+*
+*/
+void* traitantThreadEchangeur(void* param){
+
+  int numEchangeur, i;
+  numEchangeur  = (int) param;
+  while(true){
+    // Section critique
+    pthread_mutex_lock(&mutex);
+    affichageEchangeur();
+    printf("[Echangeur n°%d] : En attente",numEchangeur+1);
+    ech[numEchangeur].dispo = true;
+    pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal d'ouverture du serveur
+    ech[numEchangeur].dispo = false;
+    affichageEchangeur();
+    printf("[Echangeur n°%d] : Ouverture de la barriere",numEchangeur+1);
+    pthread_mutex_unlock(&mutex);
+    // Fin de section critique
+  }
+  fflush(stdout);
+  pthread_exit(NULL);
+}
+
+
+/**
 * \fn void creationEchangeur(echangeur* c,int Id,int D,int G,int H,int B)
 * \brief Fonction permettant le paramètrage d'un echangeur
 *
@@ -21,12 +50,12 @@
 *
 */
 void creationEchangeur(echangeur* c,int Id,int D,int G,int H,int B){
-    c->numId = Id;
-    c->haut = H;
-    c->bas = B;
-    c->droite = D;
-    c->gauche = G;
-    c->dispo = false;
+  c->numId = Id;
+  c->haut = H;
+  c->bas = B;
+  c->droite = D;
+  c->gauche = G;
+  c->dispo = true;
 }
 
 /**
@@ -43,27 +72,10 @@ void afficherEchangeur(echangeur* c){
   printf("\n\tConnexion haute: %d\n\tConnexion basse: %d\n\tConnexion gauche: %d\n\tConnexion droite: %d\n\tBlocage: %d",c->haut,c->bas,c->gauche,c->droite,c->dispo);
 }
 
-
-/**
-* \fn void* traitantThread(void* param)
-* \brief Fonction gerant un thread "Echangeur"
-*
-* \param param Pointeur contenant un echangeur
-*
-*/
-void* traitantThreadEchangeur(void* param){
-
+void affichageEchangeur(){
   int i;
-
-    int ech= (int) param;
-    // Utilisation Mutex ????
-    while(true){
-    pthread_mutex_lock(&mutex);
-    printf("\n Numero d'echangeur %d en attente",ech);
-    pthread_cond_wait (&BarierreEchangeur[ech],&mutex);
-    printf("\n \t l'changeur %d ouvre la barriére",ech);
-    pthread_mutex_unlock(&mutex);
-    }
-    fflush(stdout);
-    pthread_exit(NULL);
+  printf("\n");
+  for (i = 0; i < 2; i++){
+    printf("\t");
+  }
 }

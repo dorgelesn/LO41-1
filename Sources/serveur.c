@@ -16,29 +16,42 @@
 *
 * \param param Paramètre du thread contenant la structure du serveur
 */
-void* traitantThreadServeurAjout(void* param){
-  /*
-  pthread_mutex_lock(&mutex);
-  pthread_cond_wait (&partir,&mutex);
-  pthread_mutex_unlock(&mutex);*/
+void* traitantThreadServeur(void* param){
+
   serveur* serv = (serveur*) param;
   int i ;
 
-  for (i = 0; i < 10; i++){
+  for (i = 0; i < serv->NbVoiture; i++){
     // Section critique
     pthread_mutex_lock(&mutex);
-    pthread_cond_wait (&attendre,&mutex);  // Attente du signal du thread generateur de voiture
-    printf("\n\n~Serveur : Reception d'un nouveau vehicule à gerer : depart %d",serv->liste->val->depart);
+    pthread_cond_wait (&attendre,&mutex);  // Attente de la generation d'un nouveau vehicule
+    printf("\n\n[Serveur] : Nouveau vehicule (n°%d)",serv->liste->val->idVehicule);
+    pthread_cond_signal(&departVehicule); // Ordonne au nouveau véhicule de démarrer
+    pthread_mutex_unlock(&mutex);
+    // Fin de section critique
+  }
 
-  //  afficherVehicule(serv->liste->val); // Affiche les informations relatives au véhicule
-    if(ech[serv->liste->val->depart].dispo==false){
-      pthread_cond_signal (&BarierreEchangeur[serv->liste->val->depart-1]);
+  sleep(2);
+
+
+  // SECTION A PROBLEME
+  while(true){
+    // Section critique
+    pthread_mutex_lock(&mutex);
+    element* debutListe = serv->liste;  // Sauvegarde du début de la liste
+    // Parcours de la liste
+    while (!estVide(serv->liste)){
+      afficherVehicule(serv->liste->val);
+      // Si l'echangeur où se trouve le véhicule est disponible, ordonne d'ouvrir la barrière
+      /*if(ech[serv->liste->val->idEchangeur].dispo == true){
+        pthread_cond_signal(&BarriereEchangeur[serv->liste->val->idEchangeur-1]);
+      }*/
+      serv->liste = serv->liste->nxt; // On passe à l'élément suivant
     }
     pthread_mutex_unlock(&mutex);
     // Fin de section critique
   }
 
-  printf("\nfin du thread serveur");
 }
 
 /**
@@ -50,32 +63,17 @@ void* traitantThreadServeurAjout(void* param){
 * \param dep Départ du véhicule
 * \param arr Arrivée du véhicule
 */
-vehicule *ajouterVehicule(serveur* serv,int ech,int dep,int arr){
+vehicule* ajouterVehicule(serveur* serv,int id, int ech,int dep,int arr){
   // Initialisation du véhicule
-  vehicule* v=malloc(sizeof(vehicule));
+  vehicule* v = malloc(sizeof(vehicule));
   // Configuration du véhicule
   // le resultat est stocker dans V
-  creationVehicule(v,ech,dep,arr);
+  creationVehicule(v,id,ech,dep,arr);
   // Ajout du véhicule en tête de la liste de traitement du serveur
   (*serv).liste = ajouterEnTeteListe((*serv).liste,v);
   return v;
 }
 
-/**
-* \fn void creationVehicule(vehicule* v,int IdEchangeur,int depart,int arrivee)
-* \brief Fonction permettant le paramètrage d'un véhicule
-*
-* \param v Structure du véhicule
-* \param IdEchangeur Numéro d'identification de l'échangeur
-* \param depart Point de départ du véhicule
-* \param arrivee Point d'arrivée du véhicule
-*
-*/
-void creationVehicule(vehicule* v,int IdEchangeur,int depart,int arrivee){
-  v->IdEchangeur = IdEchangeur;
-  v->depart = depart;
-  v->arrivee = arrivee;
-}
 /**
 * \fn void afficherServeur(serveur* s)
 * \brief Fonction permettant l'affichage d'informations concernant le serveur

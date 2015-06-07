@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include "structures.h"
 #include <pthread.h>
-void* traitantThreadEchangeur(void* param);
 
+void* traitantThreadEchangeur(void* param);
 void creationEchangeur(echangeur *c,int Id,int D,int G,int H,int B);
 void afficherEchangeur(echangeur* c);
+void affichageEchangeur();
 
-void afficherVehicule(vehicule* v);
 #endif //ECHANGEUR_H_INCLUDED

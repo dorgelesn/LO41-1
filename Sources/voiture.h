@@ -9,5 +9,9 @@
 #include "serveur.h"
 
 void* traitantThreadGenerationVoiture(void* param);
+void* traitantThreadVehicule(void* param);
+void creationVehicule(vehicule* v,int idVehicule,int idEchangeur,int depart,int arrivee);
+void afficherVehicule(vehicule* v);
+void affichageVehicule();
 
 #endif
