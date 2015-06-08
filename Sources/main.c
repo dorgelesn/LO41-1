@@ -15,7 +15,7 @@
 #include "structures.h"
 #include "serveur.h"
 #include "voiture.h"
-
+#include <stdint.h>
 /**
 * \fn void traitantSignt()
 * \brief Fonction de traitement des interruptions
@@ -95,13 +95,13 @@ int main(int argc,char *argv[]) {
   printf("\n(!)erreur creation thread serveur ");
 
   // Creation du thread generateur de vehicule
-  rc = pthread_create(&threadGenerateur,NULL,traitantThreadGenerationVoiture,(void*) nbVehicules);
+  rc = pthread_create(&threadGenerateur,NULL,traitantThreadGenerationVoiture,(void*)(intptr_t) nbVehicules);
   if(rc)
   printf("\n(!)erreur creation thread Generation echangeur");
 
   // Creation des threads des echangeurs
   for(i = 0; i < nbEchangeurs; i++){
-    rc = pthread_create(&threadsEchangeur[i],NULL,traitantThreadEchangeur,(void*) i);
+    rc = pthread_create(&threadsEchangeur[i],NULL,traitantThreadEchangeur,(void*)(intptr_t) i);
     if(rc)
     printf("\n(!)erreur creation thread echangeur");
   }
@@ -112,7 +112,7 @@ int main(int argc,char *argv[]) {
   pthread_cond_signal (&partir);
 
   // Attente de fin du thread générateur de véhicule
-  pthread_join(threadGenerateur,NULL);
+
 //  printf("\n*Fin du thread generateur de vehicule");
 
   // Attente de fin des threads véhicule
@@ -123,7 +123,12 @@ int main(int argc,char *argv[]) {
   }*/
 
   printf("\n\n");
-sleep(2);
+  pthread_join(threadGenerateur,NULL);
+  /*
+  while(!estVide(serv.liste)){
+    pthread_join(threadsVehicule[serv.liste->val->idVehicule],NULL);
+
+  }*/
   /* Nettoyage mémoire */
 
   // Destruction des mutex

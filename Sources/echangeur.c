@@ -18,7 +18,7 @@
 void* traitantThreadEchangeur(void* param){
 
   int numEchangeur, i;
-  numEchangeur  = (int) param;
+  numEchangeur  = (int)(intptr_t) param;
   while(true){
     // Section critique
     pthread_mutex_lock(&mutex);

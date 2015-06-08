@@ -23,6 +23,8 @@ llist rechercherElement(llist liste, vehicule valeur);
 
 int rechercherPlaceById(llist liste, int valeur);
 
+int rechercherPlaceByReady(llist liste, bool valeur);
+
 void afficherListe(llist liste);
 
 llist element_i(llist liste, int indice);

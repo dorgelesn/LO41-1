@@ -39,6 +39,7 @@ typedef struct vehicule {
   int idVehicule;
   int depart;
   int arrivee;
+  bool ready;
 } vehicule;
 
 /**

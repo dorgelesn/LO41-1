@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <time.h>
+#include <stdint.h>
 #include "structures.h"
 #include "serveur.h"
 

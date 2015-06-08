@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include "structures.h"
 #include <pthread.h>
-
+#include <stdint.h>
 void* traitantThreadEchangeur(void* param);
 void creationEchangeur(echangeur *c,int Id,int D,int G,int H,int B);
 void afficherEchangeur(echangeur* c);

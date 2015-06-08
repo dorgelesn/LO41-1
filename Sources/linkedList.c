@@ -229,6 +229,26 @@ llist supprimerElementEnFin(llist liste)
     return liste;
 }
 
+
+int rechercherPlaceByReady(llist liste, bool valeur){
+
+  element *tmp=liste;
+  int i=0;
+  /* Tant que l'on n'est pas au bout de la liste */
+  while(tmp != NULL)
+  {
+      if(tmp->val->ready == valeur)
+      {
+          /* Si l'élément a la valeur recherchée, on renvoie son adresse */
+          return i;
+      }
+      tmp = tmp->nxt;
+      i++;
+  }
+  return -1;
+}
+
+
 int rechercherPlaceById(llist liste, int valeur){
   element *tmp=liste;
   int i=0;
@@ -347,12 +367,12 @@ llist effacerListe(llist liste)
     }
 }
 
-bool resteVoiture(llist liste,int numroEchan){
+bool resteVoiture(llist liste,int ready){
   element *tmp=liste;
   /* Tant que l'on n'est pas au bout de la liste */
   while(tmp != NULL)
   {
-      if(tmp->val->idEchangeur == numroEchan )
+      if(tmp->val->ready == ready)
       {
           /* Si l'élément a la valeur recherchée, on renvoie son adresse */
           return true;
