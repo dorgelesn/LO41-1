@@ -22,43 +22,43 @@ void* traitantThreadServeur(void* param){
   int i ;
 
   while(true){
-    // Section critique
+    /* Autorisation démarrage des véhicules */
+
+    //Attend que le véhicule soit prêt
     pthread_mutex_lock(&mutex);
-    pthread_cond_wait (&attendre,&mutex);  // Attente de la generation d'un nouveau vehicule
     pthread_cond_wait (&voitureReady,&mutex);
-    printf("\n\n[Serveur] :vehicule (n°%d), depart %d ",serv->liste->val->idVehicule,serv->liste->val->depart);
-    pthread_cond_signal(&BarriereEchangeur[serv->liste->val->depart-1]);
     pthread_mutex_unlock(&mutex);
-   // Ordonne au nouveau véhicule de démarrer
-   //simulation temps de lever
-   usleep(500);
-   /*
-   pthread_mutex_lock(&mutex);
-   pthread_cond_signal(&departVehicule[serv->liste->val->idVehicule]);
-   pthread_mutex_unlock(&mutex);*/
-    // Fin de section critique
+
+    // Attend que l'echangeur soit disponible
+    while (ech[serv->liste->val->idEchangeur-1].dispo == false){
+      affichageServeur();
+      printf("[Serveur] : [...]Attente disponibilite echangeur n°%d",serv->liste->val->idEchangeur);
+      sleep(1);
+    }
+
+    /* Autorise le départ du véhicule */
+    pthread_mutex_lock(&mutex);
+    affichageServeur();
+    printf("[Serveur] : (Vehicule n°%d) [~]Autorisation depart accorde",serv->liste->val->idVehicule);
+    pthread_cond_signal(&BarriereEchangeur[serv->liste->val->idEchangeur-1]);  // Ordonne l'ouverture de la barrière de l'échangeur
+    pthread_mutex_unlock(&mutex);
+
+    sleep(1);  // Simulation temps ouverture barrière
+
+    pthread_mutex_lock(&mutex);
+    pthread_cond_signal(&departVehicule[serv->liste->val->idVehicule]); // Ordonne le départ du véhicule
+    pthread_mutex_unlock(&mutex);
+
+    sleep(2); // Simulation temps déplacement véhicule
+
+    pthread_mutex_lock(&mutex);
+    pthread_cond_signal(&BarriereEchangeur[serv->liste->val->idEchangeur-1]); // Ordonne la fermeture de la barrière de l'échangeur
+    pthread_mutex_unlock(&mutex);
+
+    sleep(1);  // Simulation temps fermeture barrière
+
   }
 
-  sleep(2);
-
-/*
-  // SECTION A PROBLEME
-  while(true){
-    // Section critique
-    pthread_mutex_lock(&mutex);
-    element* debutListe = serv->liste;  // Sauvegarde du début de la liste
-    // Parcours de la liste
-    while (!estVide(serv->liste)){
-  //    afficherVehicule(serv->liste->val);
-      // Si l'echangeur où se trouve le véhicule est disponible, ordonne d'ouvrir la barrière
-      /*if(ech[serv->liste->val->idEchangeur].dispo == true){
-        pthread_cond_signal(&BarriereEchangeur[serv->liste->val->idEchangeur-1]);
-      }
-      serv->liste = serv->liste->nxt; // On passe à l'élément suivant
-    }
-    pthread_mutex_unlock(&mutex);
-    // Fin de section critique
-  }*/
 }
 
 
@@ -96,3 +96,7 @@ void afficherServeur(serveur* s){
   printf("\n-----------------------");
   printf("\n\tNombre de vehicule: %d\n\tNombre d'echangeurs: %d",s->NbVoiture,s->NbEchangeur);
 }
+
+void affichageServeur(){
+  printf("\n\n");
+  }

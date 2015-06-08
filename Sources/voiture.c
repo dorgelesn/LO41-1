@@ -1,5 +1,12 @@
 #include "voiture.h"
 
+/**
+* \fn void* traitantThreadGenerationVoiture(void* param)
+* \brief Fonction gerant le thread de génération de vehicule
+*
+* \param param Pointeur contenant le nombre véhicule à générer par le thread
+*
+*/
 void* traitantThreadGenerationVoiture(void* param){
 
   vehicule* voiture;
@@ -7,14 +14,13 @@ void* traitantThreadGenerationVoiture(void* param){
   nbVehicules = (int) param;
   srand(time(NULL));
 
-  // Section critique
+  /* Attente du signal de départ du main */
   pthread_mutex_lock(&mutex);
-  pthread_cond_wait (&partir,&mutex); // Attente du signal de départ du main
+  pthread_cond_wait (&partir,&mutex);
   pthread_mutex_unlock(&mutex);
-  // Fin de section critique
 
+  /* Génération de véhicules */
   for (i = 0; i < nbVehicules; i++){
-
     // Détermination des propriétés du véhicule
     idVehicule = i+1;
     idEchangeur = rand()%4 + 1; // Assigne la voiture à un échangeur de manière aléatoire
@@ -23,46 +29,68 @@ void* traitantThreadGenerationVoiture(void* param){
       arrivee = rand()%4 + 1;   // Tente d'assigner un échangeur d'arrivée
     } while(arrivee == depart);
 
-    // Section critique
+    // Envoi du véhicule au serveur
     pthread_mutex_lock(&mutex);
     voiture = ajouterVehicule(&serv,idVehicule,idEchangeur,depart,arrivee); // Ajoute le véhicule dans la liste du serveur
-    pthread_cond_signal (&attendre); // Envoi un signal de réveil au serveur
+
     // Creation du thread du vehicule
     rc = pthread_create(&threadsVehicule[i],NULL,traitantThreadVehicule,(void *) voiture);
     if(rc)
     printf("\n(!)erreur creation thread vehicule");
     pthread_mutex_unlock(&mutex);
+
     sleep(2);
   }
 
   printf("\nfin du thread generation de voiture");
-
 }
 
+/**
+* \fn void* traitantThreadVehicule(void* param)
+* \brief Fonction gerant un thread "Vehicule"
+*
+* \param param Pointeur contenant un pointeur sur le vehicule
+*
+*/
 void* traitantThreadVehicule(void* param){
-  pthread_mutex_lock(&mutex);
-  vehicule* voiture = (vehicule*) param;
-  // Section critique
-  printf("\n \n [Voiture n°%d] Creation",voiture->idVehicule);
-  pthread_cond_signal (&voitureReady);
-  pthread_cond_wait(&departVehicule[voiture->idVehicule],&mutex);
-  //affichageVehicule();
-  printf("\n [Voiture n°%d] : Depart depuis l'echangeur n°%d passe la barriére",voiture->idVehicule,voiture->idEchangeur);
 
+  vehicule* voiture = (vehicule*) param;
+
+
+
+  /* Démarrage du véhicule */
+  pthread_mutex_lock(&mutex);
+  affichageVehicule();
+  printf("[Voiture n°%d] : [+]Demarrage a l'echangeur n°%d",voiture->idVehicule, voiture->idEchangeur);
+  pthread_cond_signal (&voitureReady);  // Envoi un signal au serveur
   pthread_mutex_unlock(&mutex);
+
+
+  /* Départ du véhicule */
+  pthread_mutex_lock(&mutex);
+  pthread_cond_wait(&departVehicule[voiture->idVehicule],&mutex); // Attend l'autorisation de départ du serveur
+  affichageVehicule();
+  printf("[Voiture n°%d] : [>]Depart depuis l'echangeur n°%d",voiture->idVehicule,voiture->idEchangeur);
+  pthread_mutex_unlock(&mutex);
+
+
+
   usleep(50);
 
 
-  // Quand la voiture a fini
-  pthread_mutex_lock(&mutex);
-  printf("\n  [Voiture n°%d] supression de la liste",voiture->idVehicule);
-  //afficherListe(serv.liste);
-  if(resteVoiture(serv.liste,voiture->idEchangeur)){
-    pthread_cond_signal(&departVehicule[serv.liste->val->idVehicule]);
+  // TEMPORAIRE, la voiture doit sortir de la liste uniquement après avoir passé la barrière de fin
+  if (voiture->idEchangeur == voiture->arrivee){
+    // Quand la voiture a fini
+    pthread_mutex_lock(&mutex);
+    affichageVehicule();
+    printf("[Voiture n°%d] : [*]Suppression de la liste",voiture->idVehicule);
+    //afficherListe(serv.liste);
+    if(resteVoiture(serv.liste,voiture->idEchangeur)){
+      pthread_cond_signal(&departVehicule[serv.liste->val->idVehicule]);
+    }
+    serv.liste=supprimerElementById(serv.liste,voiture->idVehicule);
+    pthread_mutex_unlock(&mutex);
   }
-  serv.liste=supprimerElementById(serv.liste,voiture->idVehicule);
-  pthread_mutex_unlock(&mutex);
-  // Fin de section critique
 }
 
 /**
@@ -98,7 +126,7 @@ void afficherVehicule(vehicule* v){
 
 void affichageVehicule(){
   int i;
-  printf("\n");
+  printf("\n\n");
   for (i = 0; i < 4; i++){
     printf("\t");
   }

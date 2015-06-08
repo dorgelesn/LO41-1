@@ -19,20 +19,25 @@ void* traitantThreadEchangeur(void* param){
 
   int numEchangeur, i;
   numEchangeur  = (int) param;
+
   while(true){
-    // Section critique
     pthread_mutex_lock(&mutex);
-  //  affichageEchangeur();
+
+    // Ouverture de la barrière
+    pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal d'ouverture du serveur
     ech[numEchangeur].dispo = false;
-    printf("\n [Echangeur n°%d] :fermeture de la barriere",numEchangeur+1);
-    pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal d'ouverture du serveur
+    affichageEchangeur();
+    printf("[Echangeur n°%d] : [/]Ouverture de la barriere",numEchangeur+1);
+
+    //  Fermeture de la barrière
+    pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal de fermeture du serveur
+    affichageEchangeur();
+    printf("[Echangeur n°%d] : [--]Fermeture de la barriere",numEchangeur+1);
     ech[numEchangeur].dispo = true;
-    //affichageEchangeur();
-    printf("[Echangeur n°%d] : Ouverture de la barriere",numEchangeur+1);
-    pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal d'ouverture du serveur
+
     pthread_mutex_unlock(&mutex);
-    // Fin de section critique
   }
+
   fflush(stdout);
   pthread_exit(NULL);
 }
@@ -75,7 +80,7 @@ void afficherEchangeur(echangeur* c){
 
 void affichageEchangeur(){
   int i;
-  printf("\n");
+  printf("\n\n");
   for (i = 0; i < 2; i++){
     printf("\t");
   }
