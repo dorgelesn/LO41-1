@@ -21,21 +21,25 @@ void* traitantThreadServeur(void* param){
   serveur* serv = (serveur*) param;
   int i ;
   llist liste;
+
+  pthread_mutex_lock(&mutex);
   while(true){
-    liste=NULL;
-    // Section critique
-    pthread_mutex_lock(&mutex);
-    //pthread_cond_wait (&attendre,&mutex);  // Attente de la generation d'un nouveau vehicule
-
+    liste = NULL;
+    // Attente du signal d'un véhicule prêt
     pthread_cond_wait (&voitureReady,&mutex);
-    liste=  element_i(serv->liste,rechercherPlaceByReady(serv->liste,true));
-printf("\n\n[Serveur] :vehicule (n°%d), depart %d ",liste->val->idVehicule,liste->val->depart);
 
+    // Recherche du premier véhicule prêt dans la liste
+    liste = element_i(serv->liste,rechercherPlaceByReady(serv->liste,true));
 
-    if(ech[liste->val->idEchangeur].dispo==false){
-
-      pthread_cond_signal(&BarriereEchangeur[liste->val->depart-1]);
+    // Verification de la disponibilité de l'échangeur
+    if(ech[liste->val->idEchangeur-1].dispo == true){
+      // Envoi l'autorisation à l'échangeur
+      ech[liste->val->idEchangeur-1].idVehicule = liste->val->idVehicule; // Assigne le véhicule à l'échangeur
+      printf("\n\n[Serveur] : Autorisation accordée à l'échangeur n°%d pour la traversée du véhicule n°%d [@]",liste->val->idEchangeur,liste->val->idVehicule);
+      //printf("\n#DEBUG : Signal | Serveur -> Echangeur n°%d",liste->val->idEchangeur);
+      pthread_cond_signal(&BarriereEchangeur[liste->val->idEchangeur-1]);
     }
+<<<<<<< 5adea4018b5855dbbf8ee2447328c435f45c9f68
     pthread_mutex_unlock(&mutex);
     usleep(50);
 
@@ -47,28 +51,20 @@ printf("\n\n[Serveur] :vehicule (n°%d), depart %d ",liste->val->idVehicule,list
    pthread_cond_signal(&departVehicule[serv->liste->val->idVehicule]);
    pthread_mutex_unlock(&mutex);*/
     // Fin de section critique
+=======
+    /* PROBLEME
+        Si l'échangeur n'est pas disponible, un décalage entre les réveils du wait
+        et le traitement des véhicules ready se forme
+        ex: Vehicule 1 est ready mais son echangeur n'est pas disponible
+        la boucle du thread reprend, vehicule 2 est ready et active le wait.
+        le thread traite le premier vehicule ready de la liste, donc le vehicule 1
+        puis reboucle et attend dans son wait. Cependant, aucun autre véhicule n'arrive
+        le vehicule 2 n'est donc pas traité */
+>>>>>>> 6410db18aa778eeab874ea4add10c902d203184b
   }
+  pthread_mutex_unlock(&mutex);
 
-  sleep(2);
 
-/*
-  // SECTION A PROBLEME
-  while(true){
-    // Section critique
-    pthread_mutex_lock(&mutex);
-    element* debutListe = serv->liste;  // Sauvegarde du début de la liste
-    // Parcours de la liste
-    while (!estVide(serv->liste)){
-  //    afficherVehicule(serv->liste->val);
-      // Si l'echangeur où se trouve le véhicule est disponible, ordonne d'ouvrir la barrière
-      /*if(ech[serv->liste->val->idEchangeur].dispo == true){
-        pthread_cond_signal(&BarriereEchangeur[serv->liste->val->idEchangeur-1]);
-      }
-      serv->liste = serv->liste->nxt; // On passe à l'élément suivant
-    }
-    pthread_mutex_unlock(&mutex);
-    // Fin de section critique
-  }*/
 }
 
 

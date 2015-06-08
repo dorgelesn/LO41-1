@@ -1,0 +1,244 @@
+------------------
+1
+------------------
+
+fin du thread generation de voiture
+-----------------------
+Informations véhicule
+-----------------------
+	Identifiant: 1
+	Echangeur propriétaire: 1
+	Point de départ: 1
+	Point d'arrivée: 2
+
+[Voiture n°1] Prêt a l'echangeur n°1 [!]
+#DEBUG : Signal | Vehicule n°1 -> Serveur
+
+[Serveur] : Autorisation accordée à l'échangeur n°1 pour la traversée du véhicule n°1 [@]
+#DEBUG : Signal | Serveur -> Echangeur n°1
+-----------------------
+Informations echangeur n°1
+-----------------------
+	Connexion haute: 0
+	Connexion basse: 2
+	Connexion gauche: 0
+	Connexion droite: 4
+	Disponible: 1
+	Véhicule attribué: 1
+
+[Echangeur n°1] : Ouverture de la barriere [/]
+#DEBUG : Signal | Echangeur n°1 -> Vehicule n°1
+
+[Voiture n°1] : Traversée de l'echangeur n°1 [>]
+#DEBUG : Signal | Vehicule n°1 -> Echangeur n°1
+
+[Voiture n°1] : Prochain échangeur : n°2 [-->]
+
+[Echangeur n°1] : Fermeture de la barriere [--]
+-----------------------
+Informations véhicule
+-----------------------
+	Identifiant: 1
+	Echangeur propriétaire: 2
+	Point de départ: 1
+	Point d'arrivée: 2
+
+[Voiture n°1] Prêt a l'echangeur n°2 [!]
+#DEBUG : Signal | Vehicule n°1 -> Serveur------------------
+2
+------------------
+
+fin du thread generation de voiture
+-----------------------
+Informations véhicule
+-----------------------
+	Identifiant: 1
+	Echangeur propriétaire: 1
+	Point de départ: 1
+	Point d'arrivée: 4
+
+[Voiture n°1] Prêt a l'echangeur n°1 [!]
+#DEBUG : Signal | Vehicule n°1 -> Serveur
+
+[Serveur] : Autorisation accordée à l'échangeur n°1 pour la traversée du véhicule n°1 [@]
+#DEBUG : Signal | Serveur -> Echangeur n°1
+-----------------------
+Informations echangeur n°1
+-----------------------
+	Connexion haute: 0
+	Connexion basse: 2
+	Connexion gauche: 0
+	Connexion droite: 4
+	Disponible: 1
+	Véhicule attribué: 1
+
+[Echangeur n°1] : Ouverture de la barriere [/]
+#DEBUG : Signal | Echangeur n°1 -> Vehicule n°1
+
+[Voiture n°1] : Traversée de l'echangeur n°1 [>]
+#DEBUG : Signal | Vehicule n°1 -> Echangeur n°1
+
+[Voiture n°1] : Prochain échangeur : n°2 [-->]
+
+[Echangeur n°1] : Fermeture de la barriere [--]
+-----------------------
+Informations véhicule
+-----------------------
+	Identifiant: 1
+	Echangeur propriétaire: 2
+	Point de départ: 1
+	Point d'arrivée: 4
+
+[Voiture n°1] Prêt a l'echangeur n°2 [!]
+#DEBUG : Signal | Vehicule n°1 -> Serveur------------------
+3
+------------------
+
+fin du thread generation de voiture
+-----------------------
+Informations véhicule
+-----------------------
+	Identifiant: 1
+	Echangeur propriétaire: 1
+	Point de départ: 1
+	Point d'arrivée: 3
+
+[Voiture n°1] Prêt a l'echangeur n°1 [!]
+#DEBUG : Signal | Vehicule n°1 -> Serveur
+
+[Serveur] : Autorisation accordée à l'échangeur n°1 pour la traversée du véhicule n°1 [@]
+#DEBUG : Signal | Serveur -> Echangeur n°1
+-----------------------
+Informations echangeur n°1
+-----------------------
+	Connexion haute: 0
+	Connexion basse: 2
+	Connexion gauche: 0
+	Connexion droite: 4
+	Disponible: 1
+	Véhicule attribué: 1
+
+[Echangeur n°1] : Ouverture de la barriere [/]
+#DEBUG : Signal | Echangeur n°1 -> Vehicule n°1
+
+[Voiture n°1] : Traversée de l'echangeur n°1 [>]
+#DEBUG : Signal | Vehicule n°1 -> Echangeur n°1
+
+[Voiture n°1] : Prochain échangeur : n°2 [-->]
+
+[Echangeur n°1] : Fermeture de la barriere [--]
+-----------------------
+Informations véhicule
+-----------------------
+	Identifiant: 1
+	Echangeur propriétaire: 2
+	Point de départ: 1
+	Point d'arrivée: 3
+
+[Voiture n°1] Prêt a l'echangeur n°2 [!]
+#DEBUG : Signal | Vehicule n°1 -> Serveur------------------
+4
+------------------
+
+fin du thread generation de voiture
+-----------------------
+Informations véhicule
+-----------------------
+	Identifiant: 1
+	Echangeur propriétaire: 2
+	Point de départ: 2
+	Point d'arrivée: 4
+
+[Voiture n°1] Prêt a l'echangeur n°2 [!]
+#DEBUG : Signal | Vehicule n°1 -> Serveur
+
+[Serveur] : Autorisation accordée à l'échangeur n°2 pour la traversée du véhicule n°1 [@]
+#DEBUG : Signal | Serveur -> Echangeur n°2
+-----------------------
+Informations echangeur n°2
+-----------------------
+	Connexion haute: 1
+	Connexion basse: 0
+	Connexion gauche: 0
+	Connexion droite: 3
+	Disponible: 1
+	Véhicule attribué: 1
+
+[Echangeur n°2] : Ouverture de la barriere [/]
+#DEBUG : Signal | Echangeur n°2 -> Vehicule n°1
+
+[Voiture n°1] : Traversée de l'echangeur n°2 [>]
+#DEBUG : Signal | Vehicule n°1 -> Echangeur n°2
+
+[Voiture n°1] : Prochain échangeur : n°1 [-->]
+
+[Echangeur n°2] : Fermeture de la barriere [--]
+-----------------------
+Informations véhicule
+-----------------------
+	Identifiant: 1
+	Echangeur propriétaire: 1
+	Point de départ: 2
+	Point d'arrivée: 4
+
+[Voiture n°1] Prêt a l'echangeur n°1 [!]
+#DEBUG : Signal | Vehicule n°1 -> Serveur
+
+[Serveur] : Autorisation accordée à l'échangeur n°1 pour la traversée du véhicule n°1 [@]
+#DEBUG : Signal | Serveur -> Echangeur n°1
+-----------------------
+Informations echangeur n°1
+-----------------------
+	Connexion haute: 0
+	Connexion basse: 2
+	Connexion gauche: 0
+	Connexion droite: 4
+	Disponible: 1
+	Véhicule attribué: 1
+
+[Echangeur n°1] : Ouverture de la barriere [/]
+#DEBUG : Signal | Echangeur n°1 -> Vehicule n°1
+
+[Voiture n°1] : Traversée de l'echangeur n°1 [>]
+#DEBUG : Signal | Vehicule n°1 -> Echangeur n°1
+
+[Voiture n°1] : Prochain échangeur : n°4 [-->]
+
+[Echangeur n°1] : Fermeture de la barriere [--]
+-----------------------
+Informations véhicule
+-----------------------
+	Identifiant: 1
+	Echangeur propriétaire: 4
+	Point de départ: 2
+	Point d'arrivée: 4
+
+[Voiture n°1] Prêt a l'echangeur n°4 [!]
+#DEBUG : Signal | Vehicule n°1 -> Serveur
+
+[Serveur] : Autorisation accordée à l'échangeur n°4 pour la traversée du véhicule n°1 [@]
+#DEBUG : Signal | Serveur -> Echangeur n°4
+-----------------------
+Informations echangeur n°4
+-----------------------
+	Connexion haute: 0
+	Connexion basse: 3
+	Connexion gauche: 1
+	Connexion droite: 0
+	Disponible: 1
+	Véhicule attribué: 1
+
+[Echangeur n°4] : Ouverture de la barriere [/]
+#DEBUG : Signal | Echangeur n°4 -> Vehicule n°1
+
+[Voiture n°1] : Traversée de l'echangeur n°4 [>]
+#DEBUG : Signal | Vehicule n°1 -> Echangeur n°4
+
+[Voiture n°1] : Suppression de la liste [*]
+
+[Echangeur n°4] : Fermeture de la barriere [--]
+*Fin du thread du vehicule n°1
+
+------------------
+5
+------------------

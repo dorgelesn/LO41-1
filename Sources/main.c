@@ -49,25 +49,22 @@ void traitantSignt(){
 int main(int argc,char *argv[]) {
 
   // Initialisation des variables
-  int nbEchangeurs = 4, nbVehicules = 5, i,rc;
+  int nbEchangeurs = 4, nbVehicules = 1, i,rc;
   // Initialisation du serveur
   serv.NbVoiture = nbVehicules;
   serv.NbEchangeur = nbEchangeurs;
   serv.liste = initialisation();
   // Initialisation des mutex
   pthread_mutex_init(&mutex, NULL);
-
   pthread_cond_init(&attendre,NULL);
+  pthread_cond_init(&partir, NULL);
+  pthread_cond_init(&voitureReady, NULL);
   for(i = 0; i < maxiEchangeur; i++){
     pthread_cond_init(&BarriereEchangeur[i],NULL);
   }
   for(i = 0; i < maxiVoiture; i++){
     pthread_cond_init(&departVehicule[i],NULL);
   }
-
-  pthread_cond_init(&partir, NULL);
-  pthread_cond_init(&voitureReady, NULL);
-
 
   // Linkage des signaux
   signal(SIGINT,traitantSignt);
@@ -89,6 +86,7 @@ int main(int argc,char *argv[]) {
   creationEchangeur(&ech[2],3,0,2,4,0);
   creationEchangeur(&ech[3],4,0,1,0,3);
 
+
   // Creation du thread du serveur
   rc = pthread_create(&threadServeur,NULL,traitantThreadServeur,(void*) &serv);
   if(rc)
@@ -99,9 +97,10 @@ int main(int argc,char *argv[]) {
   if(rc)
   printf("\n(!)erreur creation thread Generation echangeur");
 
+
   // Creation des threads des echangeurs
   for(i = 0; i < nbEchangeurs; i++){
-    rc = pthread_create(&threadsEchangeur[i],NULL,traitantThreadEchangeur,(void*)(intptr_t) i);
+    rc = pthread_create(&threadsEchangeur[i],NULL,traitantThreadEchangeur,(void*) &ech[i]);
     if(rc)
     printf("\n(!)erreur creation thread echangeur");
   }
@@ -111,24 +110,19 @@ int main(int argc,char *argv[]) {
   // Lancement du thread de génération de véhicule
   pthread_cond_signal (&partir);
 
-  // Attente de fin du thread générateur de véhicule
 
-//  printf("\n*Fin du thread generateur de vehicule");
+  // Attente de fin du thread générateur de véhicule
+  pthread_join(threadGenerateur,NULL);
 
   // Attente de fin des threads véhicule
-  /*
   for (i = 0; i < nbVehicules; i++){
     pthread_join(threadsVehicule[i],NULL);
-    printf("\n*Fin du thread du vehicule n°%d",i);
-  }*/
+    printf("\n*Fin du thread du vehicule n°%d",i+1);
+  }
+
 
   printf("\n\n");
-  pthread_join(threadGenerateur,NULL);
-  /*
-  while(!estVide(serv.liste)){
-    pthread_join(threadsVehicule[serv.liste->val->idVehicule],NULL);
 
-  }*/
   /* Nettoyage mémoire */
 
   // Destruction des mutex

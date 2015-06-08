@@ -40,6 +40,7 @@ typedef struct vehicule {
   int depart;
   int arrivee;
   bool ready;
+  int dejaParcourus[maxiEchangeur];
 } vehicule;
 
 /**
@@ -86,6 +87,7 @@ typedef struct echangeur {
   int droite;
   int gauche;
   bool dispo;
+  int idVehicule;
 } echangeur;
 
 echangeur ech[maxiEchangeur];

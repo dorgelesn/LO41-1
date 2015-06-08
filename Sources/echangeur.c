@@ -17,6 +17,7 @@
 */
 void* traitantThreadEchangeur(void* param){
 
+<<<<<<< 5adea4018b5855dbbf8ee2447328c435f45c9f68
   int numEchangeur, i;
   numEchangeur  = (int)(intptr_t) param;
   llist liste;
@@ -38,7 +39,32 @@ void* traitantThreadEchangeur(void* param){
     pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal d'ouverture du serveur
     pthread_mutex_unlock(&mutex);
     // Fin de section critique
+=======
+  echangeur* echan = (echangeur*) param;
+  int idEchangeur, i;
+  idEchangeur = echan->numId;
+
+  pthread_mutex_lock(&mutex);
+  while(true){
+
+    // Attends l'autorisation du serveur
+    ech[idEchangeur-1].dispo = true;
+    pthread_cond_wait(&BarriereEchangeur[idEchangeur-1],&mutex);
+
+    // Ouvre la barière et envoie l'autorisation au véhicule
+    //afficherEchangeur(echan);
+    printf("\n\n[Echangeur n°%d] : Ouverture de la barriere [/]",idEchangeur);
+    //printf("\n#DEBUG : Signal | Echangeur n°%d -> Vehicule n°%d",idEchangeur,echan->idVehicule);
+    pthread_cond_signal(&departVehicule[echan->idVehicule-1]);
+
+    // Attends le signal du véhicule pour fermer la barrière
+    pthread_cond_wait (&BarriereEchangeur[idEchangeur-1],&mutex);
+    ech[idEchangeur-1].dispo = false;
+    printf("\n\n[Echangeur n°%d] : Fermeture de la barriere [--]",idEchangeur);
+
+>>>>>>> 6410db18aa778eeab874ea4add10c902d203184b
   }
+  pthread_mutex_unlock(&mutex);
   fflush(stdout);
   pthread_exit(NULL);
 }
@@ -63,6 +89,7 @@ void creationEchangeur(echangeur* c,int Id,int D,int G,int H,int B){
   c->droite = D;
   c->gauche = G;
   c->dispo = true;
+  c->idVehicule = 0;
 }
 
 /**
@@ -76,13 +103,5 @@ void afficherEchangeur(echangeur* c){
   printf("\n-----------------------");
   printf("\nInformations echangeur n°%d",c->numId);
   printf("\n-----------------------");
-  printf("\n\tConnexion haute: %d\n\tConnexion basse: %d\n\tConnexion gauche: %d\n\tConnexion droite: %d\n\tBlocage: %d",c->haut,c->bas,c->gauche,c->droite,c->dispo);
-}
-
-void affichageEchangeur(){
-  int i;
-  printf("\n");
-  for (i = 0; i < 2; i++){
-    printf("\t");
-  }
+  printf("\n\tConnexion haute: %d\n\tConnexion basse: %d\n\tConnexion gauche: %d\n\tConnexion droite: %d\n\tDisponible: %d\n\tVéhicule attribué: %d",c->haut,c->bas,c->gauche,c->droite,c->dispo,c->idVehicule);
 }

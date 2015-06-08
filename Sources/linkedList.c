@@ -19,7 +19,7 @@ llist initialisation()
 {
   llist liste = malloc(sizeof(element));
   liste->val=NULL;
-  liste->nxt==NULL;
+  liste->nxt=NULL;
   return liste;
 }
 
@@ -143,7 +143,7 @@ void afficherListe(llist liste){
 
       while(temp->nxt != NULL)
       {
-        printf("%d ",temp->val->idEchangeur);
+        printf("%d ",temp->val->idVehicule);
           temp = temp->nxt;
       }
 
