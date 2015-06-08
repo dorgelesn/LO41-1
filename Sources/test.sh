@@ -8,3 +8,4 @@ do
 	echo ------------------>>test.txt	
 	./main >> test.txt
 done
+gedit test.txt

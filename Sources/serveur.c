@@ -27,7 +27,12 @@ void* traitantThreadServeur(void* param){
     pthread_cond_wait (&attendre,&mutex);  // Attente de la generation d'un nouveau vehicule
     pthread_cond_wait (&voitureReady,&mutex);
     printf("\n\n[Serveur] :vehicule (n°%d), depart %d ",serv->liste->val->idVehicule,serv->liste->val->depart);
-    pthread_cond_signal(&BarriereEchangeur[serv->liste->val->depart-1]);
+    if(ech[serv->liste->val->idEchangeur].dispo==false){
+
+      pthread_cond_signal(&BarriereEchangeur[serv->liste->val->depart-1]);
+    }
+
+    pthread_cond_signal(&departVehicule[serv->liste->val->idVehicule]);
     pthread_mutex_unlock(&mutex);
    // Ordonne au nouveau véhicule de démarrer
    //simulation temps de lever

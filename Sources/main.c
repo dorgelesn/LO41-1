@@ -123,7 +123,7 @@ int main(int argc,char *argv[]) {
   }*/
 
   printf("\n\n");
-sleep(5);
+sleep(2);
   /* Nettoyage mémoire */
 
   // Destruction des mutex

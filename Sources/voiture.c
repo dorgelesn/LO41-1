@@ -32,7 +32,7 @@ void* traitantThreadGenerationVoiture(void* param){
     if(rc)
     printf("\n(!)erreur creation thread vehicule");
     pthread_mutex_unlock(&mutex);
-    sleep(2);
+    usleep(40000);
   }
 
   printf("\nfin du thread generation de voiture");
@@ -43,22 +43,22 @@ void* traitantThreadVehicule(void* param){
   pthread_mutex_lock(&mutex);
   vehicule* voiture = (vehicule*) param;
   // Section critique
-  printf("\n \n [Voiture n°%d] Creation",voiture->idVehicule);
+  printf("\n \n [Voiture n°%d] Creation, depart %d",voiture->idVehicule,voiture->depart);
   pthread_cond_signal (&voitureReady);
+
   pthread_cond_wait(&departVehicule[voiture->idVehicule],&mutex);
-  //affichageVehicule();
+//affichageVehicule();
   printf("\n [Voiture n°%d] : Depart depuis l'echangeur n°%d passe la barriére",voiture->idVehicule,voiture->idEchangeur);
 
   pthread_mutex_unlock(&mutex);
-  usleep(50);
-
-
+  usleep(5000);
   // Quand la voiture a fini
   pthread_mutex_lock(&mutex);
   printf("\n  [Voiture n°%d] supression de la liste",voiture->idVehicule);
   //afficherListe(serv.liste);
-  if(resteVoiture(serv.liste,voiture->idEchangeur)){
-    pthread_cond_signal(&departVehicule[serv.liste->val->idVehicule]);
+  if(resteVoiture(serv.liste,voiture->idEchangeur)==false){
+    printf("\n  [Voiture n°%d] dit a l'changeur %d de descendre",voiture->idVehicule,voiture->idEchangeur);
+    pthread_cond_signal(&BarriereEchangeur[voiture->idEchangeur]);
   }
   serv.liste=supprimerElementById(serv.liste,voiture->idVehicule);
   pthread_mutex_unlock(&mutex);
