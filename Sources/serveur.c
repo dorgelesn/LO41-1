@@ -20,45 +20,41 @@ void* traitantThreadServeur(void* param){
 
   serveur* serv = (serveur*) param;
   int i ;
+  llist listeTemp;
 
   while(true){
-    /* Autorisation démarrage des véhicules */
 
-    //Attend que le véhicule soit prêt
-    pthread_mutex_lock(&mutex);
-    pthread_cond_wait (&voitureReady,&mutex);
-    pthread_mutex_unlock(&mutex);
+    listeTemp = serv->liste; // On mémorise le premier élément
 
-    // Attend que l'echangeur soit disponible
-    while (ech[serv->liste->val->idEchangeur-1].dispo == false){
-      affichageServeur();
-      printf("[Serveur] : [...]Attente disponibilite echangeur n°%d",serv->liste->val->idEchangeur);
-      sleep(1);
+    // Tant que la liste du serveur n'est pas vide
+      while(listeTemp->val != NULL) {
+        // Si l'échangeur de la voiture est libre
+         if (ech[listeTemp->val->idEchangeur-1].dispo == true){
+          // Autorise le départ du véhicule
+          pthread_mutex_lock(&mutex);
+          affichageServeur();
+          printf("[Serveur] : (Vehicule n°%d) [~]Autorisation depart accorde",listeTemp->val->idVehicule);
+          pthread_cond_signal(&BarriereEchangeur[listeTemp->val->idEchangeur-1]);  // Ordonne l'ouverture de la barrière de l'échangeur
+          pthread_mutex_unlock(&mutex);
+
+          sleep(1);  // Simulation temps ouverture barrière
+
+          pthread_mutex_lock(&mutex);
+          pthread_cond_signal(&departVehicule[listeTemp->val->idVehicule]); // Ordonne le départ du véhicule
+          pthread_mutex_unlock(&mutex);
+
+          sleep(2); // Simulation temps déplacement véhicule
+
+          pthread_mutex_lock(&mutex);
+          pthread_cond_signal(&BarriereEchangeur[listeTemp->val->idEchangeur-1]); // Ordonne la fermeture de la barrière de l'échangeur
+          pthread_mutex_unlock(&mutex);
+
+          sleep(1);  // Simulation temps fermeture barrière
+        }
+        // On passe à la voiture suivante
+        listeTemp = listeTemp->nxt;
+      }
     }
-
-    /* Autorise le départ du véhicule */
-    pthread_mutex_lock(&mutex);
-    affichageServeur();
-    printf("[Serveur] : (Vehicule n°%d) [~]Autorisation depart accorde",serv->liste->val->idVehicule);
-    pthread_cond_signal(&BarriereEchangeur[serv->liste->val->idEchangeur-1]);  // Ordonne l'ouverture de la barrière de l'échangeur
-    pthread_mutex_unlock(&mutex);
-
-    sleep(1);  // Simulation temps ouverture barrière
-
-    pthread_mutex_lock(&mutex);
-    pthread_cond_signal(&departVehicule[serv->liste->val->idVehicule]); // Ordonne le départ du véhicule
-    pthread_mutex_unlock(&mutex);
-
-    sleep(2); // Simulation temps déplacement véhicule
-
-    pthread_mutex_lock(&mutex);
-    pthread_cond_signal(&BarriereEchangeur[serv->liste->val->idEchangeur-1]); // Ordonne la fermeture de la barrière de l'échangeur
-    pthread_mutex_unlock(&mutex);
-
-    sleep(1);  // Simulation temps fermeture barrière
-
-  }
-
 }
 
 

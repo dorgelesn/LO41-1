@@ -56,8 +56,6 @@ void* traitantThreadVehicule(void* param){
 
   vehicule* voiture = (vehicule*) param;
 
-
-
   /* Démarrage du véhicule */
   pthread_mutex_lock(&mutex);
   affichageVehicule();

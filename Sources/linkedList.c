@@ -19,7 +19,7 @@ llist initialisation()
 {
   llist liste = malloc(sizeof(element));
   liste->val=NULL;
-  liste->nxt==NULL;
+  liste->nxt=NULL;
   return liste;
 }
 
