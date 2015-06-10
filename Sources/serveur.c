@@ -38,9 +38,7 @@ printf("\n\n[Serveur] :vehicule (n°%d), depart %d ",liste->val->idVehicule,list
     }
     pthread_mutex_unlock(&mutex);
     usleep(50);
-    pthread_mutex_lock(&mutex);
-    pthread_cond_signal(&departVehicule[liste->val->idVehicule]);
-    pthread_mutex_unlock(&mutex);
+
    // Ordonne au nouveau véhicule de démarrer
    //simulation temps de lever
    usleep(500);

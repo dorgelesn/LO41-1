@@ -5,6 +5,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include "structures.h"
+#include "linkedList.h"
 #include <pthread.h>
 #include <stdint.h>
 void* traitantThreadEchangeur(void* param);

@@ -19,8 +19,11 @@ void* traitantThreadEchangeur(void* param){
 
   int numEchangeur, i;
   numEchangeur  = (int)(intptr_t) param;
+  llist liste;
   while(true){
     // Section critique
+    liste=NULL;
+
     pthread_mutex_lock(&mutex);
   //  affichageEchangeur();
     ech[numEchangeur].dispo = false;
@@ -28,8 +31,10 @@ void* traitantThreadEchangeur(void* param){
     pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal d'ouverture du serveur
     ech[numEchangeur].dispo = true;
     //affichageEchangeur();
+    liste=  element_i(serv.liste,rechercherPlaceByReady(serv.liste,true));
     printf("\n [Echangeur n°%d] : Ouverture de la barriere",numEchangeur+1);
     ech[numEchangeur].dispo =true;
+    pthread_cond_signal(&departVehicule[liste->val->idVehicule]);
     pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal d'ouverture du serveur
     pthread_mutex_unlock(&mutex);
     // Fin de section critique
