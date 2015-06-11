@@ -17,29 +17,6 @@
 */
 void* traitantThreadEchangeur(void* param){
 
-<<<<<<< 5adea4018b5855dbbf8ee2447328c435f45c9f68
-  int numEchangeur, i;
-  numEchangeur  = (int)(intptr_t) param;
-  llist liste;
-  while(true){
-    // Section critique
-    liste=NULL;
-
-    pthread_mutex_lock(&mutex);
-  //  affichageEchangeur();
-    ech[numEchangeur].dispo = false;
-    printf("\n [Echangeur n°%d] :fermeture de la barriere",numEchangeur+1);
-    pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal d'ouverture du serveur
-    ech[numEchangeur].dispo = true;
-    //affichageEchangeur();
-    liste=  element_i(serv.liste,rechercherPlaceByReady(serv.liste,true));
-    printf("\n [Echangeur n°%d] : Ouverture de la barriere",numEchangeur+1);
-    ech[numEchangeur].dispo =true;
-    pthread_cond_signal(&departVehicule[liste->val->idVehicule]);
-    pthread_cond_wait (&BarriereEchangeur[numEchangeur],&mutex); // Attend le signal d'ouverture du serveur
-    pthread_mutex_unlock(&mutex);
-    // Fin de section critique
-=======
   echangeur* echan = (echangeur*) param;
   int idEchangeur, i;
   idEchangeur = echan->numId;
@@ -62,7 +39,6 @@ void* traitantThreadEchangeur(void* param){
     ech[idEchangeur-1].dispo = false;
     printf("\n\n[Echangeur n°%d] : Fermeture de la barriere [--]",idEchangeur);
 
->>>>>>> 6410db18aa778eeab874ea4add10c902d203184b
   }
   pthread_mutex_unlock(&mutex);
   fflush(stdout);

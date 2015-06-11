@@ -39,19 +39,7 @@ void* traitantThreadServeur(void* param){
       //printf("\n#DEBUG : Signal | Serveur -> Echangeur n°%d",liste->val->idEchangeur);
       pthread_cond_signal(&BarriereEchangeur[liste->val->idEchangeur-1]);
     }
-<<<<<<< 5adea4018b5855dbbf8ee2447328c435f45c9f68
-    pthread_mutex_unlock(&mutex);
-    usleep(50);
 
-   // Ordonne au nouveau véhicule de démarrer
-   //simulation temps de lever
-   usleep(500);
-   /*
-   pthread_mutex_lock(&mutex);
-   pthread_cond_signal(&departVehicule[serv->liste->val->idVehicule]);
-   pthread_mutex_unlock(&mutex);*/
-    // Fin de section critique
-=======
     /* PROBLEME
         Si l'échangeur n'est pas disponible, un décalage entre les réveils du wait
         et le traitement des véhicules ready se forme
@@ -60,7 +48,6 @@ void* traitantThreadServeur(void* param){
         le thread traite le premier vehicule ready de la liste, donc le vehicule 1
         puis reboucle et attend dans son wait. Cependant, aucun autre véhicule n'arrive
         le vehicule 2 n'est donc pas traité */
->>>>>>> 6410db18aa778eeab874ea4add10c902d203184b
   }
   pthread_mutex_unlock(&mutex);
 
