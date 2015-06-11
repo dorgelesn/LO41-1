@@ -22,12 +22,15 @@ void* traitantThreadServeur(void* param){
   int i ;
   llist liste;
 
-  pthread_mutex_lock(&mutex);
+  printf("\n envoit le signal");
   while(true){
     liste = NULL;
-    // Attente du signal d'un véhicule prêt
-    pthread_cond_wait (&voitureReady,&mutex);
 
+    // Attente du signal d'un véhicule prêt
+
+     pthread_mutex_unlock(&mutex);
+    sem_wait(sem);
+    pthread_mutex_lock(&mutex);
     // Recherche du premier véhicule prêt dans la liste
     liste = element_i(serv->liste,rechercherPlaceByReady(serv->liste,true));
 

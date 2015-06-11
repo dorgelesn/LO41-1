@@ -5,7 +5,7 @@
 * \version 0.1
 * \date 13 Mai 2015
 */
-
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -49,7 +49,7 @@ void traitantSignt(){
 int main(int argc,char *argv[]) {
 
   // Initialisation des variables
-  int nbEchangeurs = 4, nbVehicules = 1, i,rc;
+  int nbEchangeurs = 4, nbVehicules = 2, i,rc;
   // Initialisation du serveur
   serv.NbVoiture = nbVehicules;
   serv.NbEchangeur = nbEchangeurs;
@@ -65,6 +65,22 @@ int main(int argc,char *argv[]) {
   for(i = 0; i < maxiVoiture; i++){
     pthread_cond_init(&departVehicule[i],NULL);
   }
+
+
+
+  sem = sem_open("\pthread", O_RDWR);
+  	if (sem == SEM_FAILED) {
+  		if (errno != ENOENT) {
+  			perror(argv[1]);
+  			exit(EXIT_FAILURE);
+  		}
+  		sem = sem_open("\pthread", O_RDWR | O_CREAT, 0666, 0);
+  		if (sem == SEM_FAILED) {
+  			perror(argv[1]);
+  			exit(EXIT_FAILURE);
+  		}
+  		fprintf(stderr, "[%d] Creation de %s\n", getpid(), argv[1]);
+  	}
 
   // Linkage des signaux
   signal(SIGINT,traitantSignt);
@@ -137,4 +153,5 @@ int main(int argc,char *argv[]) {
   pthread_cond_destroy(&partir);
   // Vidage de la liste chainée
   serv.liste = effacerListe(serv.liste);
+  sem_unlink("\pthread");
 }

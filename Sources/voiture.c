@@ -49,13 +49,12 @@ void* traitantThreadVehicule(void* param){
   pthread_mutex_lock(&mutex);
   while (arrived == false){
     idEchangeur = voiture->idEchangeur;
-
-    // Averti le serveur de sa disponibilitée et attend l'autorisation de départ
     voiture->ready = true;
-    //afficherVehicule(voiture);
     printf("\n\n[Voiture n°%d] Prêt a l'echangeur n°%d [!]",voiture->idVehicule,voiture->idEchangeur);
-    //printf("\n#DEBUG : Signal | Vehicule n°%d -> Serveur",voiture->idVehicule);
-    pthread_cond_signal (&voitureReady);
+    pthread_mutex_unlock(&mutex);
+    pthread_mutex_lock(&mutex);
+    printf("\n envoit le signal");
+    sem_post(sem);
     pthread_cond_wait(&departVehicule[voiture->idVehicule-1],&mutex);
 
 

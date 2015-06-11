@@ -4,7 +4,8 @@
 #define maxiEchangeur 4
 #include <stdbool.h>
 #include <pthread.h>
-
+#include <fcntl.h>
+#include <semaphore.h>
 pthread_t threadServeur;
 pthread_t threadGenerateur;
 pthread_t threadsEchangeur[maxiEchangeur];
@@ -21,11 +22,8 @@ pthread_cond_t voitureReady;
 pour la syncro des voiture avec le serveur :
 thread_cond_t attendre[maxiVoiture]=> initialisation !! ctrl+c
 quand l'echangeur est dispo (bool) alors l'echangeur envoit un signal au thread qui est en attente et se mais lui méme
-
-
-
-
 */
+sem_t * sem;
 /**
 *\struct vehicule
 *\brief Objet representant un vehicule
