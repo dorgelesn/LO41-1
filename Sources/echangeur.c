@@ -30,14 +30,14 @@ void* traitantThreadEchangeur(void* param){
 
     // Ouvre la barière et envoie l'autorisation au véhicule
     //afficherEchangeur(echan);
-    printf("\n\n[Echangeur n°%d] : Ouverture de la barriere [/]",idEchangeur);
+    printf("\n\n\t[Echangeur n°%d] : Ouverture de la barriere [/]",idEchangeur);
     //printf("\n#DEBUG : Signal | Echangeur n°%d -> Vehicule n°%d",idEchangeur,echan->idVehicule);
     pthread_cond_signal(&departVehicule[echan->idVehicule-1]);
 
     // Attends le signal du véhicule pour fermer la barrière
     pthread_cond_wait (&BarriereEchangeur[idEchangeur-1],&mutex);
-    ech[idEchangeur-1].dispo = false;
-    printf("\n\n[Echangeur n°%d] : Fermeture de la barriere [--]",idEchangeur);
+  //  ech[idEchangeur-1].dispo = false;
+    printf("\n\n\t[Echangeur n°%d] : Fermeture de la barriere [--]",idEchangeur);
 
   }
   pthread_mutex_unlock(&mutex);

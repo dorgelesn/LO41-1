@@ -49,7 +49,7 @@ void traitantSignt(){
 int main(int argc,char *argv[]) {
 
   // Initialisation des variables
-  int nbEchangeurs = 4, nbVehicules = 2, i,rc;
+  int nbEchangeurs = 4, nbVehicules = 4, i,rc;
   // Initialisation du serveur
   serv.NbVoiture = nbVehicules;
   serv.NbEchangeur = nbEchangeurs;
@@ -79,7 +79,6 @@ int main(int argc,char *argv[]) {
   			perror(argv[1]);
   			exit(EXIT_FAILURE);
   		}
-  		fprintf(stderr, "[%d] Creation de %s\n", getpid(), argv[1]);
   	}
 
   // Linkage des signaux

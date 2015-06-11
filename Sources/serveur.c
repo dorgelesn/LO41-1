@@ -24,33 +24,29 @@ void* traitantThreadServeur(void* param){
 
   printf("\n envoit le signal");
   while(true){
-    liste = NULL;
+
 
     // Attente du signal d'un véhicule prêt
 
-     pthread_mutex_unlock(&mutex);
+    pthread_mutex_unlock(&mutex);
     sem_wait(sem);
     pthread_mutex_lock(&mutex);
+    liste = NULL;
     // Recherche du premier véhicule prêt dans la liste
     liste = element_i(serv->liste,rechercherPlaceByReady(serv->liste,true));
-
+    liste->val->ready=false;
     // Verification de la disponibilité de l'échangeur
-    if(ech[liste->val->idEchangeur-1].dispo == true){
-      // Envoi l'autorisation à l'échangeur
-      ech[liste->val->idEchangeur-1].idVehicule = liste->val->idVehicule; // Assigne le véhicule à l'échangeur
-      printf("\n\n[Serveur] : Autorisation accordée à l'échangeur n°%d pour la traversée du véhicule n°%d [@]",liste->val->idEchangeur,liste->val->idVehicule);
-      //printf("\n#DEBUG : Signal | Serveur -> Echangeur n°%d",liste->val->idEchangeur);
-      pthread_cond_signal(&BarriereEchangeur[liste->val->idEchangeur-1]);
+    while(ech[liste->val->idEchangeur-1].dispo == false){
+      usleep(100);
+      printf("\n \n\n attente");
     }
+    // Envoi l'autorisation à l'échangeur
+    ech[liste->val->idEchangeur-1].dispo == false;
+    ech[liste->val->idEchangeur-1].idVehicule = liste->val->idVehicule; // Assigne le véhicule à l'échangeur
+    printf("\n\n[Serveur] : Autorisation accordée à l'échangeur n°%d pour la traversée du véhicule n°%d [@]",liste->val->idEchangeur,liste->val->idVehicule);
+    //printf("\n#DEBUG : Signal | Serveur -> Echangeur n°%d",liste->val->idEchangeur);
+    pthread_cond_signal(&BarriereEchangeur[liste->val->idEchangeur-1]);
 
-    /* PROBLEME
-        Si l'échangeur n'est pas disponible, un décalage entre les réveils du wait
-        et le traitement des véhicules ready se forme
-        ex: Vehicule 1 est ready mais son echangeur n'est pas disponible
-        la boucle du thread reprend, vehicule 2 est ready et active le wait.
-        le thread traite le premier vehicule ready de la liste, donc le vehicule 1
-        puis reboucle et attend dans son wait. Cependant, aucun autre véhicule n'arrive
-        le vehicule 2 n'est donc pas traité */
   }
   pthread_mutex_unlock(&mutex);
 

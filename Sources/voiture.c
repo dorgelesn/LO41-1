@@ -29,9 +29,6 @@ void* traitantThreadGenerationVoiture(void* param){
     rc = pthread_create(&threadsVehicule[i],NULL,traitantThreadVehicule,(void *)(intptr_t) voiture);
     if(rc)
     printf("\n(!)erreur creation thread vehicule");
-
-
-
   }
   pthread_mutex_unlock(&mutex);
 
@@ -50,26 +47,23 @@ void* traitantThreadVehicule(void* param){
   while (arrived == false){
     idEchangeur = voiture->idEchangeur;
     voiture->ready = true;
-    printf("\n\n[Voiture n°%d] Prêt a l'echangeur n°%d [!]",voiture->idVehicule,voiture->idEchangeur);
+    printf("\n\n\t\t[Voiture n°%d] Prêt a l'echangeur n°%d [!]",voiture->idVehicule,voiture->idEchangeur);
     pthread_mutex_unlock(&mutex);
     pthread_mutex_lock(&mutex);
-    printf("\n envoit le signal");
     sem_post(sem);
     pthread_cond_wait(&departVehicule[voiture->idVehicule-1],&mutex);
-
-
     // Traversée de l'echangeur
-    voiture->ready = false;
-    printf("\n\n[Voiture n°%d] : Traversée de l'echangeur n°%d [>]",voiture->idVehicule,voiture->idEchangeur);
+  //  voiture->ready = false;
+    printf("\n\t\t[Voiture n°%d] : Traversée de l'echangeur n°%d [>]",voiture->idVehicule,voiture->idEchangeur);
     //printf("\n#DEBUG : Signal | Vehicule n°%d -> Echangeur n°%d",voiture->idVehicule,idEchangeur);
     pthread_cond_signal(&BarriereEchangeur[idEchangeur-1]);
 
     // Si le véhicule est arrivé à destination, il se supprime de la liste
     if (voiture->idEchangeur == voiture->arrivee) {
       arrived = true;
-      printf("\n\n[Voiture n°%d] : Fin de parcours [X]",voiture->idVehicule);
+      printf("\n\n\t\t[Voiture n°%d] : Fin de parcours [X]",voiture->idVehicule);
       serv.liste = supprimerElementById(serv.liste,voiture->idVehicule);
-      printf("\n\n[Voiture n°%d] : Suppression de la liste [*]",voiture->idVehicule);
+      printf("\n\n\t\t\t\t\t\t\t\t\t[Voiture n°%d] : Suppression de la liste [*]",voiture->idVehicule);
     }
     // Sinon, il détermine la prochaine étape du trajet
     else {
@@ -85,7 +79,7 @@ void* traitantThreadVehicule(void* param){
         voiture->idEchangeur = ech[idEchangeur-1].droite;
       }
       i++;
-      printf("\n\n[Voiture n°%d] : Prochain échangeur : n°%d [-->]",voiture->idVehicule,voiture->idEchangeur);
+      printf("\n\n\t\t[Voiture n°%d] : Prochain échangeur : n°%d [-->]",voiture->idVehicule,voiture->idEchangeur);
     }
   }
   pthread_mutex_unlock(&mutex);
