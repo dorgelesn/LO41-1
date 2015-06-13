@@ -1,117 +1,146 @@
 
- envoit le signal
 
-[Voiture n°4] Prêt a l'echangeur n°3 [!]
+		[Voiture n°1] Prêt a l'echangeur n°1 [!]
+
+		[Voiture n°2] Prêt a l'echangeur n°2 [!]
+
+		[Voiture n°3] Prêt a l'echangeur n°1 [!]
+
+		[Voiture n°4] Prêt a l'echangeur n°4 [!]
 Fin du thread generation de voiture
 
-[Voiture n°2] Prêt a l'echangeur n°2 [!]
+		[Voiture n°5] Prêt a l'echangeur n°4 [!]
 
-[Voiture n°3] Prêt a l'echangeur n°4 [!]
+	[Echangeur n°1] : Ouverture de la barriere [/] pour 1
+		[Voiture n°1] : Traversée de l'echangeur n°1 [>]
 
-[Serveur] : Autorisation accordée à l'échangeur n°3 pour la traversée du véhicule n°4 [@]
+	[Echangeur n°2] : Ouverture de la barriere [/] pour 2
+		[Voiture n°2] : Traversée de l'echangeur n°2 [>]
 
-[Serveur] : Autorisation accordée à l'échangeur n°4 pour la traversée du véhicule n°3 [@]
+	[Echangeur n°4] : Ouverture de la barriere [/] pour 4
+		[Voiture n°4] : Traversée de l'echangeur n°4 [>]
+		[Voiture n°1] :envoit signal descente a 1
 
-[Echangeur n°3] : Ouverture de la barriere [/]
+		[Voiture n°1] : Prochain échangeur : n°2 [-->]
 
-[Echangeur n°4] : Ouverture de la barriere [/]
+		[Voiture n°1] Prêt a l'echangeur n°2 [!]
+		[Voiture n°2] :envoit signal descente a 2
 
-[Voiture n°3] : Traversée de l'echangeur n°4 [>]
+		[Voiture n°2] : Prochain échangeur : n°1 [-->]
 
-[Voiture n°3] : Prochain échangeur : n°3 [-->]
+		[Voiture n°2] Prêt a l'echangeur n°1 [!]
+		[Voiture n°4] :envoit signal descente a 4
 
-[Voiture n°3] Prêt a l'echangeur n°3 [!]
+		[Voiture n°4] : Prochain échangeur : n°3 [-->]
 
-[Echangeur n°4] : Fermeture de la barriere [--]
+		[Voiture n°4] Prêt a l'echangeur n°3 [!]
 
-[Serveur] : Autorisation accordée à l'échangeur n°3 pour la traversée du véhicule n°3 [@]
+	[Echangeur n°1] : Fermeture de la barriere [--]
 
-[Echangeur n°3] : Fermeture de la barriere [--]
+	[Echangeur n°2] : Fermeture de la barriere [--]
 
-[Voiture n°1] Prêt a l'echangeur n°2 [!]
+	[Echangeur n°4] : Fermeture de la barriere [--]
 
-[Serveur] : Autorisation accordée à l'échangeur n°2 pour la traversée du véhicule n°2 [@]
+	[Echangeur n°4] : Ouverture de la barriere [/] pour 5
+		[Voiture n°5] : Traversée de l'echangeur n°4 [>]
 
-[Echangeur n°2] : Ouverture de la barriere [/]
+	[Echangeur n°3] : Ouverture de la barriere [/] pour 4
+		[Voiture n°4] : Traversée de l'echangeur n°3 [>]
 
-[Voiture n°2] : Traversée de l'echangeur n°2 [>]
+	[Echangeur n°1] : Ouverture de la barriere [/] pour 3
+		[Voiture n°3] : Traversée de l'echangeur n°1 [>]
 
-[Voiture n°2] : Prochain échangeur : n°1 [-->]
+	[Echangeur n°3] : Fermeture de la barriere [--]
+		[Voiture n°5] :envoit signal descente a 4
 
-[Voiture n°2] Prêt a l'echangeur n°1 [!]
+		[Voiture n°5] : Prochain échangeur : n°3 [-->]
 
-[Serveur] : Autorisation accordée à l'échangeur n°1 pour la traversée du véhicule n°2 [@]
+		[Voiture n°5] Prêt a l'echangeur n°3 [!]
+		[Voiture n°4] :envoit signal descente a 3
 
-[Echangeur n°1] : Ouverture de la barriere [/]
+		[Voiture n°4] : Fin de parcours [X]
 
-[Voiture n°2] : Traversée de l'echangeur n°1 [>]
+									[Voiture n°4] : Suppression de la liste [*]
+		[Voiture n°3] :envoit signal descente a 1
 
-[Voiture n°2] : Prochain échangeur : n°4 [-->]
+		[Voiture n°3] : Prochain échangeur : n°2 [-->]
 
-[Voiture n°2] Prêt a l'echangeur n°4 [!]
+		[Voiture n°3] Prêt a l'echangeur n°2 [!]
 
-[Echangeur n°2] : Fermeture de la barriere [--]
+	[Echangeur n°4] : Fermeture de la barriere [--]
 
-[Serveur] : Autorisation accordée à l'échangeur n°4 pour la traversée du véhicule n°2 [@]
+	[Echangeur n°3] : Ouverture de la barriere [/] pour 5
+		[Voiture n°5] : Traversée de l'echangeur n°3 [>]
 
-[Echangeur n°4] : Ouverture de la barriere [/]
+	[Echangeur n°1] : Fermeture de la barriere [--]
 
-[Voiture n°2] : Traversée de l'echangeur n°4 [>]
+	[Echangeur n°2] : Ouverture de la barriere [/] pour 3
+		[Voiture n°3] : Traversée de l'echangeur n°2 [>]
 
-[Voiture n°2] : Prochain échangeur : n°3 [-->]
+	[Echangeur n°3] : Fermeture de la barriere [--]
 
-[Voiture n°2] Prêt a l'echangeur n°3 [!]
+	[Echangeur n°1] : Ouverture de la barriere [/] pour 2
+		[Voiture n°2] : Traversée de l'echangeur n°1 [>]
+		[Voiture n°5] :envoit signal descente a 3
 
-[Echangeur n°1] : Fermeture de la barriere [--]
+		[Voiture n°5] : Fin de parcours [X]
 
-[Serveur] : Autorisation accordée à l'échangeur n°3 pour la traversée du véhicule n°2 [@]
+									[Voiture n°5] : Suppression de la liste [*]
+		[Voiture n°3] :envoit signal descente a 2
 
-[Echangeur n°3] : Ouverture de la barriere [/]
+		[Voiture n°3] : Fin de parcours [X]
 
-[Echangeur n°4] : Fermeture de la barriere [--]
+									[Voiture n°3] : Suppression de la liste [*]
+		[Voiture n°2] :envoit signal descente a 1
 
-[Voiture n°2] : Traversée de l'echangeur n°3 [>]
+		[Voiture n°2] : Prochain échangeur : n°4 [-->]
 
-[Voiture n°2] : Fin de parcours [X]
+		[Voiture n°2] Prêt a l'echangeur n°4 [!]
 
-		[Voiture n°2] : Suppression de la liste [*]
+	[Echangeur n°2] : Fermeture de la barriere [--]
 
-[Echangeur n°3] : Fermeture de la barriere [--]
+	[Echangeur n°1] : Fermeture de la barriere [--]
 
-[Serveur] : Autorisation accordée à l'échangeur n°2 pour la traversée du véhicule n°1 [@]
+	[Echangeur n°4] : Ouverture de la barriere [/] pour 2
+		[Voiture n°2] : Traversée de l'echangeur n°4 [>]
 
-[Echangeur n°2] : Ouverture de la barriere [/]
+	[Echangeur n°2] : Ouverture de la barriere [/] pour 1
+		[Voiture n°1] : Traversée de l'echangeur n°2 [>]
+		[Voiture n°2] :envoit signal descente a 4
 
-[Voiture n°1] : Traversée de l'echangeur n°2 [>]
+		[Voiture n°2] : Fin de parcours [X]
 
-[Voiture n°1] : Prochain échangeur : n°1 [-->]
+									[Voiture n°2] : Suppression de la liste [*]
+		[Voiture n°1] :envoit signal descente a 2
 
-[Voiture n°1] Prêt a l'echangeur n°1 [!]
+		[Voiture n°1] : Prochain échangeur : n°3 [-->]
 
-[Serveur] : Autorisation accordée à l'échangeur n°1 pour la traversée du véhicule n°1 [@]
+		[Voiture n°1] Prêt a l'echangeur n°3 [!]
 
-[Echangeur n°1] : Ouverture de la barriere [/]
+	[Echangeur n°4] : Fermeture de la barriere [--]
 
-[Voiture n°1] : Traversée de l'echangeur n°1 [>]
+	[Echangeur n°2] : Fermeture de la barriere [--]
 
-[Voiture n°1] : Prochain échangeur : n°4 [-->]
+	[Echangeur n°3] : Ouverture de la barriere [/] pour 1
+		[Voiture n°1] : Traversée de l'echangeur n°3 [>]
 
-[Voiture n°1] Prêt a l'echangeur n°4 [!]
+	[Echangeur n°3] : Fermeture de la barriere [--]
+		[Voiture n°1] :envoit signal descente a 3
 
-[Echangeur n°2] : Fermeture de la barriere [--]
+		[Voiture n°1] : Prochain échangeur : n°4 [-->]
 
-[Serveur] : Autorisation accordée à l'échangeur n°4 pour la traversée du véhicule n°1 [@]
+		[Voiture n°1] Prêt a l'echangeur n°4 [!]
 
-[Echangeur n°1] : Fermeture de la barriere [--]
+	[Echangeur n°4] : Ouverture de la barriere [/] pour 1
+		[Voiture n°1] : Traversée de l'echangeur n°4 [>]
+		[Voiture n°1] :envoit signal descente a 4
 
-[Echangeur n°4] : Ouverture de la barriere [/]
+		[Voiture n°1] : Fin de parcours [X]
 
-[Voiture n°1] : Traversée de l'echangeur n°4 [>]
-
-[Voiture n°1] : Fin de parcours [X]
-
-		[Voiture n°1] : Suppression de la liste [*]
-
-[Echangeur n°4] : Fermeture de la barriere [--]
+									[Voiture n°1] : Suppression de la liste [*]
 *Fin du thread du vehicule n°1
 *Fin du thread du vehicule n°2
+*Fin du thread du vehicule n°3
+*Fin du thread du vehicule n°4
+*Fin du thread du vehicule n°5
+

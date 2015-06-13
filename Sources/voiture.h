@@ -3,6 +3,7 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <pthread.h>
 #include <time.h>
 #include <stdint.h>
@@ -10,6 +11,8 @@
 #include "serveur.h"
 #include <fcntl.h>
 #include <semaphore.h>
+#include <unistd.h>
+
 void* traitantThreadGenerationVoiture(void* param);
 void* traitantThreadVehicule(void* param);
 void creationVehicule(vehicule* v,int idVehicule,int idEchangeur,int depart,int arrivee);

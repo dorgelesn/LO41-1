@@ -17,42 +17,44 @@
 * \param param Paramètre du thread contenant la structure du serveur
 */
 void* traitantThreadServeur(void* param){
-
   serveur* serv = (serveur*) param;
   int i ;
   llist liste;
 
-  printf("\n envoit le signal");
   while(true){
 
 
     // Attente du signal d'un véhicule prêt
 
-    pthread_mutex_unlock(&mutex);
-    sem_wait(sem);
-    pthread_mutex_lock(&mutex);
+
+
     liste = NULL;
     // Recherche du premier véhicule prêt dans la liste
+    sem_wait(sem);
     liste = element_i(serv->liste,rechercherPlaceByReady(serv->liste,true));
+    usleep(1000);
+    if(liste!=NULL){
     liste->val->ready=false;
     // Verification de la disponibilité de l'échangeur
-    while(ech[liste->val->idEchangeur-1].dispo == false){
-      usleep(100);
-      printf("\n \n\n attente");
-    }
+    usleep(500);
+  if(ech[liste->val->idEchangeur-1].dispo ==0){
+    liste->val->ready=true;
+    sem_post(sem);
+  //  printf("\n\n[Serveur] : Echangeur  n°%d occuper voiture %d ",liste->val->idEchangeur,liste->val->idVehicule);
+    usleep(100);
+
+  }else{
     // Envoi l'autorisation à l'échangeur
-    ech[liste->val->idEchangeur-1].dispo == false;
+    ech[liste->val->idEchangeur-1].dispo=0;
     ech[liste->val->idEchangeur-1].idVehicule = liste->val->idVehicule; // Assigne le véhicule à l'échangeur
-    printf("\n\n[Serveur] : Autorisation accordée à l'échangeur n°%d pour la traversée du véhicule n°%d [@]",liste->val->idEchangeur,liste->val->idVehicule);
-    //printf("\n#DEBUG : Signal | Serveur -> Echangeur n°%d",liste->val->idEchangeur);
-    pthread_cond_signal(&BarriereEchangeur[liste->val->idEchangeur-1]);
+    //printf("\n\n[Serveur] : Autorisation accordée à l'échangeur n°%d pour la traversée du véhicule n°%d [@]",liste->val->idEchangeur,liste->val->idVehicule);
+    sem_post(semEchangeurLever[liste->val->idEchangeur-1]);
 
+      }
   }
-  pthread_mutex_unlock(&mutex);
-
 
 }
-
+}
 
 
 /**

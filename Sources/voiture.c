@@ -8,8 +8,6 @@ void* traitantThreadGenerationVoiture(void* param){
   srand(time(NULL));
 
   // Attente du signal de départ du main
-  pthread_mutex_lock(&mutex);
-  pthread_cond_wait (&partir,&mutex);
 
 
   for (i = 0; i < nbVehicules; i++){
@@ -24,13 +22,13 @@ void* traitantThreadGenerationVoiture(void* param){
 
     // Ajout du véhicule dans la liste du serveur
     voiture = ajouterVehicule(&serv,idVehicule,idEchangeur,depart,arrivee);
-
+    usleep(3000);
     // Creation du thread du vehicule
     rc = pthread_create(&threadsVehicule[i],NULL,traitantThreadVehicule,(void *)(intptr_t) voiture);
     if(rc)
     printf("\n(!)erreur creation thread vehicule");
   }
-  pthread_mutex_unlock(&mutex);
+
 
   printf("\nFin du thread generation de voiture");
 
@@ -43,27 +41,23 @@ void* traitantThreadVehicule(void* param){
   int i = 0;
   bool arrived = false;
 
-  pthread_mutex_lock(&mutex);
   while (arrived == false){
     idEchangeur = voiture->idEchangeur;
     voiture->ready = true;
     printf("\n\n\t\t[Voiture n°%d] Prêt a l'echangeur n°%d [!]",voiture->idVehicule,voiture->idEchangeur);
-    pthread_mutex_unlock(&mutex);
-    pthread_mutex_lock(&mutex);
     sem_post(sem);
-    pthread_cond_wait(&departVehicule[voiture->idVehicule-1],&mutex);
-    // Traversée de l'echangeur
-  //  voiture->ready = false;
+    sem_wait(semDepartVehicule[voiture->idVehicule-1]);
     printf("\n\t\t[Voiture n°%d] : Traversée de l'echangeur n°%d [>]",voiture->idVehicule,voiture->idEchangeur);
-    //printf("\n#DEBUG : Signal | Vehicule n°%d -> Echangeur n°%d",voiture->idVehicule,idEchangeur);
-    pthread_cond_signal(&BarriereEchangeur[idEchangeur-1]);
-
+    usleep(100000);
+    printf("\n\t\t[Voiture n°%d] :envoit signal descente a %d",voiture->idVehicule,idEchangeur);
+    sem_post(semEchangeurDescendre[idEchangeur-1]);
     // Si le véhicule est arrivé à destination, il se supprime de la liste
     if (voiture->idEchangeur == voiture->arrivee) {
       arrived = true;
       printf("\n\n\t\t[Voiture n°%d] : Fin de parcours [X]",voiture->idVehicule);
       serv.liste = supprimerElementById(serv.liste,voiture->idVehicule);
       printf("\n\n\t\t\t\t\t\t\t\t\t[Voiture n°%d] : Suppression de la liste [*]",voiture->idVehicule);
+      pthread_exit(NULL);
     }
     // Sinon, il détermine la prochaine étape du trajet
     else {
@@ -81,8 +75,9 @@ void* traitantThreadVehicule(void* param){
       i++;
       printf("\n\n\t\t[Voiture n°%d] : Prochain échangeur : n°%d [-->]",voiture->idVehicule,voiture->idEchangeur);
     }
+
   }
-  pthread_mutex_unlock(&mutex);
+
 
 }
 

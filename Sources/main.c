@@ -16,24 +16,22 @@
 #include "serveur.h"
 #include "voiture.h"
 #include <stdint.h>
+#include <string.h>
 /**
 * \fn void traitantSignt()
 * \brief Fonction de traitement des interruptions
 * Permet la suppresion des mutex
 */
+
 void traitantSignt(){
   int i;
-
-  pthread_mutex_destroy(&mutex);
-  pthread_cond_destroy(&attendre);
-  for(i = 0;i < maxiEchangeur; i++){
-    pthread_cond_destroy(&BarriereEchangeur[i]);
-  }
-  for(i = 0; i < maxiVoiture; i++){
-    pthread_cond_destroy(&departVehicule[i]);
-  }
-  pthread_cond_destroy(&partir);
+  char mot[30];
+      for(i=0;i<maxiEchangeur;i++){
+        sprintf(mot,"/semEchangeur%d",i);
+        sem_unlink(mot);
+      }
   serv.liste = effacerListe(serv.liste);
+  printf("\n");
   exit(1);
 }
 
@@ -47,36 +45,85 @@ void traitantSignt(){
 * \return Renvoi 0 si le programme s'est déroulé normalement
 */
 int main(int argc,char *argv[]) {
-
+  char mot[30];
   // Initialisation des variables
-  int nbEchangeurs = 4, nbVehicules = 4, i,rc;
+  int nbEchangeurs = 4, nbVehicules , i,rc;
+  nbVehicules=atoi(argv[1]);
   // Initialisation du serveur
   serv.NbVoiture = nbVehicules;
   serv.NbEchangeur = nbEchangeurs;
-  serv.liste = initialisation();
+//  serv.liste = initialisation();
   // Initialisation des mutex
-  pthread_mutex_init(&mutex, NULL);
-  pthread_cond_init(&attendre,NULL);
-  pthread_cond_init(&partir, NULL);
-  pthread_cond_init(&voitureReady, NULL);
-  for(i = 0; i < maxiEchangeur; i++){
-    pthread_cond_init(&BarriereEchangeur[i],NULL);
+
+
+  for(i=0;i<maxiEchangeur;i++){
+    sprintf(mot,"/semEchangeur%d",i);
+    semEchangeurLever[i]=sem_open(mot, O_RDWR);
+    if (semEchangeurLever[i] == SEM_FAILED) {
+      if (errno != ENOENT) {
+        perror("probléme de creation semaphore echangeur");
+        exit(EXIT_FAILURE);
+      }
+      semEchangeurLever[i] = sem_open(mot, O_RDWR | O_CREAT, 0666, 0);
+      if (semEchangeurLever[i] == SEM_FAILED) {
+        perror("probléme de creation semaphore echangeur");
+        exit(EXIT_FAILURE);
+      }
+    }
   }
-  for(i = 0; i < maxiVoiture; i++){
-    pthread_cond_init(&departVehicule[i],NULL);
-  }
 
 
 
-  sem = sem_open("\pthread", O_RDWR);
+
+
+    for(i=0;i<maxiEchangeur;i++){
+      sprintf(mot,"/semEchangeurDescendre%d",i);
+      semEchangeurDescendre[i]=sem_open(mot, O_RDWR);
+      if (semEchangeurDescendre[i] == SEM_FAILED) {
+        if (errno != ENOENT) {
+          perror("probléme de creation semaphore echangeur Descente");
+          exit(EXIT_FAILURE);
+        }
+        semEchangeurDescendre[i] = sem_open(mot, O_RDWR | O_CREAT, 0666, 0);
+        if (semEchangeurDescendre[i] == SEM_FAILED) {
+          perror("probléme de creation semaphore echangeur Descente");
+          exit(EXIT_FAILURE);
+        }
+      }
+    }
+
+
+
+
+        for(i=0;i<maxiVoiture;i++){
+          sprintf(mot,"/semEchangeurVoiture%d",i);
+          semDepartVehicule[i]=sem_open(mot, O_RDWR);
+          if (semDepartVehicule[i] == SEM_FAILED) {
+            if (errno != ENOENT) {
+              perror("probléme de creation semaphore voiture");
+              exit(EXIT_FAILURE);
+            }
+            semDepartVehicule[i] = sem_open(mot, O_RDWR | O_CREAT, 0666, 0);
+            if (semDepartVehicule[i] == SEM_FAILED) {
+              perror("probléme de creation semaphore voiture");
+              exit(EXIT_FAILURE);
+            }
+          }
+        }
+
+
+
+
+
+  sem = sem_open("/pthread", O_RDWR);
   	if (sem == SEM_FAILED) {
   		if (errno != ENOENT) {
-  			perror(argv[1]);
+        perror("probléme de creation semaphore serveur");
   			exit(EXIT_FAILURE);
   		}
-  		sem = sem_open("\pthread", O_RDWR | O_CREAT, 0666, 0);
+  		sem = sem_open("/pthread", O_RDWR | O_CREAT, 0666, 0);
   		if (sem == SEM_FAILED) {
-  			perror(argv[1]);
+        perror("probléme de creation semaphore erreur");
   			exit(EXIT_FAILURE);
   		}
   	}
@@ -122,8 +169,7 @@ int main(int argc,char *argv[]) {
 
   sleep(1);
 
-  // Lancement du thread de génération de véhicule
-  pthread_cond_signal (&partir);
+
 
 
   // Attente de fin du thread générateur de véhicule
@@ -135,22 +181,18 @@ int main(int argc,char *argv[]) {
     printf("\n*Fin du thread du vehicule n°%d",i+1);
   }
 
-
-  printf("\n\n");
-
-  /* Nettoyage mémoire */
-
-  // Destruction des mutex
-  pthread_mutex_destroy(&mutex);
-  pthread_cond_destroy(&attendre);
-  for(i = 0; i < maxiEchangeur; i++){
-    pthread_cond_destroy(&BarriereEchangeur[i]);
-  }
-  for(i = 0; i < maxiVoiture; i++){
-    pthread_cond_destroy(&departVehicule[i]);
-  }
-  pthread_cond_destroy(&partir);
-  // Vidage de la liste chainée
   serv.liste = effacerListe(serv.liste);
-  sem_unlink("\pthread");
+  sem_unlink("/pthread");
+
+    for(i=0;i<maxiEchangeur;i++){
+      sprintf(mot,"/semEchangeur%d",i);
+      sem_unlink(mot);
+    }
+    for(i=0;i<maxiVoiture;i++){
+      sprintf(mot,"/semEchangeurVoiture%d",i);
+      sem_unlink(mot);
+
+    }
+    printf("\n\n");
+    exit(0);
 }

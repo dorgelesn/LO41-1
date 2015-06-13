@@ -15,10 +15,10 @@
 *
 * \return Renvoi un premier élément servant de base pour la liste chainée
 */
-llist initialisation()
+llist initialisation(vehicule* v)
 {
   llist liste = malloc(sizeof(element));
-  liste->val=NULL;
+  liste->val=v;
   liste->nxt=NULL;
   return liste;
 }
@@ -235,6 +235,7 @@ int rechercherPlaceByReady(llist liste, bool valeur){
   element *tmp=liste;
   int i=0;
   /* Tant que l'on n'est pas au bout de la liste */
+
   while(tmp != NULL)
   {
       if(tmp->val->ready == valeur)

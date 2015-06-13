@@ -20,28 +20,23 @@ void* traitantThreadEchangeur(void* param){
   echangeur* echan = (echangeur*) param;
   int idEchangeur, i;
   idEchangeur = echan->numId;
-
-  pthread_mutex_lock(&mutex);
+  ech[idEchangeur-1].dispo = true;
   while(true){
 
     // Attends l'autorisation du serveur
-    ech[idEchangeur-1].dispo = true;
-    pthread_cond_wait(&BarriereEchangeur[idEchangeur-1],&mutex);
-
+    sem_wait(semEchangeurLever[idEchangeur-1]);
     // Ouvre la barière et envoie l'autorisation au véhicule
     //afficherEchangeur(echan);
-    printf("\n\n\t[Echangeur n°%d] : Ouverture de la barriere [/]",idEchangeur);
+    usleep(30000);
+    printf("\n\n\t[Echangeur n°%d] : Ouverture de la barriere [/] pour %d" ,idEchangeur,echan->idVehicule);
     //printf("\n#DEBUG : Signal | Echangeur n°%d -> Vehicule n°%d",idEchangeur,echan->idVehicule);
-    pthread_cond_signal(&departVehicule[echan->idVehicule-1]);
-
+    sem_post(semDepartVehicule[echan->idVehicule-1]);
     // Attends le signal du véhicule pour fermer la barrière
-    pthread_cond_wait (&BarriereEchangeur[idEchangeur-1],&mutex);
-  //  ech[idEchangeur-1].dispo = false;
+    sem_wait(semEchangeurDescendre[idEchangeur-1]);
+    usleep(30000);
     printf("\n\n\t[Echangeur n°%d] : Fermeture de la barriere [--]",idEchangeur);
-
+    ech[idEchangeur-1].dispo = true;
   }
-  pthread_mutex_unlock(&mutex);
-  fflush(stdout);
   pthread_exit(NULL);
 }
 
