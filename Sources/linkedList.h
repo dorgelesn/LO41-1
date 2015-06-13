@@ -34,4 +34,9 @@ int nombreElements(llist liste);
 llist effacerListe(llist liste);
 
 bool resteVoiture(llist liste,int numroEchan);
+
+int rechercherPlaceByReadyPriority(llist liste, bool valeur);
+
+
+void reinitialiserPrioEchan(llist liste,int numEchan);
 #endif //SERVEUR_H_INCLUDED

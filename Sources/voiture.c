@@ -62,7 +62,6 @@ void* traitantThreadVehicule(void* param){
     // Sinon, il détermine la prochaine étape du trajet
     else {
       voiture->dejaParcourus[i] = idEchangeur;
-
       if (ech[idEchangeur-1].haut != 0 && !dejaParcourus(voiture,ech[idEchangeur-1].haut)){
         voiture->idEchangeur = ech[idEchangeur-1].haut;
       } else if (ech[idEchangeur-1].bas != 0 && !dejaParcourus(voiture,ech[idEchangeur-1].bas)) {
@@ -96,6 +95,7 @@ void creationVehicule(vehicule* v,int idVehicule, int idEchangeur,int depart,int
   v->idEchangeur = idEchangeur;
   v->depart = depart;
   v->arrivee = arrivee;
+  v->prioriter=1;
   v->ready = false;
 }
 

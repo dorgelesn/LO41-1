@@ -1,6 +1,6 @@
 #ifndef STRUCTURE_H_INCLUDED
 #define STRUCTURE_H_INCLUDED
-#define maxiVoiture 100
+#define maxiVoiture 30000
 #define maxiEchangeur 4
 #include <stdbool.h>
 #include <pthread.h>
@@ -29,14 +29,20 @@ sem_t * semDepartVehicule[maxiVoiture-1];
 *
 * depart Represente l'Id de l'echangeur de depart de la voiture
 * arrivee Represente l'Id de l'echangeur d'arrivée de la voiture
+* idEchangeur est le numero d'echangeur ou se trouve la voiture
+* idVehicule est le numero d'identifiant de la voiture
+* ready est un boolean qui permet de savoit si la voiture a demander la permition de rentrer dans un echangeur
+* prioriter est un boolean permettant de savoir si la voiture a deja été visiter par le serveur ausquel cas cette valeur augmente de 1
+*
 **/
 typedef struct vehicule {
-  //int precedent; ????
+
   int idEchangeur;
   int idVehicule;
   int depart;
   int arrivee;
   bool ready;
+  int prioriter;
   int dejaParcourus[maxiEchangeur];
 } vehicule;
 
@@ -75,6 +81,7 @@ typedef element* llist;
 *            0         0
 *
 *
+* bool dispo est un boolean permettant de savoir si l'echangeur et deja occuper ou non true => il n'est pas occuper false => il est occuprr
 **/
 // 0 false
 typedef struct echangeur {
@@ -101,6 +108,7 @@ typedef struct serveur{
   int NbVoiture;
   int NbEchangeur;
   llist liste;
+
 } serveur;
 serveur serv;
 

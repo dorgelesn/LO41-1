@@ -229,7 +229,64 @@ llist supprimerElementEnFin(llist liste)
     return liste;
 }
 
+/**
+* \fn void reinitialiserPrioEchan(llist liste)
+* \brief Fonction permettant de reinitaliser toute les prioriter pour un echangeur donné
+*
+* \param liste La liste chainée que l'on manipule
+* \param int le numero d'echangeur pour lesquel on doit reinitialiser les valeur
+*
+*/
+void reinitialiserPrioEchan(llist liste,int numEchan){
+  element *tmp=liste;
+  /* Tant que l'on n'est pas au bout de la liste */
+  while(tmp != NULL)
+  {
+      if(tmp->val->prioriter>1&&tmp->val->idEchangeur==numEchan)
+      {
+        tmp->val->prioriter=1;
+      }
+      tmp = tmp->nxt;
 
+  }
+}
+/**
+* \fn void rechercherPlaceByReadyPriority(llist liste)
+* \brief Fonction permettant de rechercher dans la liste
+*
+* \param liste La liste chainée que l'on manipule
+* \param bool la valeur que l'on veut rechercher
+*
+*/
+int rechercherPlaceByReadyPriority(llist liste, bool valeur){
+
+  element *tmp=liste;
+
+  int i;
+/* Tant que l'on n'est pas au bout de la liste */
+  i=0;
+  while(tmp != NULL)
+  {
+      if(tmp->val->ready == valeur && tmp->val->prioriter==1 )
+      {
+          /* Si l'élément a la valeur recherchée, on renvoie son adresse */
+          return i;
+      }
+      tmp = tmp->nxt;
+      i++;
+  }
+
+  return -1;
+}
+
+/**
+* \fn void rechercherPlaceByReady(llist liste,bool)
+* \brief Fonction permettant de rechercher dans la liste sans se preocuper de la prioriter
+*
+* \param liste La liste chainée que l'on manipule
+* \param bool la valeur que l'on veut rechercher
+*
+*/
 int rechercherPlaceByReady(llist liste, bool valeur){
 
   element *tmp=liste;
@@ -249,7 +306,14 @@ int rechercherPlaceByReady(llist liste, bool valeur){
   return -1;
 }
 
-
+/**
+* \fn void rechercherPlaceById(llist liste,int
+* \brief a partir de l'id donne la place dans la liste chainé
+\return la position de l'element rechercher
+* \param liste La liste chainée que l'on manipule
+* \param int la valeur de l'id rechercher
+*
+*/
 int rechercherPlaceById(llist liste, int valeur){
   element *tmp=liste;
   int i=0;

@@ -20,7 +20,7 @@ void* traitantThreadEchangeur(void* param){
   echangeur* echan = (echangeur*) param;
   int idEchangeur, i;
   idEchangeur = echan->numId;
-  ech[idEchangeur-1].dispo = true;
+  ech[idEchangeur-1].dispo =1;
   while(true){
 
     // Attends l'autorisation du serveur
@@ -29,13 +29,14 @@ void* traitantThreadEchangeur(void* param){
     //afficherEchangeur(echan);
     usleep(30000);
     printf("\n\n\t[Echangeur n°%d] : Ouverture de la barriere [/] pour %d" ,idEchangeur,echan->idVehicule);
-    //printf("\n#DEBUG : Signal | Echangeur n°%d -> Vehicule n°%d",idEchangeur,echan->idVehicule);
-    sem_post(semDepartVehicule[echan->idVehicule-1]);
+    //dit au vehicule qu'il peut partir
+  sem_post(semDepartVehicule[echan->idVehicule-1]);
     // Attends le signal du véhicule pour fermer la barrière
     sem_wait(semEchangeurDescendre[idEchangeur-1]);
-    usleep(30000);
+    usleep(300);
     printf("\n\n\t[Echangeur n°%d] : Fermeture de la barriere [--]",idEchangeur);
     ech[idEchangeur-1].dispo = true;
+
   }
   pthread_exit(NULL);
 }

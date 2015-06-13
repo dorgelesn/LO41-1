@@ -17,45 +17,56 @@
 #include "voiture.h"
 #include <stdint.h>
 #include <string.h>
+
+
+
+
+
+
+
+
+/**
+* \fn void supression()
+* \brief Fonction de suppresion des semaphore et de la liste cjaine
+*
+*/
+void supression(){
+  char mot[30];
+  int i;
+  serv.liste = effacerListe(serv.liste);
+  sem_unlink("/pthread");
+
+    for(i=0;i<maxiEchangeur;i++){
+      sprintf(mot,"/semEchangeur%d",i);
+      sem_unlink(mot);
+    }
+    for(i=0;i<maxiVoiture;i++){
+      sprintf(mot,"/semEchangeurVoiture%d",i);
+      sem_unlink(mot);
+
+    }
+}
+
 /**
 * \fn void traitantSignt()
-* \brief Fonction de traitement des interruptions
-* Permet la suppresion des mutex
+* \brief Fonction de traitement du ctrl+c
+* Permet la suppresion des semaphore
 */
-
 void traitantSignt(){
-  int i;
-  char mot[30];
-      for(i=0;i<maxiEchangeur;i++){
-        sprintf(mot,"/semEchangeur%d",i);
-        sem_unlink(mot);
-      }
-  serv.liste = effacerListe(serv.liste);
+  supression();
   printf("\n");
   exit(1);
 }
 
-
 /**
-* \fn int main(int argc, char *argv[])
-* \brief Programme principal de la simulation
-*
-* \param argc Valeur représentant le nombre d'argument passés lors de l'appel du binaire exécutable
-* \param argv Tableau de char* contenant le nombre d'échangeur gérer
-* \return Renvoi 0 si le programme s'est déroulé normalement
+* \fn void initialisationMain()
+* \brief Fonction permettant d'initialiser les semaphore
+* Permet l'initialisation des semaphore ainsi que la prise en compte du signal ctrl+C
 */
-int main(int argc,char *argv[]) {
-  char mot[30];
-  // Initialisation des variables
-  int nbEchangeurs = 4, nbVehicules , i,rc;
-  nbVehicules=atoi(argv[1]);
+void initialisationMain(){
   // Initialisation du serveur
-  serv.NbVoiture = nbVehicules;
-  serv.NbEchangeur = nbEchangeurs;
-//  serv.liste = initialisation();
-  // Initialisation des mutex
-
-
+  char mot[30];
+  int i;
   for(i=0;i<maxiEchangeur;i++){
     sprintf(mot,"/semEchangeur%d",i);
     semEchangeurLever[i]=sem_open(mot, O_RDWR);
@@ -71,12 +82,7 @@ int main(int argc,char *argv[]) {
       }
     }
   }
-
-
-
-
-
-    for(i=0;i<maxiEchangeur;i++){
+for(i=0;i<maxiEchangeur;i++){
       sprintf(mot,"/semEchangeurDescendre%d",i);
       semEchangeurDescendre[i]=sem_open(mot, O_RDWR);
       if (semEchangeurDescendre[i] == SEM_FAILED) {
@@ -88,14 +94,10 @@ int main(int argc,char *argv[]) {
         if (semEchangeurDescendre[i] == SEM_FAILED) {
           perror("probléme de creation semaphore echangeur Descente");
           exit(EXIT_FAILURE);
-        }
       }
     }
-
-
-
-
-        for(i=0;i<maxiVoiture;i++){
+}
+for(i=0;i<maxiVoiture;i++){
           sprintf(mot,"/semEchangeurVoiture%d",i);
           semDepartVehicule[i]=sem_open(mot, O_RDWR);
           if (semDepartVehicule[i] == SEM_FAILED) {
@@ -109,27 +111,54 @@ int main(int argc,char *argv[]) {
               exit(EXIT_FAILURE);
             }
           }
-        }
-
-
-
-
-
-  sem = sem_open("/pthread", O_RDWR);
-  	if (sem == SEM_FAILED) {
-  		if (errno != ENOENT) {
-        perror("probléme de creation semaphore serveur");
-  			exit(EXIT_FAILURE);
-  		}
-  		sem = sem_open("/pthread", O_RDWR | O_CREAT, 0666, 0);
-  		if (sem == SEM_FAILED) {
+}
+sem = sem_open("/pthread", O_RDWR);
+  if (sem == SEM_FAILED) {
+    if (errno != ENOENT) {
+      perror("probléme de creation semaphore serveur");
+        exit(EXIT_FAILURE);
+      }
+      sem = sem_open("/pthread", O_RDWR | O_CREAT, 0666, 0);
+      if (sem == SEM_FAILED) {
         perror("probléme de creation semaphore erreur");
-  			exit(EXIT_FAILURE);
-  		}
-  	}
+        exit(EXIT_FAILURE);
+      }
+}
 
   // Linkage des signaux
   signal(SIGINT,traitantSignt);
+
+}
+
+
+
+
+/**
+* \fn int main(int argc, char *argv[])
+* \brief Programme principal de la simulation
+*
+* \param argc Valeur représentant le nombre d'argument passés lors de l'appel du binaire exécutable
+* \param argv Tableau de char* contenant le nombre d'échangeur gérer
+* \return Renvoi 0 si le programme s'est déroulé normalement
+*/
+int main(int argc,char *argv[]) {
+
+  // Initialisation des variables
+int nbEchangeurs = 4, nbVehicules , i,rc;
+
+if (argc != 2) {
+	fprintf(stderr, "usage: %s nombre de voiture (<%d)\n", argv[0],maxiVoiture);
+	exit(EXIT_FAILURE);
+}
+nbVehicules=atoi(argv[1]);
+
+if(nbVehicules > maxiVoiture){
+  fprintf(stderr, "nombre de voiture suppereieur a la limite ( %d )\n",maxiVoiture );
+  exit(EXIT_FAILURE);
+}
+  serv.NbVoiture = nbVehicules;
+  serv.NbEchangeur = nbEchangeurs;
+  initialisationMain();
 
   /*
   Schema des connexions
@@ -141,7 +170,6 @@ int main(int argc,char *argv[]) {
         ||        ||
         0         0
   */
-
   // Creation des echangeurs
   creationEchangeur(&ech[0],1,4,0,0,2);
   creationEchangeur(&ech[1],2,3,0,1,0);
@@ -157,7 +185,7 @@ int main(int argc,char *argv[]) {
   // Creation du thread generateur de vehicule
   rc = pthread_create(&threadGenerateur,NULL,traitantThreadGenerationVoiture,(void*)(intptr_t) nbVehicules);
   if(rc)
-  printf("\n(!)erreur creation thread Generation echangeur");
+  printf("\n(!)erreur creation thread Generation Generateur");
 
 
   // Creation des threads des echangeurs
@@ -174,25 +202,12 @@ int main(int argc,char *argv[]) {
 
   // Attente de fin du thread générateur de véhicule
   pthread_join(threadGenerateur,NULL);
-
   // Attente de fin des threads véhicule
   for (i = 0; i < nbVehicules; i++){
     pthread_join(threadsVehicule[i],NULL);
     printf("\n*Fin du thread du vehicule n°%d",i+1);
   }
-
-  serv.liste = effacerListe(serv.liste);
-  sem_unlink("/pthread");
-
-    for(i=0;i<maxiEchangeur;i++){
-      sprintf(mot,"/semEchangeur%d",i);
-      sem_unlink(mot);
-    }
-    for(i=0;i<maxiVoiture;i++){
-      sprintf(mot,"/semEchangeurVoiture%d",i);
-      sem_unlink(mot);
-
-    }
-    printf("\n\n");
-    exit(0);
+  supression();
+  printf("\n\n");
+  exit(0);
 }
