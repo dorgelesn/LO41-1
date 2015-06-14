@@ -48,7 +48,7 @@ void* traitantThreadVehicule(void* param){
     sem_post(sem);
     sem_wait(semDepartVehicule[voiture->idVehicule-1]);
     printf("\n\t\t[Voiture n°%d] : Traversée de l'echangeur n°%d [>]",voiture->idVehicule,voiture->idEchangeur);
-    usleep(100000);
+    usleep(10000);
     printf("\n\t\t[Voiture n°%d] :envoit signal descente a %d",voiture->idVehicule,idEchangeur);
     sem_post(semEchangeurDescendre[idEchangeur-1]);
     // Si le véhicule est arrivé à destination, il se supprime de la liste
