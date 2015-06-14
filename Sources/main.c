@@ -179,12 +179,6 @@ int main(int argc,char *argv[]) {
   // Initialisation des sémaphores et des signaux
   initialisationMain();
 
-  // Création des échangeurs
-  creationEchangeur(&ech[0],1,4,0,0,2);
-  creationEchangeur(&ech[1],2,3,0,1,0);
-  creationEchangeur(&ech[2],3,0,2,4,0);
-  creationEchangeur(&ech[3],4,0,1,0,3);
-
   /*
   Schema des connexions
         0        0
@@ -213,7 +207,7 @@ pthread_attr_t thread_attr;
   }
 
   // Création du thread du serveur
-  rc = pthread_create(&threadServeur,NULL,traitantThreadServeur,(void*) &serv);
+  rc = pthread_create(&threadServeur, &thread_attr,traitantThreadServeur,(void*) &serv);
   if(rc)
   printf("\n(!)erreur creation thread serveur ");
 
@@ -243,6 +237,6 @@ pthread_attr_t thread_attr;
   supression();
 
   printf("\n\n");
-  
+
   exit(0);
 }

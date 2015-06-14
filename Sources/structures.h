@@ -1,6 +1,6 @@
 #ifndef STRUCTURE_H_INCLUDED
 #define STRUCTURE_H_INCLUDED
-#define maxiVoiture 3000
+#define maxiVoiture 5000
 #define maxiEchangeur 4
 #include <stdbool.h>
 #include <pthread.h>

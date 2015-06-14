@@ -79,15 +79,42 @@ Michael Ayeng}
 	La solution qui à été retenu pour la création de ce programme est l'utilisation d'un unique processus, et d'une multiplicité de threads, chacun représentant une entité de la simulation.
 	
 	\subsection{Le processus principal}
-	
+	\paragraph{}
+	Dans le programme réalisé, le processus principal n'a pour fonction que de créer et d’héberger les différents threads et structures du programme. Il sert d'hôte aux entités de la simulation. Il exécute la fonction main contenant les différentes instructions pour mener à bien cette tâche.
+	\paragraph{}	
+	L'utilisateur transmet au processus via l'argument de lancement du programme le nombre de véhicule qu'il souhaite voir créer dans la simulation. Cette valeur doit être strictement inférieure à 5000. En effet, les test ont montrer que dépasser cette valeur entraîne la création d'erreur dans le programme. Est en cause le nombre maximal de thread que la configuration de l'utilisateur peut gérer.
+	Le nombre de véhicule ainsi obtenu est utilisé pour paramétrer la structure du serveur, ainsi que les différents sémaphores servant à la communication (cf. Section "Communication").
+	\paragraph{}
+	La fonction main du processus est également en charge de paramétrer les structures des échangeurs et d'initialiser les threads du serveur, des échangeurs et du générateur du véhicule.
+	Une fois cette tâche accomplie, il attend la fin du thread de génération de véhicule et de chaque thread de véhicule pour correctement nettoyer la mémoire avant la terminaison du programme.
 	\subsection{Le thread du serveur}
-	
+	\paragraph{}
+	Initialisé en mode "détaché" par la fonction main, le thread du serveur à pour but de traiter les véhicules souhaitent se déplacer sur le système d'échangeur, en autorisant les échangeurs correspondant à laisser par les véhicules en question.
+	\paragraph{}
+	Le thread possède un pointeur sur la structure du serveur, et à donc accès à la liste de véhicule à traité représentant le trafic de la simulation.
+	\paragraph{}
+	Le thread attend la notification d'un véhicule souhaitant traverser un échangeur pour effectuer une recherche dans sa liste et trouver un véhicule dont l'échangeur est disponible. Si lors de cette recherche, l'échangeur du véhicule trouvé est indisponible, le véhicule verra sa priorité incrémenter, le rendant ainsi plus prioritaire la prochaine fois que le serveur effectuera une recherche.
+	\paragraph{}
+	Le serveur autorise ensuite le thread de l'échangeur concerné à ouvrir le chemin au véhicule, et rend l'échangeur indisponible.
 	\subsection{Les threads des échangeurs}
-	
+	\paragraph{}
+	Initialisé en mode "détaché" par la fonction main, les threads des échangeurs ont pour but d'ouvrir leur barrière virtuelle et d'autoriser les véhicules le souhaitant à les traverser.
+	\paragraph{}
+	Les threads possèdes des pointeurs sur leur structure d'échangeur respective. Ils savent donc quel véhicule est en passe de les traverser.
+	\paragraph{}
+	Les threads attendent l'autorisation du serveur pour ouvrir leur barrière virtuelle, et ensuite autoriser au bon véhicule de les traverser. Ils attendent ensuite la notification du véhicule leur permettant de refermer leur barrière. Ils se rendent ensuite à nouveau disponible.
 	\subsection{Le thread générateur de véhicule}
-	
+	\paragraph{}
+	Initialisé par la fonction main, le thread générateur de véhicule à pour but de générer des véhicules ayant des paramètres aléatoires dans la simulation.
+	\paragraph{}
+	Le thread dispose du nombre véhicule que l'utilisateur à souhaiter voir générer.
+	\paragraph{}
+	Après avoir correctement paramétrer la structure du véhicule, le thread généréateur de véhicule va créer un thread pour le véhicule nouvellement créer. Cette tâche va être répéter autant de fois qu'il y a de véhicule à générer. Le thread se terminera ensuite.
 	\subsection{Les threads de véhicule}
-	
+	\paragraph{}
+	Initialisés par le thread générateur de véhicule, les threads de véhicule sont actifs tant que le véhicule qu'ils représentent n'est pas arrivé au bout de son parcours.
+	\paragraph{}
+	Ils informent le serveur de leur volonté de traverser un échangeur et attende l'autorisation du thread échangeur correspondant. Ils traversent ensuite l'échangeur et le notifie, afin qu'il puisse refermer sa barrière. Il détermine ensuite le prochain échangeur à visiter de manière pseudo-aléatoire (le véhicule tient compte des échangeurs déjà visités, ainsi il ne tournera pas en rond). Si le véhicule est arrivée à la fin de son parcours, le thread se termine.
 	\newpage
 	\section{Réeau de Pétri}
 	\begin{center}
@@ -106,15 +133,15 @@ Michael Ayeng}
 	\paragraph{}
 	Tous les sémaphores sont initialisées dès le début du programme, de ce fait il est nécessaire de décider dès le début du programme d'un nombre maximum de voiture a gérer.
 	
-			\subsubsection{Les sémaphores des échangeurs}
-			Chaque echangeur possede 2 semaphores, le premier semaphore permet de connaitre le nombre de voiture qui desire entrer dans le carrefour, le second semaphore est utiliser par la voiture pour libérer le carrefour.
+			\subsection{Les sémaphores des échangeurs}
+			Chaque échangeur possède 2 sémaphores, le premier sémaphore permet de connaître le nombre de voiture qui désirent entrer dans le carrefour et de communiquer sur l'ouverture de la barrière, le second sémaphore est utilisé par la voiture pour libérer le carrefour et autoriser l'échangeur à fermer sa barrière.
 
-			\subsubsection{Les sémaphores des véhicules}
-			Les voiture posséde un semaphore afin de recevoir le signal de depart de la part de l'echangeur. 
+			\subsection{Les sémaphores des véhicules}
+			Les voitures possèdent un sémaphore afin de recevoir le signal de départ de la part de l’échangeur. 
 
-			\subsubsection{Les sémaphores du serveur}
+			\subsection{Les sémaphores du serveur}
 			\paragraph{}
-			Le Serveur possede un semaphore permettant de le prevenir lorsque une voiture demande a rentrer dans l'echangeur.
+			Le serveur possède un sémaphore permettant de le prévenir lorsque une voiture demande à traverser un échangeur.
 		
 		
 	

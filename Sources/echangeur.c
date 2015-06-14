@@ -27,23 +27,20 @@ void* traitantThreadEchangeur(void* param){
     // Attends l'autorisation du serveur pour ouvrir la barrière
     sem_wait(semEchangeurLever[idEchangeur-1]);
 
-
     // Ouvre la barrière
     printf("\n\n\t[Echangeur n°%d] : Ouverture de la barriere [/] pour la voiture n°%d" ,idEchangeur,echan->idVehicule);
     // Envoi l'autorisation de circulation au véhicule
-    // simultation temp de lever
-      usleep(3000);
+    // Simultation temps de lever
+    usleep(3000);
     sem_post(semDepartVehicule[echan->idVehicule-1]);
 
     // Attends le signal du véhicule pour fermer la barrière
     sem_wait(semEchangeurDescendre[idEchangeur-1]);
 
-
     // Ferme la barrière
     printf("\n\n\t[Echangeur n°%d] : Fermeture de la barriere [--]",idEchangeur);
-  // simulation temp de descente
+    // Simulation temps de descente
     usleep(3000);
-    ech[idEchangeur-1].idVehicule = 0;
     ech[idEchangeur-1].dispo = true;
   }
   pthread_exit(NULL);

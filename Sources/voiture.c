@@ -16,9 +16,7 @@ void* traitantThreadGenerationVoiture(void* param){
     idVehicule = i+1;
     idEchangeur = rand()%4 + 1; // Assigne la voiture à un échangeur de manière aléatoire
     depart = idEchangeur;   // Assigne l'échangeur de départ du véhicule
-    do{
-      arrivee = rand()%4 + 1;   // Tente d'assigner un échangeur d'arrivée
-    } while(arrivee == depart);
+      arrivee = rand()%4 + 1;   // Assigne un échangeur d'arrivée
 
     // Ajout du véhicule dans la liste du serveur
     voiture = ajouterVehicule(&serv,idVehicule,idEchangeur,depart,arrivee);
@@ -59,18 +57,19 @@ void* traitantThreadVehicule(void* param){
 
     // Traverse l'échangeur
     printf("\n\n\t\t\t[Voiture n°%d] : Traversée de l'echangeur n°%d [>]",voiture->idVehicule,voiture->idEchangeur);
-  // temps de voyage
-    usleep(10000);
+    // Temps de voyage
+    usleep(1000000);
 
     // Envoi l'autorisation de fermeture de la barrière à l'échangeur
     sem_post(semEchangeurDescendre[idEchangeur-1]);
+
+    ech[voiture->idEchangeur-1].idVehicule = 0;
 
     // Si le véhicule est arrivé à destination, il se supprime de la liste
     if (voiture->idEchangeur == voiture->arrivee) {
       arrived = true;
       voiture->fin=1;
       printf("\n\n\t\t\t[Voiture n°%d] : Fin de parcours [X]",voiture->idVehicule);
-      //serv.liste = supprimerElementById(serv.liste,voiture->idVehicule);
       sem_post(sem);
       pthread_exit(NULL);
     }
