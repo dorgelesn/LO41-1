@@ -1,6 +1,6 @@
 
 
-[Générateur] : Voiture n°1 | Départ : 2 | Arrivée : 1
+[Générateur] : Voiture n°1 | Départ : 2 | Arrivée : 3
 
 			[Voiture n°1] Prêt a l'echangeur n°2 [!]
 
@@ -17,9 +17,13 @@
 
 ----------------------------
 
-[Générateur] : Voiture n°2 | Départ : 1 | Arrivée : 2
+	[Echangeur n°2] : Ouverture de la barriere [/] pour la voiture n°1
 
-			[Voiture n°2] Prêt a l'echangeur n°1 [!]
+[Générateur] : Voiture n°2 | Départ : 3 | Arrivée : 4
+
+			[Voiture n°1] : Traversée de l'echangeur n°2 [>]
+
+			[Voiture n°2] Prêt a l'echangeur n°3 [!]
 
 [Serveur] : Requête du véhicule n°2 acceptée [#]
 
@@ -27,16 +31,20 @@
    Voitures prises en charge
 
        ||         ||
-== |  (2)  | == | (0) | ==
+== |  (0)  | == | (0) | ==
        ||         ||
-== |  (1)  | == | (0) | ==
+== |  (1)  | == | (2) | ==
        ||         ||
 
 ----------------------------
 
-[Générateur] : Voiture n°3 | Départ : 4 | Arrivée : 1
+	[Echangeur n°3] : Ouverture de la barriere [/] pour la voiture n°2
 
-			[Voiture n°3] Prêt a l'echangeur n°4 [!]
+[Générateur] : Voiture n°3 | Départ : 1 | Arrivée : 3
+
+			[Voiture n°2] : Traversée de l'echangeur n°3 [>]
+
+			[Voiture n°3] Prêt a l'echangeur n°1 [!]
 
 [Serveur] : Requête du véhicule n°3 acceptée [#]
 
@@ -44,83 +52,18 @@
    Voitures prises en charge
 
        ||         ||
-== |  (2)  | == | (3) | ==
+== |  (3)  | == | (0) | ==
        ||         ||
-== |  (1)  | == | (0) | ==
-       ||         ||
-
-----------------------------
-
-[Générateur] : Voiture n°4 | Départ : 3 | Arrivée : 4
-
-			[Voiture n°4] Prêt a l'echangeur n°3 [!]
-
-[Serveur] : Requête du véhicule n°4 acceptée [#]
-
-----------------------------
-   Voitures prises en charge
-
-       ||         ||
-== |  (2)  | == | (3) | ==
-       ||         ||
-== |  (1)  | == | (4) | ==
+== |  (1)  | == | (2) | ==
        ||         ||
 
 ----------------------------
 
-[Générateur] : Voiture n°5 | Départ : 3 | Arrivée : 4
-Fin du thread générateur de voiture [*]
+	[Echangeur n°1] : Ouverture de la barriere [/] pour la voiture n°3
 
-			[Voiture n°5] Prêt a l'echangeur n°3 [!]
+[Générateur] : Voiture n°4 | Départ : 4 | Arrivée : 2
 
-	[Echangeur n°2] : Ouverture de la barriere [/] pour la voiture n°1
-
-			[Voiture n°1] : Traversée de l'echangeur n°2 [>]
-
-			[Voiture n°1] : Prochain échangeur : n°1 [-->]
-
-			[Voiture n°1] Prêt a l'echangeur n°1 [!]
-
-	[Echangeur n°2] : Fermeture de la barriere [--]
-
-	[Echangeur n°1] : Ouverture de la barriere [/] pour la voiture n°2
-
-			[Voiture n°2] : Traversée de l'echangeur n°1 [>]
-
-			[Voiture n°2] : Prochain échangeur : n°2 [-->]
-
-			[Voiture n°2] Prêt a l'echangeur n°2 [!]
-
-[Serveur] : Requête du véhicule n°2 acceptée [#]
-
-----------------------------
-   Voitures prises en charge
-
-       ||         ||
-== |  (2)  | == | (3) | ==
-       ||         ||
-== |  (2)  | == | (4) | ==
-       ||         ||
-
-----------------------------
-
-	[Echangeur n°1] : Fermeture de la barriere [--]
-
-	[Echangeur n°4] : Ouverture de la barriere [/] pour la voiture n°3
-
-			[Voiture n°3] : Traversée de l'echangeur n°4 [>]
-
-			[Voiture n°3] : Prochain échangeur : n°3 [-->]
-
-			[Voiture n°3] Prêt a l'echangeur n°3 [!]
-
-	[Echangeur n°4] : Fermeture de la barriere [--]
-
-	[Echangeur n°3] : Ouverture de la barriere [/] pour la voiture n°4
-
-			[Voiture n°4] : Traversée de l'echangeur n°3 [>]
-
-			[Voiture n°4] : Prochain échangeur : n°4 [-->]
+			[Voiture n°3] : Traversée de l'echangeur n°1 [>]
 
 			[Voiture n°4] Prêt a l'echangeur n°4 [!]
 
@@ -130,51 +73,423 @@ Fin du thread générateur de voiture [*]
    Voitures prises en charge
 
        ||         ||
-== |  (0)  | == | (4) | ==
+== |  (3)  | == | (4) | ==
        ||         ||
-== |  (2)  | == | (4) | ==
-       ||         ||
-
-----------------------------
-
-	[Echangeur n°3] : Fermeture de la barriere [--]
-
-[Serveur] : Requête du véhicule n°5 acceptée [#]
-
-----------------------------
-   Voitures prises en charge
-
-       ||         ||
-== |  (0)  | == | (4) | ==
-       ||         ||
-== |  (2)  | == | (5) | ==
+== |  (1)  | == | (2) | ==
        ||         ||
 
 ----------------------------
-
-	[Echangeur n°2] : Ouverture de la barriere [/] pour la voiture n°2
-
-			[Voiture n°2] : Traversée de l'echangeur n°2 [>]
-
-			[Voiture n°2] : Fin de parcours [X]
-
-	[Echangeur n°2] : Fermeture de la barriere [--]
 
 	[Echangeur n°4] : Ouverture de la barriere [/] pour la voiture n°4
 
+[Générateur] : Voiture n°5 | Départ : 4 | Arrivée : 2
+
 			[Voiture n°4] : Traversée de l'echangeur n°4 [>]
 
-			[Voiture n°4] : Fin de parcours [X]
+			[Voiture n°5] Prêt a l'echangeur n°4 [!]
 
-	[Echangeur n°3] : Ouverture de la barriere [/] pour la voiture n°5
+[Générateur] : Voiture n°6 | Départ : 2 | Arrivée : 1
 
-			[Voiture n°5] : Traversée de l'echangeur n°3 [>]
+[Générateur] : Voiture n°7 | Départ : 2 | Arrivée : 2
 
-			[Voiture n°5] : Prochain échangeur : n°4 [-->]
+[Générateur] : Voiture n°8 | Départ : 3 | Arrivée : 3
+
+			[Voiture n°7] Prêt a l'echangeur n°2 [!]
+
+			[Voiture n°6] Prêt a l'echangeur n°2 [!]
+
+			[Voiture n°8] Prêt a l'echangeur n°3 [!]
+
+[Générateur] : Voiture n°9 | Départ : 1 | Arrivée : 4
+
+[Générateur] : Voiture n°10 | Départ : 4 | Arrivée : 1
+Fin du thread générateur de voiture [*]
+
+			[Voiture n°9] Prêt a l'echangeur n°1 [!]
+
+			[Voiture n°10] Prêt a l'echangeur n°4 [!]
+
+			[Voiture n°1] : Prochain échangeur : n°1 [-->]
+
+			[Voiture n°1] Prêt a l'echangeur n°1 [!]
+
+	[Echangeur n°2] : Fermeture de la barriere [--]
+
+			[Voiture n°2] : Prochain échangeur : n°4 [-->]
+
+			[Voiture n°2] Prêt a l'echangeur n°4 [!]
+
+	[Echangeur n°3] : Fermeture de la barriere [--]
+
+			[Voiture n°3] : Prochain échangeur : n°2 [-->]
+
+			[Voiture n°3] Prêt a l'echangeur n°2 [!]
+
+	[Echangeur n°1] : Fermeture de la barriere [--]
+
+[Serveur] : Requête du véhicule n°3 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (4) | ==
+       ||         ||
+== |  (3)  | == | (0) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°2] : Ouverture de la barriere [/] pour la voiture n°3
+
+			[Voiture n°4] : Prochain échangeur : n°3 [-->]
+
+			[Voiture n°4] Prêt a l'echangeur n°3 [!]
 
 	[Echangeur n°4] : Fermeture de la barriere [--]
 
-			[Voiture n°5] Prêt a l'echangeur n°4 [!]
+[Serveur] : Requête du véhicule n°4 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (0) | ==
+       ||         ||
+== |  (3)  | == | (4) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°3] : Ouverture de la barriere [/] pour la voiture n°4
+
+			[Voiture n°3] : Traversée de l'echangeur n°2 [>]
+
+			[Voiture n°4] : Traversée de l'echangeur n°3 [>]
+
+[Serveur] : Requête du véhicule n°10 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (10) | ==
+       ||         ||
+== |  (3)  | == | (4) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°4] : Ouverture de la barriere [/] pour la voiture n°10
+
+			[Voiture n°10] : Traversée de l'echangeur n°4 [>]
+
+			[Voiture n°3] : Prochain échangeur : n°3 [-->]
+
+			[Voiture n°3] Prêt a l'echangeur n°3 [!]
+
+	[Echangeur n°2] : Fermeture de la barriere [--]
+
+			[Voiture n°4] : Prochain échangeur : n°2 [-->]
+
+			[Voiture n°4] Prêt a l'echangeur n°2 [!]
+
+	[Echangeur n°3] : Fermeture de la barriere [--]
+
+			[Voiture n°10] : Prochain échangeur : n°3 [-->]
+
+			[Voiture n°10] Prêt a l'echangeur n°3 [!]
+
+	[Echangeur n°4] : Fermeture de la barriere [--]
+
+[Serveur] : Requête du véhicule n°10 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (0) | ==
+       ||         ||
+== |  (0)  | == | (10) | ==
+       ||         ||
+
+----------------------------
+
+[Serveur] : Requête du véhicule n°7 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (0) | ==
+       ||         ||
+== |  (7)  | == | (10) | ==
+       ||         ||
+
+----------------------------
+
+[Serveur] : Requête du véhicule n°9 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (9)  | == | (0) | ==
+       ||         ||
+== |  (7)  | == | (10) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°1] : Ouverture de la barriere [/] pour la voiture n°9
+
+	[Echangeur n°2] : Ouverture de la barriere [/] pour la voiture n°7
+
+	[Echangeur n°3] : Ouverture de la barriere [/] pour la voiture n°10
+
+			[Voiture n°9] : Traversée de l'echangeur n°1 [>]
+
+			[Voiture n°7] : Traversée de l'echangeur n°2 [>]
+
+			[Voiture n°10] : Traversée de l'echangeur n°3 [>]
+
+			[Voiture n°7] : Fin de parcours [X]
+
+			[Voiture n°9] : Prochain échangeur : n°2 [-->]
+
+			[Voiture n°9] Prêt a l'echangeur n°2 [!]
+
+			[Voiture n°10] : Prochain échangeur : n°2 [-->]
+
+			[Voiture n°10] Prêt a l'echangeur n°2 [!]
+
+	[Echangeur n°1] : Fermeture de la barriere [--]
+
+	[Echangeur n°2] : Fermeture de la barriere [--]
+
+	[Echangeur n°3] : Fermeture de la barriere [--]
+
+[Serveur] : Requête du véhicule n°10 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (0) | ==
+       ||         ||
+== |  (10)  | == | (0) | ==
+       ||         ||
+
+----------------------------
+
+[Serveur] : Requête du véhicule n°1 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (1)  | == | (0) | ==
+       ||         ||
+== |  (10)  | == | (0) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°2] : Ouverture de la barriere [/] pour la voiture n°10
+
+	[Echangeur n°1] : Ouverture de la barriere [/] pour la voiture n°1
+
+			[Voiture n°1] : Traversée de l'echangeur n°1 [>]
+
+			[Voiture n°10] : Traversée de l'echangeur n°2 [>]
+
+			[Voiture n°1] : Prochain échangeur : n°4 [-->]
+
+			[Voiture n°1] Prêt a l'echangeur n°4 [!]
+
+			[Voiture n°10] : Prochain échangeur : n°1 [-->]
+
+			[Voiture n°10] Prêt a l'echangeur n°1 [!]
+
+[Serveur] : Requête du véhicule n°1 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (1) | ==
+       ||         ||
+== |  (0)  | == | (0) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°2] : Fermeture de la barriere [--]
+
+[Serveur] : Requête du véhicule n°8 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (1) | ==
+       ||         ||
+== |  (0)  | == | (8) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°4] : Ouverture de la barriere [/] pour la voiture n°1
+
+	[Echangeur n°3] : Ouverture de la barriere [/] pour la voiture n°8
+
+	[Echangeur n°1] : Fermeture de la barriere [--]
+
+			[Voiture n°1] : Traversée de l'echangeur n°4 [>]
+
+			[Voiture n°8] : Traversée de l'echangeur n°3 [>]
+
+[Serveur] : Requête du véhicule n°10 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (10)  | == | (1) | ==
+       ||         ||
+== |  (0)  | == | (8) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°1] : Ouverture de la barriere [/] pour la voiture n°10
+
+			[Voiture n°10] : Traversée de l'echangeur n°1 [>]
+
+			[Voiture n°8] : Fin de parcours [X]
+
+			[Voiture n°1] : Prochain échangeur : n°3 [-->]
+
+			[Voiture n°1] Prêt a l'echangeur n°3 [!]
+
+	[Echangeur n°4] : Fermeture de la barriere [--]
+
+	[Echangeur n°3] : Fermeture de la barriere [--]
+
+			[Voiture n°10] : Fin de parcours [X]
+
+	[Echangeur n°1] : Fermeture de la barriere [--]
+
+[Serveur] : Requête du véhicule n°9 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (0) | ==
+       ||         ||
+== |  (9)  | == | (0) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°2] : Ouverture de la barriere [/] pour la voiture n°9
+
+			[Voiture n°9] : Traversée de l'echangeur n°2 [>]
+
+			[Voiture n°9] : Prochain échangeur : n°3 [-->]
+
+			[Voiture n°9] Prêt a l'echangeur n°3 [!]
+
+[Serveur] : Requête du véhicule n°9 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (0) | ==
+       ||         ||
+== |  (0)  | == | (9) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°2] : Fermeture de la barriere [--]
+
+	[Echangeur n°3] : Ouverture de la barriere [/] pour la voiture n°9
+
+			[Voiture n°9] : Traversée de l'echangeur n°3 [>]
+
+			[Voiture n°9] : Prochain échangeur : n°4 [-->]
+
+			[Voiture n°9] Prêt a l'echangeur n°4 [!]
+
+	[Echangeur n°3] : Fermeture de la barriere [--]
+
+[Serveur] : Requête du véhicule n°9 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (9) | ==
+       ||         ||
+== |  (0)  | == | (0) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°4] : Ouverture de la barriere [/] pour la voiture n°9
+
+			[Voiture n°9] : Traversée de l'echangeur n°4 [>]
+
+			[Voiture n°9] : Fin de parcours [X]
+
+[Serveur] : Requête du véhicule n°6 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (0) | ==
+       ||         ||
+== |  (6)  | == | (0) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°4] : Fermeture de la barriere [--]
+
+	[Echangeur n°2] : Ouverture de la barriere [/] pour la voiture n°6
+
+			[Voiture n°6] : Traversée de l'echangeur n°2 [>]
+
+			[Voiture n°6] : Prochain échangeur : n°1 [-->]
+
+			[Voiture n°6] Prêt a l'echangeur n°1 [!]
+
+	[Echangeur n°2] : Fermeture de la barriere [--]
+
+[Serveur] : Requête du véhicule n°6 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (6)  | == | (0) | ==
+       ||         ||
+== |  (0)  | == | (0) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°1] : Ouverture de la barriere [/] pour la voiture n°6
+
+			[Voiture n°6] : Traversée de l'echangeur n°1 [>]
+
+			[Voiture n°6] : Fin de parcours [X]
+
+	[Echangeur n°1] : Fermeture de la barriere [--]
 
 [Serveur] : Requête du véhicule n°5 acceptée [#]
 
@@ -184,20 +499,10 @@ Fin du thread générateur de voiture [*]
        ||         ||
 == |  (0)  | == | (5) | ==
        ||         ||
-== |  (0)  | == | (5) | ==
+== |  (0)  | == | (0) | ==
        ||         ||
 
 ----------------------------
-
-	[Echangeur n°3] : Fermeture de la barriere [--]
-
-	[Echangeur n°4] : Ouverture de la barriere [/] pour la voiture n°5
-
-			[Voiture n°5] : Traversée de l'echangeur n°4 [>]
-
-			[Voiture n°5] : Fin de parcours [X]
-								 suppression
-								 suppression
 
 [Serveur] : Requête du véhicule n°3 acceptée [#]
 
@@ -212,17 +517,46 @@ Fin du thread générateur de voiture [*]
 
 ----------------------------
 
-	[Echangeur n°4] : Fermeture de la barriere [--]
+[Serveur] : Requête du véhicule n°4 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (5) | ==
+       ||         ||
+== |  (4)  | == | (3) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°4] : Ouverture de la barriere [/] pour la voiture n°5
 
 	[Echangeur n°3] : Ouverture de la barriere [/] pour la voiture n°3
 
+	[Echangeur n°2] : Ouverture de la barriere [/] pour la voiture n°4
+
 			[Voiture n°3] : Traversée de l'echangeur n°3 [>]
 
-			[Voiture n°3] : Prochain échangeur : n°2 [-->]
+			[Voiture n°5] : Traversée de l'echangeur n°4 [>]
 
-			[Voiture n°3] Prêt a l'echangeur n°2 [!]
+			[Voiture n°4] : Traversée de l'echangeur n°2 [>]
 
-[Serveur] : Requête du véhicule n°3 acceptée [#]
+			[Voiture n°5] : Prochain échangeur : n°3 [-->]
+
+			[Voiture n°5] Prêt a l'echangeur n°3 [!]
+
+			[Voiture n°4] : Fin de parcours [X]
+
+			[Voiture n°3] : Fin de parcours [X]
+
+	[Echangeur n°3] : Fermeture de la barriere [--]
+
+	[Echangeur n°4] : Fermeture de la barriere [--]
+
+	[Echangeur n°2] : Fermeture de la barriere [--]
+
+[Serveur] : Requête du véhicule n°5 acceptée [#]
 
 ----------------------------
    Voitures prises en charge
@@ -230,7 +564,49 @@ Fin du thread générateur de voiture [*]
        ||         ||
 == |  (0)  | == | (0) | ==
        ||         ||
-== |  (3)  | == | (3) | ==
+== |  (0)  | == | (5) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°3] : Ouverture de la barriere [/] pour la voiture n°5
+
+			[Voiture n°5] : Traversée de l'echangeur n°3 [>]
+
+			[Voiture n°5] : Prochain échangeur : n°2 [-->]
+
+			[Voiture n°5] Prêt a l'echangeur n°2 [!]
+
+	[Echangeur n°3] : Fermeture de la barriere [--]
+
+[Serveur] : Requête du véhicule n°5 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (0) | ==
+       ||         ||
+== |  (5)  | == | (0) | ==
+       ||         ||
+
+----------------------------
+
+	[Echangeur n°2] : Ouverture de la barriere [/] pour la voiture n°5
+
+			[Voiture n°5] : Traversée de l'echangeur n°2 [>]
+
+			[Voiture n°5] : Fin de parcours [X]
+
+[Serveur] : Requête du véhicule n°2 acceptée [#]
+
+----------------------------
+   Voitures prises en charge
+
+       ||         ||
+== |  (0)  | == | (2) | ==
+       ||         ||
+== |  (0)  | == | (0) | ==
        ||         ||
 
 ----------------------------
@@ -241,59 +617,38 @@ Fin du thread générateur de voiture [*]
    Voitures prises en charge
 
        ||         ||
-== |  (1)  | == | (0) | ==
+== |  (0)  | == | (2) | ==
        ||         ||
-== |  (3)  | == | (3) | ==
+== |  (0)  | == | (1) | ==
        ||         ||
 
 ----------------------------
 
-	[Echangeur n°3] : Fermeture de la barriere [--]
+	[Echangeur n°4] : Ouverture de la barriere [/] pour la voiture n°2
 
-	[Echangeur n°1] : Ouverture de la barriere [/] pour la voiture n°1
-
-			[Voiture n°1] : Traversée de l'echangeur n°1 [>]
-
-			[Voiture n°1] : Fin de parcours [X]
-
-	[Echangeur n°2] : Ouverture de la barriere [/] pour la voiture n°3
-
-			[Voiture n°3] : Traversée de l'echangeur n°2 [>]
-
-			[Voiture n°3] : Prochain échangeur : n°1 [-->]
-
-			[Voiture n°3] Prêt a l'echangeur n°1 [!]
+	[Echangeur n°3] : Ouverture de la barriere [/] pour la voiture n°1
 
 	[Echangeur n°2] : Fermeture de la barriere [--]
 
-	[Echangeur n°1] : Fermeture de la barriere [--]
+			[Voiture n°2] : Traversée de l'echangeur n°4 [>]
 
-[Serveur] : Requête du véhicule n°3 acceptée [#]
+			[Voiture n°1] : Traversée de l'echangeur n°3 [>]
 
-----------------------------
-   Voitures prises en charge
+			[Voiture n°2] : Fin de parcours [X]
 
-       ||         ||
-== |  (3)  | == | (0) | ==
-       ||         ||
-== |  (0)  | == | (0) | ==
-       ||         ||
+			[Voiture n°1] : Fin de parcours [X]
 
-----------------------------
-
-	[Echangeur n°1] : Ouverture de la barriere [/] pour la voiture n°3
-
-			[Voiture n°3] : Traversée de l'echangeur n°1 [>]
-
-			[Voiture n°3] : Fin de parcours [X]
-								 suppression
-								 suppression
-								 suppression
-
-	[Echangeur n°1] : Fermeture de la barriere [--]
+	[Echangeur n°4] : Fermeture de la barriere [--]
 *Fin du thread du vehicule n°1
+
+	[Echangeur n°3] : Fermeture de la barriere [--]
 *Fin du thread du vehicule n°2
 *Fin du thread du vehicule n°3
 *Fin du thread du vehicule n°4
 *Fin du thread du vehicule n°5
+*Fin du thread du vehicule n°6
+*Fin du thread du vehicule n°7
+*Fin du thread du vehicule n°8
+*Fin du thread du vehicule n°9
+*Fin du thread du vehicule n°10
 
