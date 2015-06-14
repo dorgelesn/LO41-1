@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
+<net id="Net-One" type="P/T net">
+<token id="Default" enabled="true" red="0" green="0" blue="0"/>
+<labels x="147" y="103" width="104" height="20" border="true">
+<text/>
+</labels>
+<labels x="188" y="364" width="104" height="20" border="true">
+<text>echangeur</text>
+</labels>
+<labels x="359" y="61" width="104" height="20" border="true">
+<text>Serveur</text>
+</labels>
+<labels x="897" y="379" width="104" height="20" border="true">
+<text>voiture</text>
+</labels>
+<place id="">
+<graphics>
+<position x="600.0" y="240.0"/>
+</graphics>
+<name>
+<value/>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="Attente Signal Depart">
+<graphics>
+<position x="810.0" y="450.0"/>
+</graphics>
+<name>
+<value>Attente Signal Depart</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="attente signal femeture">
+<graphics>
+<position x="480.0" y="480.0"/>
+</graphics>
+<name>
+<value>attente signal femeture</value>
+<graphics>
+<offset x="-1.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="attente Voiture">
+<graphics>
+<position x="105.0" y="105.0"/>
+</graphics>
+<name>
+<value>attente Voiture</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="echangeur attente ">
+<graphics>
+<position x="330.0" y="330.0"/>
+</graphics>
+<name>
+<value>echangeur attente </value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="traverse la ligne droite">
+<graphics>
+<position x="750.0" y="660.0"/>
+</graphics>
+<name>
+<value>traverse la ligne droite</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="verifie que l'echangeur est dispo">
+<graphics>
+<position x="330.0" y="120.0"/>
+</graphics>
+<name>
+<value>verifie que l'echangeur est dispo</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<transition id="fermer l'echangeur">
+<graphics>
+<position x="390.0" y="390.0"/>
+</graphics>
+<name>
+<value>fermer l'echangeur</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="ouvre l'echangeur ">
+<graphics>
+<position x="600.0" y="390.0"/>
+</graphics>
+<name>
+<value>ouvre l'echangeur </value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="previent de sont arriver sur l'echangeur">
+<graphics>
+<position x="870.0" y="570.0"/>
+</graphics>
+<name>
+<value>previent de sont arriver sur l'echangeur</value>
+<graphics>
+<offset x="-5.0" y="34.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="reception signal">
+<graphics>
+<position x="450.0" y="240.0"/>
+</graphics>
+<name>
+<value>reception signal</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="reception signal voiture">
+<graphics>
+<position x="240.0" y="35.0"/>
+</graphics>
+<name>
+<value>reception signal voiture</value>
+<graphics>
+<offset x="-5.0" y="36.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="sort des echangeur">
+<graphics>
+<position x="870.0" y="690.0"/>
+</graphics>
+<name>
+<value>sort des echangeur</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="transmission serveur">
+<graphics>
+<position x="210.0" y="240.0"/>
+</graphics>
+<name>
+<value>transmission serveur</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="Traverse l'echangeur">
+<graphics>
+<position x="690.0" y="540.0"/>
+</graphics>
+<name>
+<value>Traverse l'echangeur</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<arc id="Attente Signal Depart to Traverse l'echangeur" source="Attente Signal Depart" target="Traverse l'echangeur">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="810" y="471" curvePoint="false"/>
+<arcpath id="001" x="706" y="552" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="attente signal femeture to fermer l'echangeur" source="attente signal femeture" target="fermer l'echangeur">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="481" y="481" curvePoint="false"/>
+<arcpath id="001" x="406" y="402" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="attente Voiture to reception signal voiture" source="attente Voiture" target="reception signal voiture">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="130" y="109" curvePoint="false"/>
+<arcpath id="001" x="246" y="47" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="echangeur attente  to reception signal" source="echangeur attente " target="reception signal">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="353" y="332" curvePoint="false"/>
+<arcpath id="001" x="456" y="252" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="fermer l'echangeur to echangeur attente " source="fermer l'echangeur" target="echangeur attente ">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="396" y="402" curvePoint="false"/>
+<arcpath id="001" x="352" y="353" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="ouvre l'echangeur  to Attente Signal Depart" source="ouvre l'echangeur " target="Attente Signal Depart">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="616" y="402" curvePoint="false"/>
+<arcpath id="001" x="807" y="457" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="ouvre l'echangeur  to attente signal femeture" source="ouvre l'echangeur " target="attente signal femeture">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="606" y="402" curvePoint="false"/>
+<arcpath id="001" x="503" y="482" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="previent de sont arriver sur l'echangeur to Attente Signal Depart" source="previent de sont arriver sur l'echangeur" target="Attente Signal Depart">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="882" y="567" curvePoint="false"/>
+<arcpath id="001" x="829" y="474" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="previent de sont arriver sur l'echangeur to attente Voiture" source="previent de sont arriver sur l'echangeur" target="attente Voiture">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="877" y="577" curvePoint="false"/>
+<arcpath id="001" x="87" y="567" curvePoint="false"/>
+<arcpath id="002" x="116" y="131" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="reception signal to " source="reception signal" target="">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="466" y="252" curvePoint="false"/>
+<arcpath id="001" x="597" y="252" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="reception signal voiture to verifie que l'echangeur est dispo" source="reception signal voiture" target="verifie que l'echangeur est dispo">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="256" y="47" curvePoint="false"/>
+<arcpath id="001" x="331" y="121" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id=" to ouvre l'echangeur " source="" target="ouvre l'echangeur ">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="612" y="266" curvePoint="false"/>
+<arcpath id="001" x="612" y="387" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="transmission serveur to attente Voiture" source="transmission serveur" target="attente Voiture">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="216" y="252" curvePoint="false"/>
+<arcpath id="001" x="125" y="129" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="transmission serveur to echangeur attente " source="transmission serveur" target="echangeur attente ">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="226" y="257" curvePoint="false"/>
+<arcpath id="001" x="329" y="333" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Traverse l'echangeur to attente signal femeture" source="Traverse l'echangeur" target="attente signal femeture">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="696" y="552" curvePoint="false"/>
+<arcpath id="001" x="506" y="496" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Traverse l'echangeur to traverse la ligne droite" source="Traverse l'echangeur" target="traverse la ligne droite">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="702" y="567" curvePoint="false"/>
+<arcpath id="001" x="754" y="658" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="traverse la ligne droite to previent de sont arriver sur l'echangeur" source="traverse la ligne droite" target="previent de sont arriver sur l'echangeur">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="774" y="663" curvePoint="false"/>
+<arcpath id="001" x="876" y="587" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="traverse la ligne droite to sort des echangeur" source="traverse la ligne droite" target="sort des echangeur">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="776" y="675" curvePoint="false"/>
+<arcpath id="001" x="876" y="702" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="verifie que l'echangeur est dispo to transmission serveur" source="verifie que l'echangeur est dispo" target="transmission serveur">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="331" y="142" curvePoint="false"/>
+<arcpath id="001" x="227" y="247" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+</net>
+</pnml>
