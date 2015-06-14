@@ -40,6 +40,11 @@ void supression(){
       sprintf(mot,"/semEchangeur%d",i);
       sem_unlink(mot);
     }
+
+    for(i=0;i<maxiEchangeur;i++){
+      sprintf(mot,"/semEchangeurDescendre%d",i);
+      sem_unlink(mot);
+    }
     for(i=0;i<maxiVoiture;i++){
       sprintf(mot,"/semEchangeurVoiture%d",i);
       sem_unlink(mot);
@@ -145,7 +150,6 @@ int main(int argc,char *argv[]) {
 
   // Initialisation des variables
 int nbEchangeurs = 4, nbVehicules , i,rc;
-
 if (argc != 2) {
 	fprintf(stderr, "usage: %s nombre de voiture (<%d)\n", argv[0],maxiVoiture);
 	exit(EXIT_FAILURE);
@@ -175,10 +179,20 @@ if(nbVehicules > maxiVoiture){
   creationEchangeur(&ech[1],2,3,0,1,0);
   creationEchangeur(&ech[2],3,0,2,4,0);
   creationEchangeur(&ech[3],4,0,1,0,3);
+// atribut des thread deatacher
+pthread_attr_t thread_attr;
 
+  if (pthread_attr_init (&thread_attr) != 0) {
+    fprintf (stderr, "pthread_attr_init error");
+    exit (1);
+  }
+  if (pthread_attr_setdetachstate (&thread_attr, PTHREAD_CREATE_DETACHED) != 0) {
+    fprintf (stderr, "pthread_attr_setdetachstate error");
 
+    exit (1);
+  }
   // Creation du thread du serveur
-  rc = pthread_create(&threadServeur,NULL,traitantThreadServeur,(void*) &serv);
+  rc = pthread_create(&threadServeur, &thread_attr,traitantThreadServeur,(void*) &serv);
   if(rc)
   printf("\n(!)erreur creation thread serveur ");
 
@@ -190,16 +204,12 @@ if(nbVehicules > maxiVoiture){
 
   // Creation des threads des echangeurs
   for(i = 0; i < nbEchangeurs; i++){
-    rc = pthread_create(&threadsEchangeur[i],NULL,traitantThreadEchangeur,(void*) &ech[i]);
+    rc = pthread_create(&threadsEchangeur[i], &thread_attr,traitantThreadEchangeur,(void*) &ech[i]);
     if(rc)
     printf("\n(!)erreur creation thread echangeur");
   }
 
   sleep(1);
-
-
-
-
   // Attente de fin du thread générateur de véhicule
   pthread_join(threadGenerateur,NULL);
   // Attente de fin des threads véhicule
