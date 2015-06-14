@@ -59,7 +59,8 @@ void* traitantThreadVehicule(void* param){
 
     // Traverse l'échangeur
     printf("\n\n\t\t\t[Voiture n°%d] : Traversée de l'echangeur n°%d [>]",voiture->idVehicule,voiture->idEchangeur);
-  //  usleep(10000);
+  // temps de voyage
+    usleep(10000);
 
     // Envoi l'autorisation de fermeture de la barrière à l'échangeur
     sem_post(semEchangeurDescendre[idEchangeur-1]);
