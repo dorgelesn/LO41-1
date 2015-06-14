@@ -28,24 +28,27 @@ void* traitantThreadServeur(void* param){
     // Attente du signal d'un véhicule prêt
     sem_wait(sem);
 
-    usleep(50);
+// usleep(50);
     liste = NULL;
 
     // Recherche du premier véhicule prêt dans la liste avec prise en compte de sa priorité
     liste = element_i(serv->liste,rechercherPlaceByReadyPriority(serv->liste,true));
-    usleep(1000);
+    //usleep(1000);
 
     if(liste != NULL){
+      if(liste->val->fin==1){
+    //    printf("\n\t\t\t\t\t\t\t\t suppression");
+        serv->liste = supprimerElementById(serv->liste,liste->val->idVehicule);
 
-
+      }
       // Verification de la disponibilité de l'échangeur
-      if(ech[liste->val->idEchangeur-1].dispo == 0){  // Si l'échangeur est indisponible
+      else if(ech[liste->val->idEchangeur-1].dispo == 0){  // Si l'échangeur est indisponible
 
         // Augmentation de la priorité du véhicule
         liste->val->priorite += 1;
         sem_post(sem);
 
-        usleep(100000);
+  //    usleep(100000);
 
       } else {  // Si l'échangeur est disponible
 
@@ -63,7 +66,7 @@ void* traitantThreadServeur(void* param){
         // Envoi l'autorisation de traitement à l'échangeur
         sem_post(semEchangeurLever[liste->val->idEchangeur-1]);
 
-        usleep(400);
+      //  usleep(400);
       }
     }
   }

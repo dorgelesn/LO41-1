@@ -1,6 +1,6 @@
 #ifndef STRUCTURE_H_INCLUDED
 #define STRUCTURE_H_INCLUDED
-#define maxiVoiture 30000
+#define maxiVoiture 3000
 #define maxiEchangeur 4
 #include <stdbool.h>
 #include <pthread.h>
@@ -44,6 +44,7 @@ typedef struct vehicule {
   bool ready;
   int priorite;
   int dejaParcourus[maxiEchangeur];
+  int fin;
 } vehicule;
 
 /**

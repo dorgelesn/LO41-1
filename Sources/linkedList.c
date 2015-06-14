@@ -265,9 +265,15 @@ int rechercherPlaceByReadyPriority(llist liste, bool valeur){
   int i;
 /* Tant que l'on n'est pas au bout de la liste */
   i=0;
+  int j=1;
+  int prioMax=1;
+do{
   while(tmp != NULL)
   {
-      if(tmp->val->ready == valeur && tmp->val->priorite==1 )
+      if(tmp->val->priorite > prioMax){
+        prioMax=tmp->val->priorite;
+      }
+      if(tmp->val->ready == valeur && tmp->val->priorite==j )
       {
           /* Si l'élément a la valeur recherchée, on renvoie son adresse */
           return i;
@@ -275,6 +281,8 @@ int rechercherPlaceByReadyPriority(llist liste, bool valeur){
       tmp = tmp->nxt;
       i++;
   }
+  j++;
+}while(j<prioMax);
 
   return -1;
 }

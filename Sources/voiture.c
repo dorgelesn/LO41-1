@@ -59,7 +59,7 @@ void* traitantThreadVehicule(void* param){
 
     // Traverse l'échangeur
     printf("\n\n\t\t\t[Voiture n°%d] : Traversée de l'echangeur n°%d [>]",voiture->idVehicule,voiture->idEchangeur);
-    usleep(10000);
+  //  usleep(10000);
 
     // Envoi l'autorisation de fermeture de la barrière à l'échangeur
     sem_post(semEchangeurDescendre[idEchangeur-1]);
@@ -67,8 +67,10 @@ void* traitantThreadVehicule(void* param){
     // Si le véhicule est arrivé à destination, il se supprime de la liste
     if (voiture->idEchangeur == voiture->arrivee) {
       arrived = true;
+      voiture->fin=1;
       printf("\n\n\t\t\t[Voiture n°%d] : Fin de parcours [X]",voiture->idVehicule);
-      serv.liste = supprimerElementById(serv.liste,voiture->idVehicule);
+      //serv.liste = supprimerElementById(serv.liste,voiture->idVehicule);
+      sem_post(sem);
       pthread_exit(NULL);
     }
     // Sinon, il détermine la prochaine étape du trajet
@@ -106,6 +108,7 @@ void creationVehicule(vehicule* v,int idVehicule, int idEchangeur,int depart,int
   v->arrivee = arrivee;
   v->priorite = 1;
   v->ready = false;
+  v->fin=0;
 }
 
 bool dejaParcourus(vehicule* v,int ech){
