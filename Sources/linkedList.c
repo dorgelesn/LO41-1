@@ -231,7 +231,7 @@ llist supprimerElementEnFin(llist liste)
 
 /**
 * \fn void reinitialiserPrioEchan(llist liste)
-* \brief Fonction permettant de reinitaliser toute les prioriter pour un echangeur donné
+* \brief Fonction permettant de reinitaliser toute les priorites des véhicules pour un echangeur donné
 *
 * \param liste La liste chainée que l'on manipule
 * \param int le numero d'echangeur pour lesquel on doit reinitialiser les valeur
@@ -242,9 +242,9 @@ void reinitialiserPrioEchan(llist liste,int numEchan){
   /* Tant que l'on n'est pas au bout de la liste */
   while(tmp != NULL)
   {
-      if(tmp->val->prioriter>1&&tmp->val->idEchangeur==numEchan)
+      if(tmp->val->priorite > 1 && tmp->val->idEchangeur == numEchan)
       {
-        tmp->val->prioriter=1;
+        tmp->val->priorite = 1;
       }
       tmp = tmp->nxt;
 
@@ -267,7 +267,7 @@ int rechercherPlaceByReadyPriority(llist liste, bool valeur){
   i=0;
   while(tmp != NULL)
   {
-      if(tmp->val->ready == valeur && tmp->val->prioriter==1 )
+      if(tmp->val->ready == valeur && tmp->val->priorite==1 )
       {
           /* Si l'élément a la valeur recherchée, on renvoie son adresse */
           return i;
@@ -281,7 +281,7 @@ int rechercherPlaceByReadyPriority(llist liste, bool valeur){
 
 /**
 * \fn void rechercherPlaceByReady(llist liste,bool)
-* \brief Fonction permettant de rechercher dans la liste sans se preocuper de la prioriter
+* \brief Fonction permettant de rechercher dans la liste sans se preocuper de la priorite
 *
 * \param liste La liste chainée que l'on manipule
 * \param bool la valeur que l'on veut rechercher

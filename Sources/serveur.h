@@ -7,5 +7,7 @@
 #include <pthread.h>
 void* traitantThreadServeur(void* param);
 void afficherServeur(serveur* s);
+void schemaSimulation();
 vehicule* ajouterVehicule(serveur* serv,int id, int ech,int dep,int arr);
+
 #endif

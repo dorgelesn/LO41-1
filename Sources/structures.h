@@ -32,7 +32,7 @@ sem_t * semDepartVehicule[maxiVoiture-1];
 * idEchangeur est le numero d'echangeur ou se trouve la voiture
 * idVehicule est le numero d'identifiant de la voiture
 * ready est un boolean qui permet de savoit si la voiture a demander la permition de rentrer dans un echangeur
-* prioriter est un boolean permettant de savoir si la voiture a deja été visiter par le serveur ausquel cas cette valeur augmente de 1
+* priorite est un boolean permettant de savoir si la voiture a deja été visiter par le serveur ausquel cas cette valeur augmente de 1
 *
 **/
 typedef struct vehicule {
@@ -42,7 +42,7 @@ typedef struct vehicule {
   int depart;
   int arrivee;
   bool ready;
-  int prioriter;
+  int priorite;
   int dejaParcourus[maxiEchangeur];
 } vehicule;
 
