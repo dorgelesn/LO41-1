@@ -26,8 +26,8 @@
 */
 void supression(){
   char mot[30];
-  int i;
 
+  int i;
   // Suppression de la liste du serveur
   serv.liste = effacerListe(serv.liste);
 
@@ -52,6 +52,7 @@ void supression(){
     sem_unlink(mot);
 
   }
+
 }
 
 /**
@@ -60,6 +61,15 @@ void supression(){
 * Permet la suppresion des semaphore
 */
 void traitantSignt(){
+  int i;
+  pthread_cancel(threadServeur);
+  pthread_cancel(threadGenerateur);
+  for(i = 0; i < maxiEchangeur-1; i++){
+     pthread_cancel(threadsEchangeur[i]);
+  }
+  for(i=0;i<maxiVoiture;i++){
+    pthread_cancel(threadsVehicule[i]);
+  }
   supression();
   printf("\n");
   exit(1);
