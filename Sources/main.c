@@ -167,7 +167,7 @@ int main(int argc,char *argv[]) {
   nbVehicules = atoi(argv[1]);
 
   // Message d'erreur si nombre de véhicules à simuler supérieur à la limite
-  if(nbVehicules > maxiVoiture){
+  if(nbVehicules >= maxiVoiture){
     fprintf(stderr, "Nombre de voitures supérieur à la limite ( %d )\n",maxiVoiture );
     exit(EXIT_FAILURE);
   }
