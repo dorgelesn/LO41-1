@@ -16,13 +16,14 @@ void* traitantThreadGenerationVoiture(void* param){
     idVehicule = i+1;
     idEchangeur = rand()%4 + 1; // Assigne la voiture à un échangeur de manière aléatoire
     depart = idEchangeur;   // Assigne l'échangeur de départ du véhicule
-      arrivee = rand()%4 + 1;   // Assigne un échangeur d'arrivée
+    arrivee = rand()%4 + 1;   // Assigne un échangeur d'arrivée
+
+    printf("\n\n[Générateur] : Voiture n°%d | Départ : %d | Arrivée : %d",idVehicule,depart,arrivee);
 
     // Ajout du véhicule dans la liste du serveur
     voiture = ajouterVehicule(&serv,idVehicule,idEchangeur,depart,arrivee);
     usleep(3000);
 
-    printf("\n\n[Générateur] : Voiture n°%d | Départ : %d | Arrivée : %d",idVehicule,depart,arrivee);
     // Creation du thread du vehicule
     rc = pthread_create(&threadsVehicule[i],NULL,traitantThreadVehicule,(void *)(intptr_t) voiture);
     if(rc)
@@ -47,8 +48,8 @@ void* traitantThreadVehicule(void* param){
     idEchangeur = voiture->idEchangeur;
 
     // Se rend prêt
-    voiture->ready = true;
     printf("\n\n\t\t\t[Voiture n°%d] Prêt a l'echangeur n°%d [!]",voiture->idVehicule,voiture->idEchangeur);
+    voiture->ready = true;
     // Envoi le signal au serveur
     sem_post(sem);
 
@@ -60,6 +61,7 @@ void* traitantThreadVehicule(void* param){
     // Temps de voyage
     usleep(10000);
 
+    printf("\n\n\t\t\t[Voiture n°%d] : Fin de la traversée de l'echangeur n°%d [>]",voiture->idVehicule,voiture->idEchangeur);
     // Envoi l'autorisation de fermeture de la barrière à l'échangeur
     sem_post(semEchangeurDescendre[idEchangeur-1]);
 
