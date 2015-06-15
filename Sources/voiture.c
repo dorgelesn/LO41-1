@@ -48,7 +48,7 @@ void* traitantThreadVehicule(void* param){
     idEchangeur = voiture->idEchangeur;
 
     // Se rend prêt
-    printf("\n\n\t\t\t[Voiture n°%d] Prêt a l'echangeur n°%d [!]",voiture->idVehicule,voiture->idEchangeur);
+    printf("\n\n\t\t\t[Voiture n°%d] : Prêt a l'echangeur n°%d [!]",voiture->idVehicule,voiture->idEchangeur);
     voiture->ready = true;
     // Envoi le signal au serveur
     sem_post(sem);
